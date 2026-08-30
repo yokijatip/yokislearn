@@ -1,0 +1,84 @@
+---
+import { featureMenu } from "../data/learning";
+
+interface Props {
+  active?: string;
+}
+
+const { active = "" } = Astro.props;
+---
+
+<div class="min-h-screen overflow-x-clip bg-[#f7f4ee] pb-20 text-slate-950 sm:pb-0">
+  <header class="sticky top-0 z-30 border-b border-black/5 bg-[#fffaf1]/90 backdrop-blur-xl print:hidden">
+    <div class="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3">
+      <a href="/" class="min-w-0 flex items-center gap-3">
+        <div class="grid size-11 place-items-center rounded-2xl bg-[#d71920] font-serif text-xl font-bold text-white shadow-[0_10px_24px_rgba(215,25,32,0.22)]">
+          学
+        </div>
+        <div class="min-w-0">
+          <div class="text-base font-black tracking-normal text-slate-950">YokisLearn</div>
+          <div class="text-xs font-bold tracking-normal text-slate-500">LPK Baraya</div>
+        </div>
+      </a>
+
+      <div class="shrink-0 flex items-center gap-2">
+        <a href="/akun" class="hidden rounded-2xl border border-black/10 bg-white/70 px-4 py-2 text-sm font-bold text-slate-700 transition hover:border-slate-950 hover:text-slate-950 sm:block">
+          Akun
+        </a>
+        <button id="menuButton" class="grid size-11 place-items-center rounded-2xl border border-black/10 bg-white/80 text-slate-950 shadow-sm transition hover:border-slate-400" type="button" aria-expanded="false" aria-controls="mainMenu" aria-label="Buka menu">
+          <span class="grid gap-1.5">
+            <span class="block h-0.5 w-5 rounded bg-current"></span>
+            <span class="block h-0.5 w-5 rounded bg-current"></span>
+            <span class="block h-0.5 w-5 rounded bg-current"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div id="menuOverlay" class="fixed inset-0 top-[70px] hidden bg-slate-950/20"></div>
+    <nav id="mainMenu" class="absolute right-4 top-[72px] hidden w-[min(280px,calc(100vw-32px))] rounded-3xl border border-black/10 bg-[#fffaf1] p-2 shadow-2xl">
+      <div class="grid gap-2">
+        {featureMenu.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "rounded-2xl px-4 py-3 text-sm font-black transition",
+              active === item.title ? "bg-slate-950 text-white" : "text-slate-700 hover:bg-white hover:text-slate-950",
+            ]}
+          >
+            {item.title}
+          </a>
+        ))}
+      </div>
+    </nav>
+
+    <script>
+      const menuButton = document.getElementById("menuButton");
+      const mainMenu = document.getElementById("mainMenu");
+      const menuOverlay = document.getElementById("menuOverlay");
+
+      function setMenuOpen(open) {
+        mainMenu?.classList.toggle("hidden", !open);
+        menuOverlay?.classList.toggle("hidden", !open);
+        menuButton?.setAttribute("aria-expanded", String(open));
+      }
+
+      menuButton?.addEventListener("click", () => {
+        setMenuOpen(mainMenu?.classList.contains("hidden") ?? true);
+      });
+      menuOverlay?.addEventListener("click", () => setMenuOpen(false));
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setMenuOpen(false);
+      });
+    </script>
+  </header>
+  <main class="overflow-x-clip">
+    <slot />
+  </main>
+  <nav class="fixed inset-x-3 bottom-3 z-30 grid grid-cols-4 gap-2 rounded-3xl border border-black/10 bg-[#fffaf1]/95 p-2 shadow-2xl backdrop-blur-xl sm:hidden print:hidden">
+    <a href="/" class="rounded-2xl px-2 py-2 text-center text-xs font-black text-slate-700">Home</a>
+    <a href="/belajar/kanji/n5" class="rounded-2xl bg-slate-950 px-2 py-2 text-center text-xs font-black text-white">Kanji</a>
+    <a href="/latihan/cetak?type=kanji&level=n5" class="rounded-2xl px-2 py-2 text-center text-xs font-black text-slate-700">Ujian</a>
+    <a href="/games" class="rounded-2xl px-2 py-2 text-center text-xs font-black text-slate-700">Games</a>
+  </nav>
+</div>

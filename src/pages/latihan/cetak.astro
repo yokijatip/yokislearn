@@ -1,0 +1,156 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AppShell from "../../components/AppShell.astro";
+import { learningItems, materialTypes, levels } from "../../data/learning";
+---
+
+<Layout title="Cetak Ulangan - YokisLearn">
+  <AppShell active="Cetak Ulangan">
+    <section class="mx-auto grid max-w-7xl gap-5 px-3 py-5 sm:px-5 lg:grid-cols-[320px_1fr] lg:px-6">
+      <form id="printForm" class="h-fit rounded-md border border-slate-200 bg-white p-5 shadow-sm print:hidden">
+        <div class="text-xs font-black uppercase text-red-700">LPK Baraya</div>
+        <h1 class="mt-2 text-2xl font-black text-slate-950">Cetak Ulangan</h1>
+
+        <label class="mt-5 block text-sm font-black text-slate-900" for="level">Level</label>
+        <select id="level" class="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm font-bold">
+          {levels.map((level) => <option value={level.id}>{level.label}</option>)}
+        </select>
+
+        <label class="mt-4 block text-sm font-black text-slate-900" for="type">Materi</label>
+        <select id="type" class="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm font-bold">
+          {materialTypes.map((type) => <option value={type.id}>{type.label}</option>)}
+        </select>
+
+        <div class="mt-4 grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-black text-slate-900" for="chapterStart">Bab Awal</label>
+            <select id="chapterStart" class="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm font-bold"></select>
+          </div>
+          <div>
+            <label class="block text-sm font-black text-slate-900" for="chapterEnd">Bab Akhir</label>
+            <select id="chapterEnd" class="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm font-bold"></select>
+          </div>
+        </div>
+
+        <label class="mt-4 block text-sm font-black text-slate-900" for="count">Jumlah soal</label>
+        <input id="count" type="number" min="1" max="100" value="10" class="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm font-bold" />
+
+        <label class="mt-4 block text-sm font-black text-slate-900" for="answerMode">Model soal</label>
+        <select id="answerMode" class="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm font-bold">
+          <option value="meaning">Tulis arti Indonesia</option>
+          <option value="reading">Tulis bacaan Jepang</option>
+          <option value="mixed">Campur arti dan bacaan</option>
+        </select>
+
+        <div class="mt-5 grid grid-cols-2 gap-3">
+          <button type="submit" class="rounded-md bg-slate-950 px-4 py-3 text-sm font-black text-white hover:bg-red-700">Acak Soal</button>
+          <button type="button" id="printBtn" class="rounded-md border border-slate-300 px-4 py-3 text-sm font-black text-slate-800 hover:border-slate-950">Cetak</button>
+        </div>
+      </form>
+
+      <div class="paper rounded-md border border-slate-200 bg-white p-6 shadow-sm print:border-0 print:p-0 print:shadow-none">
+        <div class="exam-header mb-5 border-b-2 border-slate-950 pb-4">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <div class="text-sm font-black uppercase tracking-normal text-red-700 print:text-black">LPK Baraya</div>
+              <h2 id="paperTitle" class="mt-1 text-2xl font-black text-slate-950">Kanji N5</h2>
+            </div>
+            <div id="paperMeta" class="text-right text-xs font-bold uppercase text-slate-500"></div>
+          </div>
+          <div class="exam-identity mt-4 grid gap-3 text-sm font-bold text-slate-700 sm:grid-cols-3">
+            <div>Nama: <span></span></div>
+            <div>Kelas: <span></span></div>
+            <div>Nilai: <span></span></div>
+          </div>
+        </div>
+        <ol id="questionList" class="exam-questions grid gap-3 text-base leading-7"></ol>
+      </div>
+    </section>
+
+    <script define:vars={{ learningItems }}>
+      const form = document.getElementById("printForm");
+      const level = document.getElementById("level");
+      const type = document.getElementById("type");
+      const chapterStart = document.getElementById("chapterStart");
+      const chapterEnd = document.getElementById("chapterEnd");
+      const count = document.getElementById("count");
+      const answerMode = document.getElementById("answerMode");
+      const list = document.getElementById("questionList");
+      const title = document.getElementById("paperTitle");
+      const paperMeta = document.getElementById("paperMeta");
+      const printBtn = document.getElementById("printBtn");
+
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("level")) level.value = params.get("level");
+      if (params.get("type")) type.value = params.get("type");
+
+      function shuffle(items) {
+        return items.map((item) => ({ item, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(({ item }) => item);
+      }
+
+      function chaptersForSelection() {
+        return [...new Set(learningItems.filter((item) => item.level === level.value && item.type === type.value).map((item) => item.chapter))].sort((a, b) => a - b);
+      }
+
+      function syncChapters() {
+        const chapters = chaptersForSelection();
+        const chapterLabel = type.value === "kanji" ? "Grup" : "Bab";
+        const options = chapters.map((value) => `<option value="${value}">${chapterLabel} ${value}</option>`).join("");
+        chapterStart.innerHTML = options;
+        chapterEnd.innerHTML = options;
+        if (chapters.length) {
+          chapterStart.value = String(chapters[0]);
+          chapterEnd.value = String(chapters[0]);
+        }
+      }
+
+      function getRange() {
+        const start = Number(chapterStart.value);
+        const end = Number(chapterEnd.value);
+        return [Math.min(start, end), Math.max(start, end)];
+      }
+
+      function formatTitle() {
+        const [start, end] = getRange();
+        const typeLabel = type.options[type.selectedIndex].textContent;
+        if (type.value === "kanji") return `${typeLabel} ${level.value.toUpperCase()}`;
+        return start === end ? `${typeLabel} Bab ${start}` : `${typeLabel} Bab ${start}-${end}`;
+      }
+
+      function renderQuestions() {
+        const [start, end] = getRange();
+        const pool = learningItems.filter((item) => item.level === level.value && item.type === type.value && item.chapter >= start && item.chapter <= end);
+        const selected = shuffle(pool).slice(0, Number(count.value) || 10);
+        title.textContent = formatTitle();
+        paperMeta.textContent = `${level.value.toUpperCase()} / ${selected.length} soal`;
+        list.innerHTML = selected.map((item, index) => {
+          const mode = answerMode.value === "mixed" ? (index % 2 === 0 ? "meaning" : "reading") : answerMode.value;
+          const label = mode === "reading" ? "Bacaan" : "Arti";
+          return `
+            <li class="exam-question rounded-md border border-slate-200 bg-white p-3 print:break-inside-avoid">
+              <div class="grid grid-cols-[28px_1fr] gap-2">
+                <span class="exam-number font-black text-slate-500">${index + 1}.</span>
+                <div class="min-w-0">
+                  <div class="exam-prompt font-serif text-2xl font-bold leading-tight text-slate-950">${item.prompt}</div>
+                  <div class="exam-label mt-1 text-xs font-bold text-slate-500">${label}</div>
+                  <div class="exam-line mt-2 h-7 border-b border-dashed border-slate-300"></div>
+                </div>
+              </div>
+            </li>
+          `;
+        }).join("");
+      }
+
+      level.addEventListener("change", () => { syncChapters(); renderQuestions(); });
+      type.addEventListener("change", () => { syncChapters(); renderQuestions(); });
+      chapterStart.addEventListener("change", renderQuestions);
+      chapterEnd.addEventListener("change", renderQuestions);
+      answerMode.addEventListener("change", renderQuestions);
+      form.addEventListener("submit", (event) => { event.preventDefault(); renderQuestions(); });
+      printBtn.addEventListener("click", () => window.print());
+
+      syncChapters();
+      renderQuestions();
+    </script>
+  </AppShell>
+</Layout>
