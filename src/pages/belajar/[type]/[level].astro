@@ -263,7 +263,7 @@ const activeName = material.label;
     </section>
 
     <script define:vars={{ items, type, level }}>
-      import { createSupabaseClient, isSupabaseConfigured } from "../../../lib/supabase";
+      import { createFirebaseDb, firebaseDocId, isFirebaseConfigured } from "../../../lib/firebase";
 
       const allItems = items;
       let chapter = "all";
@@ -305,36 +305,32 @@ const activeName = material.label;
         }
       }
 
-      async function getSupabase() {
-        if (!isSupabaseConfigured || !activeSession?.nim) return null;
+      async function getFirebaseDb() {
+        if (!isFirebaseConfigured || !activeSession?.nim) return null;
         try {
-          return await createSupabaseClient();
+          return await createFirebaseDb();
         } catch {
           return null;
         }
       }
 
       async function loadRemoteProgress() {
-        const supabase = await getSupabase();
-        if (!supabase) return;
+        const db = await getFirebaseDb();
+        if (!db) return;
 
-        const { data, error } = await supabase
-          .from("user_progress")
-          .select("item_id,status")
-          .eq("user_nim", storageOwner)
-          .eq("material_type", type)
-          .eq("level", level);
-
-        if (error) return;
+        const { collection, getDocs, query, where } = await import("firebase/firestore");
+        const snapshot = await getDocs(query(collection(db, "user_progress"), where("userNim", "==", storageOwner)));
 
         let changed = false;
-        (data || []).forEach((row) => {
+        snapshot.docs.forEach((docSnapshot) => {
+          const row = docSnapshot.data();
+          if (row.materialType !== type || row.level !== level) return;
           if (row.status === "hafal") {
-            memorizedIds.add(row.item_id);
+            memorizedIds.add(row.itemId);
             changed = true;
           }
           if (row.status === "belum") {
-            memorizedIds.delete(row.item_id);
+            memorizedIds.delete(row.itemId);
             changed = true;
           }
         });
@@ -342,21 +338,19 @@ const activeName = material.label;
       }
 
       async function saveRemoteProgress(item, isMemorized) {
-        const supabase = await getSupabase();
-        if (!supabase) return;
+        const db = await getFirebaseDb();
+        if (!db) return;
 
-        await supabase.from("user_progress").upsert(
-          {
-            user_nim: storageOwner,
-            item_id: item.id,
-            material_type: item.type,
-            level: item.level,
-            chapter: item.chapter,
-            status: isMemorized ? "hafal" : "belum",
-            updated_at: new Date().toISOString(),
-          },
-          { onConflict: "user_nim,item_id" },
-        );
+        const { doc, serverTimestamp, setDoc } = await import("firebase/firestore");
+        await setDoc(doc(db, "user_progress", firebaseDocId(`${storageOwner}__${item.id}`)), {
+          userNim: storageOwner,
+          itemId: item.id,
+          materialType: item.type,
+          level: item.level,
+          chapter: item.chapter,
+          status: isMemorized ? "hafal" : "belum",
+          updatedAt: serverTimestamp(),
+        });
       }
 
       try {

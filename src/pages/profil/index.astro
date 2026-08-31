@@ -60,7 +60,7 @@ import { learningItems } from "../../data/learning";
 
     <script define:vars={{ learningItems }}>
       import { getUsers } from "../../lib/accounts";
-      import { createSupabaseClient, isSupabaseConfigured } from "../../lib/supabase";
+      import { createFirebaseDb, isFirebaseConfigured } from "../../lib/firebase";
 
       const activeSession = JSON.parse(localStorage.getItem("yokislearn:session") || "null");
       const activeUserLabel = document.getElementById("activeUserLabel");
@@ -95,21 +95,21 @@ import { learningItems } from "../../data/learning";
       }
 
       async function loadRemoteProgress() {
-        if (!isSupabaseConfigured) return [];
+        if (!isFirebaseConfigured) return [];
         try {
-          const supabase = await createSupabaseClient();
-          if (!supabase) return [];
-          const { data, error } = await supabase.from("user_progress").select("*").eq("status", "hafal");
-          if (error) return [];
+          const db = await createFirebaseDb();
+          if (!db) return [];
+          const { collection, getDocs, query, where } = await import("firebase/firestore");
+          const snapshot = await getDocs(query(collection(db, "user_progress"), where("status", "==", "hafal")));
           remoteReady = true;
-          return data || [];
+          return snapshot.docs.map((docSnapshot) => ({ id: docSnapshot.id, ...docSnapshot.data() }));
         } catch {
           return [];
         }
       }
 
       function memorizedIdsFor(userNim) {
-        const ids = new Set(remoteRows.filter((row) => row.user_nim === userNim).map((row) => row.item_id));
+        const ids = new Set(remoteRows.filter((row) => row.userNim === userNim || row.user_nim === userNim).map((row) => row.itemId || row.item_id));
         if (userNim === activeSession?.nim) {
           ["kanji", "kotoba"].forEach((type) => {
             ["n5", "n4"].forEach((level) => {
@@ -155,7 +155,7 @@ import { learningItems } from "../../data/learning";
         }
 
         if (progressSource) {
-          progressSource.textContent = remoteReady ? "Supabase" : "Lokal";
+          progressSource.textContent = remoteReady ? "Firebase" : "Lokal";
           progressSource.className = remoteReady
             ? "rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-black text-emerald-700"
             : "rounded-full bg-stone-100 px-3 py-1.5 text-xs font-black text-stone-600";

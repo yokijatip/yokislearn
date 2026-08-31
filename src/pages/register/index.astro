@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { isSupabaseConfigured } from "../../lib/supabase";
+import { isFirebaseConfigured } from "../../lib/firebase";
 
 export const prerender = false;
 
@@ -69,7 +69,7 @@ if (Astro.request.method === "POST") {
                 <h1 class="mt-1 text-3xl font-black leading-tight text-slate-950">Buat akun murid</h1>
               </div>
               <span id="storageStatus" class="rounded-full bg-stone-100 px-3 py-1.5 text-xs font-black text-stone-600">
-                {isSupabaseConfigured ? "Supabase" : "Lokal"}
+                {isFirebaseConfigured ? "Firebase" : "Lokal"}
               </span>
             </div>
 
@@ -151,18 +151,18 @@ if (Astro.request.method === "POST") {
               storageStatus.textContent = "Lokal";
               storageStatus.className = "rounded-full bg-amber-50 px-3 py-1.5 text-xs font-black text-amber-700";
             } else {
-              storageStatus.textContent = "Supabase";
+              storageStatus.textContent = "Firebase";
               storageStatus.className = "rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-black text-emerald-700";
             }
           }
 
           if (syncResult.synced > 0) {
-            setMessage(`${syncResult.synced} akun lokal berhasil disinkronkan ke Supabase.`, "success");
+            setMessage(`${syncResult.synced} akun lokal berhasil disinkronkan ke Firebase.`, "success");
           }
 
           if (!studentList) return;
           if (!students.length) {
-            studentList.innerHTML = `<div class="rounded-2xl bg-[#f7f4ee] px-4 py-4 text-sm font-bold text-stone-600">${remoteError ? "Supabase belum siap. Akun baru akan tersimpan di browser ini." : "Belum ada akun murid."}</div>`;
+            studentList.innerHTML = `<div class="rounded-2xl bg-[#f7f4ee] px-4 py-4 text-sm font-bold text-stone-600">${remoteError ? "Firebase belum siap. Akun baru akan tersimpan di browser ini." : "Belum ada akun murid."}</div>`;
             return;
           }
 
@@ -210,7 +210,7 @@ if (Astro.request.method === "POST") {
           setMessage(
             result.remoteSaved
               ? `Akun ${result.account.name} dibuat. Murid bisa login pakai NIM ${result.account.nim}.`
-              : `Akun ${result.account.name} dibuat di browser ini. Supabase perlu tabel accounts agar bisa dipakai dari perangkat lain.`,
+              : `Akun ${result.account.name} dibuat di browser ini. Firebase perlu diaktifkan agar bisa dipakai dari perangkat lain.`,
             result.remoteSaved ? "success" : "neutral",
           );
           await renderStudents();

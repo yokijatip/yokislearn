@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "@astrojs/netlify": "^8.2.4",
-    "@supabase/supabase-js": "^2.112.4",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.9",
+    "firebase": "^12.18.0",
     "tailwindcss": "^4.3.3"
   },
   "allowScripts": {

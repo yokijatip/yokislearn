@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { isSupabaseConfigured } from "../../lib/supabase";
+import { isFirebaseConfigured } from "../../lib/firebase";
 ---
 
 <Layout title="Akun - YokisLearn">
@@ -103,8 +103,8 @@ import { isSupabaseConfigured } from "../../lib/supabase";
               <div id="roleCard" class="mt-2 text-2xl font-black">Belum login</div>
             </div>
             <div class="rounded-2xl bg-[#fffaf1] p-5">
-              <div class="text-xs font-black uppercase text-stone-500">Supabase</div>
-              <div class="mt-2 text-2xl font-black text-slate-950">{isSupabaseConfigured ? "Aktif" : "Belum"}</div>
+              <div class="text-xs font-black uppercase text-stone-500">Firebase</div>
+              <div class="mt-2 text-2xl font-black text-slate-950">{isFirebaseConfigured ? "Aktif" : "Belum"}</div>
             </div>
             <div class="rounded-2xl bg-[#fffaf1] p-5">
               <div class="text-xs font-black uppercase text-stone-500">Akun demo</div>
@@ -160,7 +160,7 @@ import { isSupabaseConfigured } from "../../lib/supabase";
         if (!studentList) return;
 
         if (!students.length) {
-          studentList.innerHTML = `<div class="rounded-2xl bg-[#f7f4ee] px-4 py-4 text-sm font-bold text-stone-600">${remoteError ? "Belum ada akun murid di browser ini. Supabase belum siap." : "Belum ada akun murid."}</div>`;
+          studentList.innerHTML = `<div class="rounded-2xl bg-[#f7f4ee] px-4 py-4 text-sm font-bold text-stone-600">${remoteError ? "Belum ada akun murid di browser ini. Firebase belum siap." : "Belum ada akun murid."}</div>`;
           return;
         }
 
@@ -208,7 +208,7 @@ import { isSupabaseConfigured } from "../../lib/supabase";
         const nim = normalizeNim(loginNim?.value);
         const { user, remoteError } = await findAccountByNim(nim);
         if (!user) {
-          if (loginMessage) loginMessage.textContent = remoteError ? "NIM belum terdaftar. Supabase belum siap, hanya akun lokal yang bisa login." : "NIM belum terdaftar.";
+          if (loginMessage) loginMessage.textContent = remoteError ? "NIM belum terdaftar. Firebase belum siap, hanya akun lokal yang bisa login." : "NIM belum terdaftar.";
           return;
         }
 
@@ -237,7 +237,7 @@ import { isSupabaseConfigured } from "../../lib/supabase";
         if (studentMessage) {
           studentMessage.textContent = result.remoteSaved
             ? `Akun ${name} dibuat. Murid bisa login dari perangkat lain pakai NIM ${result.account.nim}.`
-            : `Akun ${name} dibuat di browser ini. Buat tabel Supabase agar bisa login dari perangkat lain.`;
+            : `Akun ${name} dibuat di browser ini. Aktifkan Firebase agar bisa login dari perangkat lain.`;
         }
         if (studentNim) studentNim.value = "";
         if (studentName) studentName.value = "";

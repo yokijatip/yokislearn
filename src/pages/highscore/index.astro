@@ -28,7 +28,7 @@ import AppShell from "../../components/AppShell.astro";
     </section>
 
     <script>
-      import { createSupabaseClient, isSupabaseConfigured } from "../../lib/supabase";
+      import { createFirebaseDb, isFirebaseConfigured } from "../../lib/firebase";
 
       const session = JSON.parse(localStorage.getItem("yokislearn:session") || "null");
       const localScoresKey = "yokislearn:game-scores";
@@ -56,15 +56,14 @@ import AppShell from "../../components/AppShell.astro";
       }
 
       async function loadScores() {
-        if (isSupabaseConfigured) {
+        if (isFirebaseConfigured) {
           try {
-            const supabase = await createSupabaseClient();
-            if (supabase) {
-              const { data, error } = await supabase.from("game_scores").select("*").order("score", { ascending: false }).limit(100);
-              if (!error) {
-                remoteReady = true;
-                return data || [];
-              }
+            const db = await createFirebaseDb();
+            if (db) {
+              const { collection, getDocs, limit, orderBy, query } = await import("firebase/firestore");
+              const snapshot = await getDocs(query(collection(db, "game_scores"), orderBy("score", "desc"), limit(100)));
+              remoteReady = true;
+              return snapshot.docs.map((docSnapshot) => ({ id: docSnapshot.id, ...docSnapshot.data() }));
             }
           } catch {
             remoteReady = false;
@@ -76,7 +75,7 @@ import AppShell from "../../components/AppShell.astro";
 
       function renderSource() {
         if (!scoreSource) return;
-        scoreSource.textContent = remoteReady ? "Supabase" : "Lokal";
+        scoreSource.textContent = remoteReady ? "Firebase" : "Lokal";
         scoreSource.className = remoteReady
           ? "rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-black text-emerald-700"
           : "rounded-full bg-stone-100 px-3 py-1.5 text-xs font-black text-stone-600";

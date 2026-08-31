@@ -133,7 +133,7 @@ import { learningItems } from "../../data/learning";
     </section>
 
     <script define:vars={{ learningItems }}>
-      import { createSupabaseClient, isSupabaseConfigured } from "../../lib/supabase";
+      import { createFirebaseDb, isFirebaseConfigured } from "../../lib/firebase";
 
       const playable = learningItems.filter((item) => item.status !== "draft");
       const session = JSON.parse(localStorage.getItem("yokislearn:session") || "null");
@@ -227,32 +227,38 @@ import { learningItems } from "../../data/learning";
         localStorage.setItem(localScoresKey, JSON.stringify(scores.slice(0, 100)));
       }
 
-      async function getSupabase() {
-        if (!isSupabaseConfigured) return null;
+      async function getFirebaseDb() {
+        if (!isFirebaseConfigured) return null;
         try {
-          return await createSupabaseClient();
+          return await createFirebaseDb();
         } catch {
           return null;
         }
       }
 
       async function loadRooms() {
-        const supabase = await getSupabase();
-        if (supabase) {
-          const { data, error } = await supabase.from("game_rooms").select("*").order("created_at", { ascending: false });
-          if (!error) {
+        const db = await getFirebaseDb();
+        if (db) {
+          try {
+            const { collection, getDocs, orderBy, query } = await import("firebase/firestore");
+            const snapshot = await getDocs(query(collection(db, "game_rooms"), orderBy("createdAt", "desc")));
             remoteReady = true;
-            return [...(data || []).map((room) => ({
-              id: room.id,
-              name: room.name,
-              type: room.material_type,
-              level: room.level,
-              mode: room.mode,
-              timeLimit: room.time_limit,
-              createdBy: room.created_by,
-              creatorName: room.creator_name,
-              createdAt: room.created_at,
-            })), ...seedRooms];
+            return [...snapshot.docs.map((docSnapshot) => {
+              const room = docSnapshot.data();
+              return {
+                id: docSnapshot.id,
+                name: room.name,
+                type: room.type || room.material_type,
+                level: room.level,
+                mode: room.mode,
+                timeLimit: room.timeLimit || room.time_limit,
+                createdBy: room.createdBy || room.created_by,
+                creatorName: room.creatorName || room.creator_name,
+                createdAt: room.createdAt?.toDate?.().toISOString?.() || room.createdAt || room.created_at,
+              };
+            }), ...seedRooms];
+          } catch {
+            remoteReady = false;
           }
         }
         remoteReady = false;
@@ -260,35 +266,24 @@ import { learningItems } from "../../data/learning";
       }
 
       async function createRoom(room) {
-        const supabase = await getSupabase();
-        if (supabase) {
-          const { data, error } = await supabase
-            .from("game_rooms")
-            .insert({
+        const db = await getFirebaseDb();
+        if (db) {
+          try {
+            const { addDoc, collection, serverTimestamp } = await import("firebase/firestore");
+            const docRef = await addDoc(collection(db, "game_rooms"), {
               name: room.name,
-              material_type: room.type,
+              type: room.type,
               level: room.level,
               mode: room.mode,
-              time_limit: room.timeLimit,
-              created_by: room.createdBy,
-              creator_name: room.creatorName,
-            })
-            .select("*")
-            .single();
-
-          if (!error && data) {
+              timeLimit: room.timeLimit,
+              createdBy: room.createdBy,
+              creatorName: room.creatorName,
+              createdAt: serverTimestamp(),
+            });
             remoteReady = true;
-            return {
-              id: data.id,
-              name: data.name,
-              type: data.material_type,
-              level: data.level,
-              mode: data.mode,
-              timeLimit: data.time_limit,
-              createdBy: data.created_by,
-              creatorName: data.creator_name,
-              createdAt: data.created_at,
-            };
+            return { ...room, id: docRef.id };
+          } catch {
+            remoteReady = false;
           }
         }
 
@@ -297,12 +292,15 @@ import { learningItems } from "../../data/learning";
       }
 
       async function loadScores() {
-        const supabase = await getSupabase();
-        if (supabase) {
-          const { data, error } = await supabase.from("game_scores").select("*").order("score", { ascending: false }).limit(20);
-          if (!error) {
+        const db = await getFirebaseDb();
+        if (db) {
+          try {
+            const { collection, getDocs, limit, orderBy, query } = await import("firebase/firestore");
+            const snapshot = await getDocs(query(collection(db, "game_scores"), orderBy("score", "desc"), limit(20)));
             remoteReady = true;
-            return data || [];
+            return snapshot.docs.map((docSnapshot) => ({ id: docSnapshot.id, ...docSnapshot.data() }));
+          } catch {
+            remoteReady = false;
           }
         }
         return getLocalScores();
@@ -322,12 +320,18 @@ import { learningItems } from "../../data/learning";
           created_at: new Date().toISOString(),
         };
 
-        const supabase = await getSupabase();
-        if (supabase) {
-          const { error } = await supabase.from("game_scores").insert(scoreRow);
-          if (!error) {
+        const db = await getFirebaseDb();
+        if (db) {
+          try {
+            const { addDoc, collection, serverTimestamp } = await import("firebase/firestore");
+            await addDoc(collection(db, "game_scores"), {
+              ...scoreRow,
+              createdAt: serverTimestamp(),
+            });
             remoteReady = true;
             return;
+          } catch {
+            remoteReady = false;
           }
         }
         saveLocalScore(scoreRow);
@@ -345,7 +349,7 @@ import { learningItems } from "../../data/learning";
         if (totalScoreEl) totalScoreEl.textContent = total;
         if (bestScoreEl) bestScoreEl.textContent = best;
         if (scoreSource) {
-          scoreSource.textContent = remoteReady ? "Supabase" : "Lokal";
+          scoreSource.textContent = remoteReady ? "Firebase" : "Lokal";
           scoreSource.className = remoteReady
             ? "rounded-full bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700"
             : "rounded-full bg-stone-100 px-3 py-1 text-xs font-black text-stone-600";

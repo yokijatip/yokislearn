@@ -1,4 +1,4 @@
-import { createSupabaseClient, isSupabaseConfigured } from "./supabase";
+import { createFirebaseDb, firebaseDocId, isFirebaseConfigured } from "./firebase";
 
 export const USERS_KEY = "yokislearn:accounts";
 export const SESSION_KEY = "yokislearn:session";
@@ -53,28 +53,29 @@ export function saveLocalUser(user: AppAccount) {
 }
 
 export async function getRemoteUsers() {
-  if (!isSupabaseConfigured) {
+  if (!isFirebaseConfigured) {
     return { users: [] as AppAccount[], error: null as Error | null };
   }
 
   try {
-    const supabase = await createSupabaseClient();
-    if (!supabase) return { users: [] as AppAccount[], error: null };
+    const db = await createFirebaseDb();
+    if (!db) return { users: [] as AppAccount[], error: null };
 
-    const { data, error } = await supabase
-      .from("accounts")
-      .select("nim,name,role,created_by")
-      .order("name", { ascending: true });
+    const { collection, getDocs, orderBy, query } = await import("firebase/firestore");
+    const snapshot = await getDocs(query(collection(db, "accounts"), orderBy("name", "asc")));
 
-    if (error) return { users: [] as AppAccount[], error };
+    const users = snapshot.docs.map((docSnapshot) => {
+      const user = docSnapshot.data();
+      return {
+        nim: normalizeNim(user.nim),
+        name: String(user.name || ""),
+        role: user.role,
+        createdBy: user.createdBy || user.created_by || undefined,
+      };
+    }) as AppAccount[];
 
     return {
-      users: (data || []).map((user) => ({
-        nim: normalizeNim(user.nim),
-        name: user.name,
-        role: user.role,
-        createdBy: user.created_by || undefined,
-      })) as AppAccount[],
+      users,
       error: null,
     };
   } catch (error) {
@@ -111,21 +112,21 @@ export async function createStudentAccount(input: { nim: string; name: string; c
     return { account, remoteSaved: false, error: new Error("NIM sudah dipakai.") };
   }
 
-  if (isSupabaseConfigured) {
+  if (isFirebaseConfigured) {
     try {
-      const supabase = await createSupabaseClient();
-      if (supabase) {
-        const { error } = await supabase.from("accounts").insert({
+      const db = await createFirebaseDb();
+      if (db) {
+        const { doc, serverTimestamp, setDoc } = await import("firebase/firestore");
+        await setDoc(doc(db, "accounts", firebaseDocId(account.nim)), {
           nim: account.nim,
           name: account.name,
           role: account.role,
-          created_by: account.createdBy,
+          createdBy: account.createdBy,
+          createdAt: serverTimestamp(),
         });
 
-        if (!error) {
-          saveLocalUser(account);
-          return { account, remoteSaved: true, error: null };
-        }
+        saveLocalUser(account);
+        return { account, remoteSaved: true, error: null };
       }
     } catch {
       // Fallback below keeps local development usable.
@@ -137,13 +138,13 @@ export async function createStudentAccount(input: { nim: string; name: string; c
 }
 
 export async function syncLocalStudentsToRemote() {
-  if (!isSupabaseConfigured) {
+  if (!isFirebaseConfigured) {
     return { synced: 0, error: null as Error | null };
   }
 
   try {
-    const supabase = await createSupabaseClient();
-    if (!supabase) return { synced: 0, error: null };
+    const db = await createFirebaseDb();
+    if (!db) return { synced: 0, error: null };
 
     const { users: remoteUsers, error: remoteError } = await getRemoteUsers();
     if (remoteError) return { synced: 0, error: remoteError };
@@ -157,16 +158,20 @@ export async function syncLocalStudentsToRemote() {
       return { synced: 0, error: null };
     }
 
-    const { error } = await supabase.from("accounts").insert(
-      localStudents.map((user) => ({
+    const { doc, serverTimestamp, writeBatch } = await import("firebase/firestore");
+    const batch = writeBatch(db);
+    localStudents.forEach((user) => {
+      batch.set(doc(db, "accounts", firebaseDocId(normalizeNim(user.nim))), {
         nim: normalizeNim(user.nim),
         name: user.name,
         role: "murid",
-        created_by: user.createdBy || "local-sync",
-      })),
-    );
+        createdBy: user.createdBy || "local-sync",
+        createdAt: serverTimestamp(),
+      });
+    });
+    await batch.commit();
 
-    return { synced: error ? 0 : localStudents.length, error };
+    return { synced: localStudents.length, error: null };
   } catch (error) {
     return { synced: 0, error: error as Error };
   }
