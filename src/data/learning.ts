@@ -41,6 +41,8 @@ export const featureMenu = [
   { title: "Kotoba", href: "/belajar/kotoba/n5", scope: "Kosakata per bab dan latihan acak" },
   { title: "Cetak Ulangan", href: "/latihan/cetak", scope: "Pilih level, materi, dan rentang bab" },
   { title: "Games", href: "/games", scope: "Latihan cepat dan score" },
+  { title: "Profil", href: "/profil", scope: "Progress hafalan semua user" },
+  { title: "Highscore", href: "/highscore", scope: "Ranking score games" },
   { title: "Akun", href: "/akun", scope: "Login, progres, nilai, dan riwayat" },
 ];
 

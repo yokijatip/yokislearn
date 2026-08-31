@@ -48,3 +48,15 @@ create policy "game_scores_insert_public"
   on public.game_scores
   for insert
   with check (true);
+
+insert into public.game_rooms (name, material_type, level, mode, time_limit, created_by, creator_name)
+select 'Kanji N5 Sprint', 'kanji', 'n5', 'Speed Quiz', 60, 'GURU001', 'Guru LPK Baraya'
+where not exists (select 1 from public.game_rooms where name = 'Kanji N5 Sprint' and created_by = 'GURU001');
+
+insert into public.game_rooms (name, material_type, level, mode, time_limit, created_by, creator_name)
+select 'Kotoba Bab Campur', 'kotoba', 'n5', 'Speed Quiz', 90, 'DEV001', 'Developer'
+where not exists (select 1 from public.game_rooms where name = 'Kotoba Bab Campur' and created_by = 'DEV001');
+
+insert into public.game_rooms (name, material_type, level, mode, time_limit, created_by, creator_name)
+select 'Kanji N4 Challenge', 'kanji', 'n4', 'Speed Quiz', 120, 'GURU001', 'Guru LPK Baraya'
+where not exists (select 1 from public.game_rooms where name = 'Kanji N4 Challenge' and created_by = 'GURU001');

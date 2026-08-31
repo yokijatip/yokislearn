@@ -1,0 +1,117 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AppShell from "../../components/AppShell.astro";
+---
+
+<Layout title="Highscore - YokisLearn">
+  <AppShell active="Highscore">
+    <section class="mx-auto w-full max-w-5xl overflow-x-clip px-3 py-5 sm:px-4 sm:py-8">
+      <div class="rounded-[1.75rem] border border-stone-200/80 bg-white p-5 shadow-lg shadow-slate-900/5 sm:p-6">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p class="text-xs font-black uppercase tracking-wider text-red-600">Games</p>
+            <h1 class="mt-1 text-3xl font-black text-slate-950">Highscore</h1>
+            <p class="mt-2 text-sm font-bold leading-6 text-stone-600">Ranking score dari semua room games.</p>
+          </div>
+          <span id="scoreSource" class="rounded-full bg-stone-100 px-3 py-1.5 text-xs font-black text-stone-600">Lokal</span>
+        </div>
+
+        <div class="mt-6 grid gap-4 lg:grid-cols-[1fr_260px]">
+          <section id="scoreList" class="grid gap-3"></section>
+          <aside class="rounded-[1.25rem] bg-[#faf6ee] p-4">
+            <div class="text-xs font-black uppercase tracking-wider text-stone-500">Score saya</div>
+            <div id="myScore" class="mt-2 text-4xl font-black text-slate-950">0</div>
+            <div id="myBest" class="mt-4 rounded-2xl bg-white p-4 text-sm font-black text-slate-700">Best: 0</div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      import { createSupabaseClient, isSupabaseConfigured } from "../../lib/supabase";
+
+      const session = JSON.parse(localStorage.getItem("yokislearn:session") || "null");
+      const localScoresKey = "yokislearn:game-scores";
+      const scoreList = document.getElementById("scoreList");
+      const scoreSource = document.getElementById("scoreSource");
+      const myScore = document.getElementById("myScore");
+      const myBest = document.getElementById("myBest");
+      let remoteReady = false;
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function getLocalScores() {
+        try {
+          return JSON.parse(localStorage.getItem(localScoresKey) || "[]");
+        } catch {
+          return [];
+        }
+      }
+
+      async function loadScores() {
+        if (isSupabaseConfigured) {
+          try {
+            const supabase = await createSupabaseClient();
+            if (supabase) {
+              const { data, error } = await supabase.from("game_scores").select("*").order("score", { ascending: false }).limit(100);
+              if (!error) {
+                remoteReady = true;
+                return data || [];
+              }
+            }
+          } catch {
+            remoteReady = false;
+          }
+        }
+        remoteReady = false;
+        return getLocalScores();
+      }
+
+      function renderSource() {
+        if (!scoreSource) return;
+        scoreSource.textContent = remoteReady ? "Supabase" : "Lokal";
+        scoreSource.className = remoteReady
+          ? "rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-black text-emerald-700"
+          : "rounded-full bg-stone-100 px-3 py-1.5 text-xs font-black text-stone-600";
+      }
+
+      async function render() {
+        const scores = await loadScores();
+        const sorted = scores.slice().sort((a, b) => Number(b.score || 0) - Number(a.score || 0));
+        const mine = session ? sorted.filter((row) => row.player_nim === session.nim) : [];
+        const total = mine.reduce((sum, row) => sum + Number(row.score || 0), 0);
+        const best = mine.reduce((max, row) => Math.max(max, Number(row.score || 0)), 0);
+
+        if (myScore) myScore.textContent = total;
+        if (myBest) myBest.textContent = `Best: ${best}`;
+        renderSource();
+
+        if (!scoreList) return;
+        if (!sorted.length) {
+          scoreList.innerHTML = `<div class="rounded-2xl bg-[#faf6ee] p-5 text-sm font-bold text-stone-600">Belum ada score game.</div>`;
+          return;
+        }
+
+        scoreList.innerHTML = sorted.slice(0, 30).map((row, index) => `
+          <article class="grid gap-3 rounded-2xl border border-stone-200 bg-[#faf6ee] p-4 sm:grid-cols-[auto_1fr_auto] sm:items-center">
+            <div class="grid size-10 place-items-center rounded-2xl bg-slate-950 text-sm font-black text-white">${index + 1}</div>
+            <div class="min-w-0">
+              <div class="truncate text-base font-black text-slate-950">${escapeHtml(row.player_name)}</div>
+              <div class="mt-1 truncate text-xs font-bold text-stone-500">${escapeHtml(row.room_name || "Room")} - ${escapeHtml(row.player_nim)}</div>
+            </div>
+            <div class="rounded-2xl bg-white px-4 py-2 text-right text-xl font-black text-red-600">${Number(row.score || 0)}</div>
+          </article>
+        `).join("");
+      }
+
+      await render();
+    </script>
+  </AppShell>
+</Layout>

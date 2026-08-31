@@ -65,14 +65,21 @@ const activeName = material.label;
             ))}
           </div>
 
-          <!-- Mode Switcher Tabs (Kartu, Kuis, Daftar) -->
-          <div class="grid grid-cols-3 gap-1 rounded-2xl bg-[#ede8e0]/60 p-1 border border-stone-200/30">
+          <!-- Mode Switcher Tabs (Kartu, Belum Hafal, Kuis, Daftar) -->
+          <div class="grid grid-cols-4 gap-1 rounded-2xl bg-[#ede8e0]/60 p-1 border border-stone-200/30">
             <button class="mode-btn flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-black transition-all bg-white text-slate-950 shadow-sm cursor-pointer flex-1" data-mode="flashcard">
               <svg class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <rect x="3" y="4" width="18" height="16" rx="3" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h10M7 16h6" />
               </svg>
               <span>Kartu</span>
+            </button>
+            <button class="mode-btn flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-black transition-all text-stone-700 hover:bg-white/50 cursor-pointer flex-1" data-mode="unmemorized">
+              <svg class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 11l3 3L22 4" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+              </svg>
+              <span>Belum</span>
             </button>
             <button class="mode-btn flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-black transition-all text-stone-700 hover:bg-white/50 cursor-pointer flex-1" data-mode="quiz">
               <svg class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -213,6 +220,17 @@ const activeName = material.label;
             <div id="itemList" class="grid gap-3"></div>
           </section>
 
+          <section id="unmemorizedPanel" class="hidden min-w-0 rounded-[2rem] border border-stone-200 bg-white p-5 shadow-lg shadow-slate-900/5">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p class="text-xs font-black uppercase tracking-wider text-red-600">Belum hafal</p>
+                <h2 class="mt-1 text-xl font-black text-slate-950">Daftar latihan ulang</h2>
+              </div>
+              <span id="unmemorizedCount" class="rounded-full bg-slate-950 px-3 py-1.5 text-xs font-black text-white">0 item</span>
+            </div>
+            <div id="unmemorizedList" class="mt-4 grid gap-3"></div>
+          </section>
+
           <!-- PANEL 3: QUIZ (KUIS CEPAT) -->
           <section id="quizPanel" class="hidden min-w-0 rounded-[2rem] border border-stone-200 bg-white p-5 shadow-lg shadow-slate-900/5">
             <div class="mb-4 flex items-center justify-between gap-3">
@@ -245,6 +263,8 @@ const activeName = material.label;
     </section>
 
     <script define:vars={{ items, type, level }}>
+      import { createSupabaseClient, isSupabaseConfigured } from "../../../lib/supabase";
+
       const allItems = items;
       let chapter = "all";
       let mode = "flashcard";
@@ -285,6 +305,60 @@ const activeName = material.label;
         }
       }
 
+      async function getSupabase() {
+        if (!isSupabaseConfigured || !activeSession?.nim) return null;
+        try {
+          return await createSupabaseClient();
+        } catch {
+          return null;
+        }
+      }
+
+      async function loadRemoteProgress() {
+        const supabase = await getSupabase();
+        if (!supabase) return;
+
+        const { data, error } = await supabase
+          .from("user_progress")
+          .select("item_id,status")
+          .eq("user_nim", storageOwner)
+          .eq("material_type", type)
+          .eq("level", level);
+
+        if (error) return;
+
+        let changed = false;
+        (data || []).forEach((row) => {
+          if (row.status === "hafal") {
+            memorizedIds.add(row.item_id);
+            changed = true;
+          }
+          if (row.status === "belum") {
+            memorizedIds.delete(row.item_id);
+            changed = true;
+          }
+        });
+        if (changed) saveProgress();
+      }
+
+      async function saveRemoteProgress(item, isMemorized) {
+        const supabase = await getSupabase();
+        if (!supabase) return;
+
+        await supabase.from("user_progress").upsert(
+          {
+            user_nim: storageOwner,
+            item_id: item.id,
+            material_type: item.type,
+            level: item.level,
+            chapter: item.chapter,
+            status: isMemorized ? "hafal" : "belum",
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "user_nim,item_id" },
+        );
+      }
+
       try {
         const storedQuizStats = localStorage.getItem(quizStatsKey);
         if (storedQuizStats) {
@@ -309,6 +383,7 @@ const activeName = material.label;
         flashcard: document.getElementById("flashcardPanel"),
         list: document.getElementById("listPanel"),
         quiz: document.getElementById("quizPanel"),
+        unmemorized: document.getElementById("unmemorizedPanel"),
       };
       
       const cardMeta = document.getElementById("cardMeta");
@@ -338,6 +413,8 @@ const activeName = material.label;
       const btnBelumHafal = document.getElementById("btnBelumHafal");
       const btnSudahHafal = document.getElementById("btnSudahHafal");
       const btnShuffle = document.getElementById("btnShuffle");
+      const unmemorizedList = document.getElementById("unmemorizedList");
+      const unmemorizedCount = document.getElementById("unmemorizedCount");
 
       // Hidden summary element reference
       const chapterSummary = document.getElementById("chapterSummary") || { textContent: "" };
@@ -433,6 +510,7 @@ const activeName = material.label;
         if (mode === "flashcard") renderCard();
         if (mode === "list") renderList();
         if (mode === "quiz") renderQuiz();
+        if (mode === "unmemorized") renderUnmemorizedList();
       }
 
       function renderCard() {
@@ -493,6 +571,30 @@ const activeName = material.label;
             </article>
           `).join("");
         }
+      }
+
+      function renderUnmemorizedList() {
+        const filtered = deck.filter((item) => !memorizedIds.has(item.id));
+        if (unmemorizedCount) unmemorizedCount.textContent = `${filtered.length} item`;
+        if (!unmemorizedList) return;
+
+        if (!filtered.length) {
+          unmemorizedList.innerHTML = `<div class="rounded-2xl bg-[#faf6ee] p-5 text-sm font-bold text-stone-600">Semua item di pilihan ini sudah ditandai hafal.</div>`;
+          return;
+        }
+
+        unmemorizedList.innerHTML = filtered.map((item) => `
+          <article class="rounded-2xl border border-stone-200 bg-[#faf6ee] p-4 shadow-sm">
+            <div class="flex items-start justify-between gap-3">
+              <div class="min-w-0">
+                <div class="break-all font-serif text-3xl font-bold leading-tight text-slate-950">${item.prompt}</div>
+                <div class="mt-2 break-words text-sm font-black text-red-700">${item.reading || ""}</div>
+                <div class="mt-1 break-words text-sm font-black text-slate-800">${item.meaning}</div>
+              </div>
+              <button class="open-unmemorized shrink-0 rounded-2xl bg-slate-950 px-4 py-2 text-xs font-black text-white" data-id="${item.id}" type="button">Buka</button>
+            </div>
+          </article>
+        `).join("");
       }
 
       function renderQuizStats() {
@@ -591,8 +693,10 @@ const activeName = material.label;
           memorizedIds.delete(currentItem.id);
         }
         saveProgress();
+        void saveRemoteProgress(currentItem, isMemorized);
         updateHafalCount();
         updateHafalButtonsState();
+        if (mode === "unmemorized") renderUnmemorizedList();
 
         if (isMemorized && deck.length > 1) {
           setTimeout(() => {
@@ -669,6 +773,19 @@ const activeName = material.label;
       }
 
       if (searchInput) searchInput.addEventListener("input", renderList);
+
+      if (unmemorizedList) {
+        unmemorizedList.addEventListener("click", (event) => {
+          const button = event.target.closest(".open-unmemorized");
+          if (!button) return;
+          const targetIndex = deck.findIndex((item) => item.id === button.dataset.id);
+          if (targetIndex < 0) return;
+          cardIndex = targetIndex;
+          revealed = true;
+          setMode("flashcard");
+          renderCard();
+        });
+      }
       
       if (quizOptions) {
         quizOptions.addEventListener("click", (event) => {
@@ -680,6 +797,7 @@ const activeName = material.label;
       
       if (nextQuiz) nextQuiz.addEventListener("click", renderQuiz);
 
+      await loadRemoteProgress();
       syncDeck();
     </script>
   </AppShell>

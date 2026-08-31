@@ -1,0 +1,207 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AppShell from "../../components/AppShell.astro";
+import { learningItems } from "../../data/learning";
+---
+
+<Layout title="Profil Progress - YokisLearn">
+  <AppShell active="Profil">
+    <section class="mx-auto w-full max-w-6xl overflow-x-clip px-3 py-5 sm:px-4 sm:py-8">
+      <div class="grid gap-4 lg:grid-cols-[340px_minmax(0,1fr)]">
+        <aside class="rounded-[1.75rem] border border-stone-200/80 bg-white p-5 shadow-lg shadow-slate-900/5">
+          <p class="text-xs font-black uppercase tracking-wider text-red-600">Profil</p>
+          <h1 class="mt-1 text-2xl font-black text-slate-950">Progress hafalan</h1>
+          <p id="activeUserLabel" class="mt-2 text-sm font-bold leading-6 text-stone-600">Memuat user...</p>
+
+          <div class="mt-5 grid grid-cols-2 gap-2">
+            <div class="rounded-2xl bg-slate-950 p-4 text-white">
+              <div id="myKanjiCount" class="text-3xl font-black">0</div>
+              <div class="text-[10px] font-black uppercase text-white/60">kanji hafal</div>
+            </div>
+            <div class="rounded-2xl bg-red-600 p-4 text-white">
+              <div id="myKotobaCount" class="text-3xl font-black">0</div>
+              <div class="text-[10px] font-black uppercase text-white/70">kotoba hafal</div>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <label class="grid gap-2 text-sm font-black text-slate-800">
+              Lihat user
+              <select id="userSelect" class="h-11 rounded-2xl border border-stone-200 bg-[#faf6ee] px-3 text-sm font-black outline-none focus:border-slate-950"></select>
+            </label>
+          </div>
+        </aside>
+
+        <main class="grid gap-4">
+          <section class="rounded-[1.75rem] border border-stone-200/80 bg-white p-5 shadow-lg shadow-slate-900/5">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p class="text-xs font-black uppercase tracking-wider text-red-600">Ranking</p>
+                <h2 class="mt-1 text-xl font-black text-slate-950">Semua user</h2>
+              </div>
+              <span id="progressSource" class="rounded-full bg-stone-100 px-3 py-1.5 text-xs font-black text-stone-600">Lokal</span>
+            </div>
+            <div id="userProgressList" class="mt-4 grid gap-2"></div>
+          </section>
+
+          <section class="rounded-[1.75rem] border border-stone-200/80 bg-white p-5 shadow-lg shadow-slate-900/5">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p class="text-xs font-black uppercase tracking-wider text-red-600">Detail</p>
+                <h2 id="detailTitle" class="mt-1 text-xl font-black text-slate-950">Belum hafal</h2>
+              </div>
+              <span id="detailCount" class="rounded-full bg-slate-950 px-3 py-1.5 text-xs font-black text-white">0 item</span>
+            </div>
+            <div id="unmemorizedDetail" class="mt-4 grid gap-2 sm:grid-cols-2"></div>
+          </section>
+        </main>
+      </div>
+    </section>
+
+    <script define:vars={{ learningItems }}>
+      import { getUsers } from "../../lib/accounts";
+      import { createSupabaseClient, isSupabaseConfigured } from "../../lib/supabase";
+
+      const activeSession = JSON.parse(localStorage.getItem("yokislearn:session") || "null");
+      const activeUserLabel = document.getElementById("activeUserLabel");
+      const myKanjiCount = document.getElementById("myKanjiCount");
+      const myKotobaCount = document.getElementById("myKotobaCount");
+      const userSelect = document.getElementById("userSelect");
+      const userProgressList = document.getElementById("userProgressList");
+      const unmemorizedDetail = document.getElementById("unmemorizedDetail");
+      const detailTitle = document.getElementById("detailTitle");
+      const detailCount = document.getElementById("detailCount");
+      const progressSource = document.getElementById("progressSource");
+
+      let accounts = [];
+      let remoteRows = [];
+      let remoteReady = false;
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function localMemorizedIds(userNim, type, level) {
+        try {
+          return new Set(JSON.parse(localStorage.getItem(`yokislearn:memorized:${userNim}:${type}:${level}`) || "[]"));
+        } catch {
+          return new Set();
+        }
+      }
+
+      async function loadRemoteProgress() {
+        if (!isSupabaseConfigured) return [];
+        try {
+          const supabase = await createSupabaseClient();
+          if (!supabase) return [];
+          const { data, error } = await supabase.from("user_progress").select("*").eq("status", "hafal");
+          if (error) return [];
+          remoteReady = true;
+          return data || [];
+        } catch {
+          return [];
+        }
+      }
+
+      function memorizedIdsFor(userNim) {
+        const ids = new Set(remoteRows.filter((row) => row.user_nim === userNim).map((row) => row.item_id));
+        if (userNim === activeSession?.nim) {
+          ["kanji", "kotoba"].forEach((type) => {
+            ["n5", "n4"].forEach((level) => {
+              localMemorizedIds(userNim, type, level).forEach((id) => ids.add(id));
+            });
+          });
+        }
+        return ids;
+      }
+
+      function summaryFor(userNim) {
+        const ids = memorizedIdsFor(userNim);
+        const memorized = learningItems.filter((item) => ids.has(item.id));
+        return {
+          kanji: memorized.filter((item) => item.type === "kanji").length,
+          kotoba: memorized.filter((item) => item.type === "kotoba").length,
+          total: memorized.length,
+        };
+      }
+
+      function renderUserOptions() {
+        if (!userSelect) return;
+        userSelect.innerHTML = accounts.map((user) => `<option value="${escapeHtml(user.nim)}">${escapeHtml(user.name)} (${escapeHtml(user.nim)})</option>`).join("");
+        if (activeSession?.nim) userSelect.value = activeSession.nim;
+      }
+
+      function renderOverview() {
+        const rows = accounts.map((user) => ({ user, summary: summaryFor(user.nim) })).sort((a, b) => b.summary.total - a.summary.total);
+        if (userProgressList) {
+          userProgressList.innerHTML = rows.map(({ user, summary }, index) => `
+            <article class="grid gap-3 rounded-2xl bg-[#faf6ee] p-4 sm:grid-cols-[1fr_auto] sm:items-center">
+              <div class="min-w-0">
+                <div class="truncate text-sm font-black text-slate-950">${index + 1}. ${escapeHtml(user.name)}</div>
+                <div class="mt-1 text-xs font-bold text-stone-500">${escapeHtml(user.nim)}</div>
+              </div>
+              <div class="grid grid-cols-3 gap-2 text-center text-xs font-black">
+                <div class="rounded-xl bg-white px-3 py-2">${summary.kanji} kanji</div>
+                <div class="rounded-xl bg-white px-3 py-2">${summary.kotoba} kotoba</div>
+                <div class="rounded-xl bg-slate-950 px-3 py-2 text-white">${summary.total} total</div>
+              </div>
+            </article>
+          `).join("");
+        }
+
+        if (progressSource) {
+          progressSource.textContent = remoteReady ? "Supabase" : "Lokal";
+          progressSource.className = remoteReady
+            ? "rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-black text-emerald-700"
+            : "rounded-full bg-stone-100 px-3 py-1.5 text-xs font-black text-stone-600";
+        }
+      }
+
+      function renderDetail(userNim) {
+        const user = accounts.find((item) => item.nim === userNim);
+        const ids = memorizedIdsFor(userNim);
+        const missing = learningItems.filter((item) => !ids.has(item.id)).slice(0, 80);
+        const summary = summaryFor(userNim);
+
+        if (detailTitle) detailTitle.textContent = user ? `Belum hafal - ${user.name}` : "Belum hafal";
+        if (detailCount) detailCount.textContent = `${missing.length} item tampil`;
+        if (myKanjiCount && userNim === activeSession?.nim) myKanjiCount.textContent = summary.kanji;
+        if (myKotobaCount && userNim === activeSession?.nim) myKotobaCount.textContent = summary.kotoba;
+        if (!unmemorizedDetail) return;
+
+        unmemorizedDetail.innerHTML = missing.map((item) => `
+          <article class="rounded-2xl border border-stone-200 bg-[#faf6ee] p-4">
+            <div class="flex items-start justify-between gap-3">
+              <div class="min-w-0">
+                <div class="break-all font-serif text-2xl font-bold text-slate-950">${escapeHtml(item.prompt)}</div>
+                <div class="mt-1 break-words text-xs font-black text-red-700">${escapeHtml(item.reading || "")}</div>
+                <div class="mt-1 break-words text-sm font-bold text-slate-700">${escapeHtml(item.meaning)}</div>
+              </div>
+              <span class="shrink-0 rounded-full bg-white px-3 py-1 text-xs font-black text-stone-600">${item.type} ${item.level.toUpperCase()}</span>
+            </div>
+          </article>
+        `).join("");
+      }
+
+      async function init() {
+        const accountResult = await getUsers();
+        accounts = accountResult.users.filter((user) => user.role !== "developer");
+        remoteRows = await loadRemoteProgress();
+        if (activeUserLabel) {
+          activeUserLabel.textContent = activeSession ? `Login sebagai ${activeSession.name} (${activeSession.nim})` : "Belum login";
+        }
+        renderUserOptions();
+        renderOverview();
+        renderDetail(userSelect?.value || activeSession?.nim || accounts[0]?.nim || "");
+      }
+
+      userSelect?.addEventListener("change", () => renderDetail(userSelect.value));
+      await init();
+    </script>
+  </AppShell>
+</Layout>
