@@ -342,8 +342,19 @@ const activeName = material.label;
       // Hidden summary element reference
       const chapterSummary = document.getElementById("chapterSummary") || { textContent: "" };
 
-      function shuffle(values) {
-        return values.map((item) => ({ item, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(({ item }) => item);
+      function shuffle(values, avoidFirstId = "") {
+        const shuffled = values.slice();
+        for (let index = shuffled.length - 1; index > 0; index -= 1) {
+          const swapIndex = Math.floor(Math.random() * (index + 1));
+          [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+        }
+
+        if (avoidFirstId && shuffled.length > 1 && shuffled[0]?.id === avoidFirstId) {
+          const swapIndex = shuffled.findIndex((item) => item.id !== avoidFirstId);
+          [shuffled[0], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[0]];
+        }
+
+        return shuffled;
       }
 
       function syncDeck() {
@@ -593,17 +604,17 @@ const activeName = material.label;
       }
 
       function toggleShuffle() {
-        isShuffled = !isShuffled;
-        if (isShuffled) {
-          if (btnShuffle) {
-            btnShuffle.className = "flex items-center justify-center gap-2 rounded-2xl border border-orange-200/50 bg-orange-50 px-2 py-2 font-extrabold text-orange-600 shadow-sm transition-all active:scale-95";
-          }
-        } else {
-          if (btnShuffle) {
-            btnShuffle.className = "flex items-center justify-center gap-2 rounded-2xl px-2 py-2 font-bold text-stone-600 transition-all hover:bg-white/70 hover:text-slate-950 active:scale-95";
-          }
+        const currentId = deck[cardIndex]?.id || "";
+        isShuffled = true;
+        if (btnShuffle) {
+          btnShuffle.className = "flex items-center justify-center gap-2 rounded-2xl border border-orange-200/50 bg-orange-50 px-2 py-2 font-extrabold text-orange-600 shadow-sm transition-all active:scale-95";
         }
-        syncDeck();
+        const filteredItems = chapter === "all" ? allItems.slice() : allItems.filter((item) => String(item.chapter) === chapter);
+        deck = shuffle(filteredItems, currentId);
+        cardIndex = 0;
+        revealed = false;
+        updateHafalCount();
+        renderActiveMode();
       }
 
       // Add Event Listeners
