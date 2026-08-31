@@ -219,9 +219,24 @@ const activeName = material.label;
               <div id="quizMeta" class="text-xs font-black uppercase text-slate-500 tracking-wider">Kuis Cepat</div>
               <div id="quizScore" class="rounded-xl bg-slate-950 px-3 py-1.5 text-xs font-black text-white">0 benar</div>
             </div>
+            <div class="mb-4 grid grid-cols-3 gap-2 text-center">
+              <div class="rounded-2xl bg-[#faf6ee] px-3 py-3">
+                <div class="text-[10px] font-black uppercase text-stone-500">Streak</div>
+                <div id="quizStreak" class="mt-1 text-xl font-black text-slate-950">0</div>
+              </div>
+              <div class="rounded-2xl bg-[#faf6ee] px-3 py-3">
+                <div class="text-[10px] font-black uppercase text-stone-500">Terbaik</div>
+                <div id="quizBestStreak" class="mt-1 text-xl font-black text-slate-950">0</div>
+              </div>
+              <div class="rounded-2xl bg-[#faf6ee] px-3 py-3">
+                <div class="text-[10px] font-black uppercase text-stone-500">Jawab</div>
+                <div id="quizAnswered" class="mt-1 text-xl font-black text-slate-950">0</div>
+              </div>
+            </div>
             <div class="rounded-[1.5rem] bg-slate-950 p-6 text-center">
               <div id="quizPrompt" class="break-all font-serif text-5xl font-bold leading-tight text-white sm:text-6xl"></div>
             </div>
+            <div id="quizFeedback" class="mt-4 hidden rounded-2xl px-4 py-3 text-sm font-black"></div>
             <div id="quizOptions" class="mt-4 grid gap-3 sm:grid-cols-2"></div>
             <button id="nextQuiz" class="mt-4 hidden w-full rounded-xl bg-red-600 px-4 py-3 text-sm font-black text-white hover:bg-red-700 transition active:scale-95 cursor-pointer">Soal Berikut</button>
           </section>
@@ -237,14 +252,22 @@ const activeName = material.label;
       let deck = allItems.slice();
       let cardIndex = 0;
       let revealed = false;
-      let score = 0;
       let currentQuiz = null;
+      let quizAnsweredCurrent = false;
 
       // LocalStorage Key for progress tracking
       const activeSession = JSON.parse(localStorage.getItem("yokislearn:session") || "null");
       const storageOwner = activeSession?.nim || "guest";
       const storageKey = `yokislearn:memorized:${storageOwner}:${type}:${level}`;
+      const quizStatsKey = `yokislearn:quiz:${storageOwner}:${type}:${level}`;
       let memorizedIds = new Set();
+      let quizStats = {
+        correct: 0,
+        answered: 0,
+        streak: 0,
+        bestStreak: 0,
+        lastStartedAt: "",
+      };
       try {
         const stored = localStorage.getItem(storageKey);
         if (stored) {
@@ -259,6 +282,23 @@ const activeName = material.label;
           localStorage.setItem(storageKey, JSON.stringify([...memorizedIds]));
         } catch (e) {
           console.error("Error saving progress", e);
+        }
+      }
+
+      try {
+        const storedQuizStats = localStorage.getItem(quizStatsKey);
+        if (storedQuizStats) {
+          quizStats = { ...quizStats, ...JSON.parse(storedQuizStats) };
+        }
+      } catch (e) {
+        console.error("Error loading quiz stats", e);
+      }
+
+      function saveQuizStats() {
+        try {
+          localStorage.setItem(quizStatsKey, JSON.stringify(quizStats));
+        } catch (e) {
+          console.error("Error saving quiz stats", e);
         }
       }
 
@@ -284,6 +324,10 @@ const activeName = material.label;
       const quizPrompt = document.getElementById("quizPrompt");
       const quizOptions = document.getElementById("quizOptions");
       const quizScore = document.getElementById("quizScore");
+      const quizStreak = document.getElementById("quizStreak");
+      const quizBestStreak = document.getElementById("quizBestStreak");
+      const quizAnswered = document.getElementById("quizAnswered");
+      const quizFeedback = document.getElementById("quizFeedback");
       const nextQuiz = document.getElementById("nextQuiz");
 
       const progressIndex = document.getElementById("progressIndex");
@@ -440,21 +484,91 @@ const activeName = material.label;
         }
       }
 
+      function renderQuizStats() {
+        if (quizScore) quizScore.textContent = `${quizStats.correct} benar`;
+        if (quizStreak) quizStreak.textContent = quizStats.streak;
+        if (quizBestStreak) quizBestStreak.textContent = quizStats.bestStreak;
+        if (quizAnswered) quizAnswered.textContent = quizStats.answered;
+      }
+
       function renderQuiz() {
         if (!deck.length) return;
+        quizAnsweredCurrent = false;
+        quizStats.lastStartedAt = new Date().toISOString();
+        saveQuizStats();
         currentQuiz = shuffle(deck)[0];
         const options = shuffle([currentQuiz, ...shuffle(allItems.filter((item) => item.id !== currentQuiz.id)).slice(0, 3)]);
         if (quizMeta) quizMeta.textContent = type === "kanji" ? `Kanji ${level.toUpperCase()}` : `${currentQuiz.type.toUpperCase()} Bab ${currentQuiz.chapter}`;
         if (quizPrompt) quizPrompt.textContent = currentQuiz.prompt;
-        if (quizScore) quizScore.textContent = `${score} benar`;
+        renderQuizStats();
+        if (quizFeedback) {
+          quizFeedback.className = "mt-4 hidden rounded-2xl px-4 py-3 text-sm font-black";
+          quizFeedback.textContent = "";
+        }
         if (nextQuiz) nextQuiz.classList.add("hidden");
         if (quizOptions) {
           quizOptions.innerHTML = options.map((item) => `
             <button class="quiz-option rounded-xl border border-stone-200 bg-white px-4 py-4 text-left text-sm font-black text-slate-800 hover:border-slate-950 transition active:scale-[0.98] cursor-pointer w-full" data-id="${item.id}">
-              ${item.meaning}
+              <span class="block">${item.meaning}</span>
+              <span class="quiz-result mt-2 hidden text-xs uppercase tracking-wider"></span>
             </button>
           `).join("");
         }
+      }
+
+      function answerQuiz(selectedButton) {
+        if (!currentQuiz || quizAnsweredCurrent) return;
+        quizAnsweredCurrent = true;
+        const correct = selectedButton.dataset.id === currentQuiz.id;
+
+        quizStats.answered += 1;
+        if (correct) {
+          quizStats.correct += 1;
+          quizStats.streak += 1;
+          quizStats.bestStreak = Math.max(quizStats.bestStreak, quizStats.streak);
+        } else {
+          quizStats.streak = 0;
+        }
+        saveQuizStats();
+        renderQuizStats();
+
+        [...quizOptions.querySelectorAll("button")].forEach((button) => {
+          const isCorrectOption = button.dataset.id === currentQuiz.id;
+          const result = button.querySelector(".quiz-result");
+          button.disabled = true;
+          button.classList.remove("hover:border-slate-950");
+
+          if (isCorrectOption) {
+            button.classList.add("border-emerald-600", "bg-emerald-50", "text-emerald-800", "ring-2", "ring-emerald-100");
+            if (result) {
+              result.textContent = "Benar";
+              result.className = "quiz-result mt-2 block text-xs font-black uppercase tracking-wider text-emerald-700";
+            }
+            return;
+          }
+
+          if (button === selectedButton) {
+            button.classList.add("border-red-700", "bg-red-50", "text-red-800", "ring-2", "ring-red-100");
+            if (result) {
+              result.textContent = "Salah";
+              result.className = "quiz-result mt-2 block text-xs font-black uppercase tracking-wider text-red-700";
+            }
+          } else {
+            button.classList.add("opacity-60");
+          }
+        });
+
+        if (quizFeedback) {
+          if (correct) {
+            quizFeedback.textContent = `Benar. Streak kamu sekarang ${quizStats.streak}.`;
+            quizFeedback.className = "mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-black text-emerald-800";
+          } else {
+            quizFeedback.textContent = `Salah. Jawaban yang benar: ${currentQuiz.meaning}.`;
+            quizFeedback.className = "mt-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-black text-red-800";
+          }
+        }
+
+        if (nextQuiz) nextQuiz.classList.remove("hidden");
       }
 
       function markMemorized(isMemorized) {
@@ -549,15 +663,7 @@ const activeName = material.label;
         quizOptions.addEventListener("click", (event) => {
           const button = event.target.closest("button");
           if (!button || button.disabled) return;
-          const correct = button.dataset.id === currentQuiz.id;
-          [...quizOptions.querySelectorAll("button")].forEach((item) => {
-            item.disabled = true;
-            if (item.dataset.id === currentQuiz.id) item.classList.add("border-emerald-600", "bg-emerald-50", "text-emerald-800");
-          });
-          if (!correct) button.classList.add("border-red-700", "bg-red-50", "text-red-800");
-          if (correct) score += 1;
-          if (quizScore) quizScore.textContent = `${score} benar`;
-          if (nextQuiz) nextQuiz.classList.remove("hidden");
+          answerQuiz(button);
         });
       }
       
