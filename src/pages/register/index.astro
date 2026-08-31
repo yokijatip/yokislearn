@@ -119,7 +119,7 @@ if (Astro.request.method === "POST") {
 
     {unlocked && (
       <script>
-        import { createStudentAccount, escapeHtml, getUsers, normalizeNim, syncLocalStudentsToRemote } from "../../lib/accounts";
+        import { createStudentAccount, escapeHtml, getUsers, normalizeNim } from "../../lib/accounts";
 
         const registerForm = document.getElementById("registerForm");
         const studentNim = document.getElementById("studentNim");
@@ -141,13 +141,12 @@ if (Astro.request.method === "POST") {
         }
 
         async function renderStudents() {
-          const syncResult = await syncLocalStudentsToRemote();
           const { users, remoteError } = await getUsers();
           const students = users.filter((user) => user.role === "murid");
 
           if (studentCount) studentCount.textContent = `${students.length} murid`;
           if (storageStatus) {
-            if (remoteError || syncResult.error) {
+            if (remoteError) {
               storageStatus.textContent = "Lokal";
               storageStatus.className = "rounded-full bg-amber-50 px-3 py-1.5 text-xs font-black text-amber-700";
             } else {
@@ -156,13 +155,9 @@ if (Astro.request.method === "POST") {
             }
           }
 
-          if (syncResult.synced > 0) {
-            setMessage(`${syncResult.synced} akun lokal berhasil disinkronkan ke Firebase.`, "success");
-          }
-
           if (!studentList) return;
           if (!students.length) {
-            studentList.innerHTML = `<div class="rounded-2xl bg-[#f7f4ee] px-4 py-4 text-sm font-bold text-stone-600">${remoteError ? "Firebase belum siap. Akun baru akan tersimpan di browser ini." : "Belum ada akun murid."}</div>`;
+            studentList.innerHTML = `<div class="rounded-2xl bg-[#f7f4ee] px-4 py-4 text-sm font-bold text-stone-600">${remoteError ? "Firebase belum siap. Akun baru tidak akan disimpan lokal." : "Belum ada akun murid."}</div>`;
             return;
           }
 
@@ -210,9 +205,7 @@ if (Astro.request.method === "POST") {
           setMessage(
             result.remoteSaved
               ? `Akun ${result.account.name} dibuat. Murid bisa login pakai NIM ${result.account.nim}.`
-              : result.remoteError
-                ? `Akun ${result.account.name} dibuat lokal, tapi gagal masuk Firebase: ${result.remoteError.message}`
-                : `Akun ${result.account.name} dibuat di browser ini. Firebase perlu diaktifkan agar bisa dipakai dari perangkat lain.`,
+              : result.error?.message || result.remoteError?.message || "Akun gagal dibuat.",
             result.remoteSaved ? "success" : "neutral",
           );
           await renderStudents();

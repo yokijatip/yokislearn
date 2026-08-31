@@ -130,7 +130,6 @@ import { isFirebaseConfigured } from "../../lib/firebase";
         getUsers,
         normalizeNim,
         setSession,
-        syncLocalStudentsToRemote,
       } from "../../lib/accounts";
 
       const loginForm = document.getElementById("loginForm");
@@ -153,14 +152,13 @@ import { isFirebaseConfigured } from "../../lib/firebase";
       const nextUrl = new URLSearchParams(window.location.search).get("next") || "/";
 
       async function renderStudentList() {
-        await syncLocalStudentsToRemote();
         const { users, remoteError } = await getUsers();
         const students = users.filter((user) => user.role === "murid");
         if (studentCount) studentCount.textContent = `${students.length} murid`;
         if (!studentList) return;
 
         if (!students.length) {
-          studentList.innerHTML = `<div class="rounded-2xl bg-[#f7f4ee] px-4 py-4 text-sm font-bold text-stone-600">${remoteError ? "Belum ada akun murid di browser ini. Firebase belum siap." : "Belum ada akun murid."}</div>`;
+          studentList.innerHTML = `<div class="rounded-2xl bg-[#f7f4ee] px-4 py-4 text-sm font-bold text-stone-600">${remoteError ? "Firebase belum siap. Akun lokal tidak dipakai lagi." : "Belum ada akun murid."}</div>`;
           return;
         }
 
@@ -208,7 +206,7 @@ import { isFirebaseConfigured } from "../../lib/firebase";
         const nim = normalizeNim(loginNim?.value);
         const { user, remoteError } = await findAccountByNim(nim);
         if (!user) {
-          if (loginMessage) loginMessage.textContent = remoteError ? "NIM belum terdaftar. Firebase belum siap, hanya akun lokal yang bisa login." : "NIM belum terdaftar.";
+          if (loginMessage) loginMessage.textContent = remoteError ? "NIM belum terdaftar. Firebase belum siap." : "NIM belum terdaftar.";
           return;
         }
 
@@ -237,9 +235,7 @@ import { isFirebaseConfigured } from "../../lib/firebase";
         if (studentMessage) {
           studentMessage.textContent = result.remoteSaved
             ? `Akun ${name} dibuat. Murid bisa login dari perangkat lain pakai NIM ${result.account.nim}.`
-            : result.remoteError
-              ? `Akun ${name} dibuat lokal, tapi gagal masuk Firebase: ${result.remoteError.message}`
-              : `Akun ${name} dibuat di browser ini. Aktifkan Firebase agar bisa login dari perangkat lain.`;
+            : result.error?.message || result.remoteError?.message || "Akun gagal dibuat.";
         }
         if (studentNim) studentNim.value = "";
         if (studentName) studentName.value = "";

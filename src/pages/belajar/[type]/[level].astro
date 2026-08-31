@@ -315,42 +315,50 @@ const activeName = material.label;
       }
 
       async function loadRemoteProgress() {
-        const db = await getFirebaseDb();
-        if (!db) return;
+        try {
+          const db = await getFirebaseDb();
+          if (!db) return;
 
-        const { collection, getDocs, query, where } = await import("firebase/firestore");
-        const snapshot = await getDocs(query(collection(db, "user_progress"), where("userNim", "==", storageOwner)));
+          const { collection, getDocs, query, where } = await import("firebase/firestore");
+          const snapshot = await getDocs(query(collection(db, "user_progress"), where("userNim", "==", storageOwner)));
 
-        let changed = false;
-        snapshot.docs.forEach((docSnapshot) => {
-          const row = docSnapshot.data();
-          if (row.materialType !== type || row.level !== level) return;
-          if (row.status === "hafal") {
-            memorizedIds.add(row.itemId);
-            changed = true;
-          }
-          if (row.status === "belum") {
-            memorizedIds.delete(row.itemId);
-            changed = true;
-          }
-        });
-        if (changed) saveProgress();
+          let changed = false;
+          snapshot.docs.forEach((docSnapshot) => {
+            const row = docSnapshot.data();
+            if (row.materialType !== type || row.level !== level) return;
+            if (row.status === "hafal") {
+              memorizedIds.add(row.itemId);
+              changed = true;
+            }
+            if (row.status === "belum") {
+              memorizedIds.delete(row.itemId);
+              changed = true;
+            }
+          });
+          if (changed) saveProgress();
+        } catch {
+          // Materi tetap harus tampil walaupun Firebase progress belum siap.
+        }
       }
 
       async function saveRemoteProgress(item, isMemorized) {
-        const db = await getFirebaseDb();
-        if (!db) return;
+        try {
+          const db = await getFirebaseDb();
+          if (!db) return;
 
-        const { doc, serverTimestamp, setDoc } = await import("firebase/firestore");
-        await setDoc(doc(db, "user_progress", firebaseDocId(`${storageOwner}__${item.id}`)), {
-          userNim: storageOwner,
-          itemId: item.id,
-          materialType: item.type,
-          level: item.level,
-          chapter: item.chapter,
-          status: isMemorized ? "hafal" : "belum",
-          updatedAt: serverTimestamp(),
-        });
+          const { doc, serverTimestamp, setDoc } = await import("firebase/firestore");
+          await setDoc(doc(db, "user_progress", firebaseDocId(`${storageOwner}__${item.id}`)), {
+            userNim: storageOwner,
+            itemId: item.id,
+            materialType: item.type,
+            level: item.level,
+            chapter: item.chapter,
+            status: isMemorized ? "hafal" : "belum",
+            updatedAt: serverTimestamp(),
+          });
+        } catch {
+          // Simpan lokal tetap menjaga tombol hafal responsif saat Firebase gagal.
+        }
       }
 
       try {
