@@ -76,9 +76,9 @@ const { active = "" } = Astro.props;
     <slot />
   </main>
   <nav class="fixed inset-x-3 bottom-3 z-30 grid grid-cols-4 gap-2 rounded-3xl border border-black/10 bg-[#fffaf1]/95 p-2 shadow-2xl backdrop-blur-xl sm:hidden print:hidden">
-    <a href="/" class="rounded-2xl px-2 py-2 text-center text-xs font-black text-slate-700">Home</a>
-    <a href="/belajar/kanji/n5" class="rounded-2xl bg-slate-950 px-2 py-2 text-center text-xs font-black text-white">Kanji</a>
-    <a href="/latihan/cetak?type=kanji&level=n5" class="rounded-2xl px-2 py-2 text-center text-xs font-black text-slate-700">Ujian</a>
-    <a href="/games" class="rounded-2xl px-2 py-2 text-center text-xs font-black text-slate-700">Games</a>
+    <a href="/" class:list={["rounded-2xl px-2 py-2 text-center text-xs font-black", active === "" ? "bg-slate-950 text-white" : "text-slate-700"]}>Home</a>
+    <a href="/belajar/kanji/n5" class:list={["rounded-2xl px-2 py-2 text-center text-xs font-black", active === "Kanji" ? "bg-slate-950 text-white" : "text-slate-700"]}>Kanji</a>
+    <a href="/latihan/cetak?type=kanji&level=n5" class:list={["rounded-2xl px-2 py-2 text-center text-xs font-black", active === "Cetak Ulangan" ? "bg-slate-950 text-white" : "text-slate-700"]}>Ujian</a>
+    <a href="/games" class:list={["rounded-2xl px-2 py-2 text-center text-xs font-black", active === "Games" ? "bg-slate-950 text-white" : "text-slate-700"]}>Games</a>
   </nav>
 </div>

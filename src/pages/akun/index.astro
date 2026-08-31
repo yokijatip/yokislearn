@@ -1,37 +1,280 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import AppShell from "../../components/AppShell.astro";
-import { plannedTables } from "../../lib/supabase";
+import { isSupabaseConfigured } from "../../lib/supabase";
 ---
 
-<Layout title="Akun dan Supabase - YokisLearn">
+<Layout title="Akun - YokisLearn">
   <AppShell active="Akun">
-    <section class="border-b border-slate-200 bg-white">
-      <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <p class="text-sm font-black uppercase tracking-normal text-red-700">Supabase ready</p>
-        <h1 class="mt-2 text-3xl font-black text-slate-950 sm:text-4xl">Akun, nilai, dan progres</h1>
-        <p class="mt-3 max-w-2xl text-sm leading-7 text-slate-600">
-          Halaman ini menjadi tempat login, profil user, riwayat latihan, score games, dan progres hafalan setelah kredensial Supabase ditambahkan.
-        </p>
+    <section class="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 sm:py-10">
+      <div class="grid gap-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+        <section class="rounded-[1.75rem] border border-black/5 bg-white p-5 shadow-xl shadow-slate-900/5 sm:p-7">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs font-black uppercase tracking-wider text-red-600">Akun</p>
+              <h1 class="mt-1 text-3xl font-black leading-tight text-slate-950">Login NIM</h1>
+            </div>
+            <span id="authStatus" class="rounded-full bg-stone-100 px-3 py-1.5 text-xs font-black text-stone-600">Offline</span>
+          </div>
+
+          <form id="loginForm" class="mt-6 grid gap-3">
+            <label class="grid gap-2 text-sm font-black text-slate-800">
+              NIM
+              <input
+                id="loginNim"
+                class="h-12 rounded-2xl border border-stone-200 bg-[#fffaf1] px-4 text-base font-black text-slate-950 outline-none transition focus:border-slate-950"
+                name="nim"
+                autocomplete="username"
+                placeholder="Masukkan NIM"
+                required
+              />
+            </label>
+            <button class="h-12 rounded-2xl bg-slate-950 px-4 text-sm font-black text-white transition active:scale-[0.98]" type="submit">
+              Masuk
+            </button>
+            <p id="loginMessage" class="min-h-5 text-sm font-bold text-red-700"></p>
+          </form>
+
+          <div id="activeAccount" class="mt-6 hidden rounded-2xl bg-[#f7f4ee] p-4">
+            <div class="text-xs font-black uppercase tracking-wider text-stone-500">Sedang login</div>
+            <div id="activeName" class="mt-1 text-xl font-black text-slate-950"></div>
+            <div class="mt-2 flex flex-wrap gap-2 text-xs font-black">
+              <span id="activeNim" class="rounded-full bg-white px-3 py-1.5 text-slate-700"></span>
+              <span id="activeRole" class="rounded-full bg-slate-950 px-3 py-1.5 text-white"></span>
+            </div>
+            <button id="logoutButton" class="mt-4 h-11 w-full rounded-2xl border border-black/10 bg-white px-4 text-sm font-black text-slate-800 transition active:scale-[0.98]" type="button">
+              Keluar
+            </button>
+          </div>
+        </section>
+
+        <section id="teacherPanel" class="hidden rounded-[1.75rem] border border-black/5 bg-white p-5 shadow-xl shadow-slate-900/5 sm:p-7">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs font-black uppercase tracking-wider text-red-600">Guru</p>
+              <h2 class="mt-1 text-2xl font-black leading-tight text-slate-950">Buat akun murid</h2>
+            </div>
+            <span id="studentCount" class="rounded-full bg-slate-950 px-3 py-1.5 text-xs font-black text-white">0 murid</span>
+          </div>
+
+          <form id="studentForm" class="mt-6 grid gap-3 sm:grid-cols-[1fr_1.4fr_auto]">
+            <label class="grid gap-2 text-sm font-black text-slate-800">
+              NIM
+              <input
+                id="studentNim"
+                class="h-12 rounded-2xl border border-stone-200 bg-[#fffaf1] px-4 text-sm font-black text-slate-950 outline-none transition focus:border-slate-950"
+                name="nim"
+                placeholder="NIM murid"
+                required
+              />
+            </label>
+            <label class="grid gap-2 text-sm font-black text-slate-800">
+              Nama
+              <input
+                id="studentName"
+                class="h-12 rounded-2xl border border-stone-200 bg-[#fffaf1] px-4 text-sm font-black text-slate-950 outline-none transition focus:border-slate-950"
+                name="name"
+                placeholder="Nama murid"
+                required
+              />
+            </label>
+            <button class="mt-auto h-12 rounded-2xl bg-red-600 px-5 text-sm font-black text-white transition active:scale-[0.98]" type="submit">
+              Buat
+            </button>
+          </form>
+          <p id="studentMessage" class="mt-3 min-h-5 text-sm font-bold text-slate-600"></p>
+
+          <div id="studentList" class="mt-5 grid gap-2"></div>
+        </section>
+
+        <section class="rounded-[1.75rem] border border-black/5 bg-white p-5 shadow-xl shadow-slate-900/5 sm:p-7 lg:col-span-2">
+          <div class="grid gap-3 sm:grid-cols-3">
+            <div class="rounded-2xl bg-slate-950 p-5 text-white">
+              <div class="text-xs font-black uppercase text-white/60">Role</div>
+              <div id="roleCard" class="mt-2 text-2xl font-black">Belum login</div>
+            </div>
+            <div class="rounded-2xl bg-[#fffaf1] p-5">
+              <div class="text-xs font-black uppercase text-stone-500">Supabase</div>
+              <div class="mt-2 text-2xl font-black text-slate-950">{isSupabaseConfigured ? "Aktif" : "Belum"}</div>
+            </div>
+            <div class="rounded-2xl bg-[#fffaf1] p-5">
+              <div class="text-xs font-black uppercase text-stone-500">Akun demo</div>
+              <div class="mt-2 text-sm font-black leading-6 text-slate-800">GURU001 / DEV001</div>
+            </div>
+          </div>
+        </section>
       </div>
     </section>
 
-    <section class="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-2 lg:px-8">
-      <div class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-xl font-black text-slate-950">Environment</h2>
-        <p class="mt-3 text-sm leading-7 text-slate-600">Tambahkan variabel ini di `.env` saat project Supabase sudah dibuat.</p>
-        <pre class="mt-4 overflow-x-auto rounded-lg bg-slate-950 p-4 text-sm leading-6 text-slate-100"><code>PUBLIC_SUPABASE_URL=...
-PUBLIC_SUPABASE_ANON_KEY=...</code></pre>
-      </div>
+    <script>
+      const USERS_KEY = "yokislearn:accounts";
+      const SESSION_KEY = "yokislearn:session";
+      const seededUsers = [
+        { nim: "DEV001", name: "Developer", role: "developer", createdBy: "system" },
+        { nim: "GURU001", name: "Guru LPK Baraya", role: "guru", createdBy: "system" },
+      ];
 
-      <div class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-xl font-black text-slate-950">Tabel yang disiapkan</h2>
-        <div class="mt-4 grid gap-2">
-          {plannedTables.map((table) => (
-            <div class="rounded-lg bg-slate-100 px-3 py-2 text-sm font-black text-slate-800">{table}</div>
-          ))}
-        </div>
-      </div>
-    </section>
+      const loginForm = document.getElementById("loginForm");
+      const loginNim = document.getElementById("loginNim");
+      const loginMessage = document.getElementById("loginMessage");
+      const activeAccount = document.getElementById("activeAccount");
+      const activeName = document.getElementById("activeName");
+      const activeNim = document.getElementById("activeNim");
+      const activeRole = document.getElementById("activeRole");
+      const logoutButton = document.getElementById("logoutButton");
+      const teacherPanel = document.getElementById("teacherPanel");
+      const studentForm = document.getElementById("studentForm");
+      const studentNim = document.getElementById("studentNim");
+      const studentName = document.getElementById("studentName");
+      const studentMessage = document.getElementById("studentMessage");
+      const studentList = document.getElementById("studentList");
+      const studentCount = document.getElementById("studentCount");
+      const roleCard = document.getElementById("roleCard");
+      const authStatus = document.getElementById("authStatus");
+
+      function normalizeNim(value) {
+        return String(value || "").trim().toUpperCase();
+      }
+
+      function getUsers() {
+        let stored = [];
+        try {
+          stored = JSON.parse(localStorage.getItem(USERS_KEY) || "[]");
+        } catch {
+          stored = [];
+        }
+
+        const merged = [...seededUsers, ...stored];
+        const unique = new Map();
+        merged.forEach((user) => unique.set(normalizeNim(user.nim), { ...user, nim: normalizeNim(user.nim) }));
+        return [...unique.values()];
+      }
+
+      function saveUser(user) {
+        const users = getUsers();
+        const nim = normalizeNim(user.nim);
+        const nextUsers = users.filter((item) => item.nim !== nim && item.createdBy !== "system");
+        nextUsers.push({ ...user, nim });
+        localStorage.setItem(USERS_KEY, JSON.stringify(nextUsers));
+      }
+
+      function getSession() {
+        try {
+          return JSON.parse(localStorage.getItem(SESSION_KEY) || "null");
+        } catch {
+          return null;
+        }
+      }
+
+      function setSession(user) {
+        localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+      }
+
+      function clearSession() {
+        localStorage.removeItem(SESSION_KEY);
+      }
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function renderStudentList() {
+        const students = getUsers().filter((user) => user.role === "murid");
+        if (studentCount) studentCount.textContent = `${students.length} murid`;
+        if (!studentList) return;
+
+        if (!students.length) {
+          studentList.innerHTML = `<div class="rounded-2xl bg-[#f7f4ee] px-4 py-4 text-sm font-bold text-stone-600">Belum ada akun murid.</div>`;
+          return;
+        }
+
+        studentList.innerHTML = students.map((student) => `
+          <article class="flex items-center justify-between gap-3 rounded-2xl border border-stone-200 bg-[#fffaf1] px-4 py-3">
+            <div class="min-w-0">
+              <div class="truncate text-sm font-black text-slate-950">${escapeHtml(student.name)}</div>
+              <div class="text-xs font-bold text-stone-500">${escapeHtml(student.nim)}</div>
+            </div>
+            <span class="shrink-0 rounded-full bg-white px-3 py-1 text-xs font-black text-slate-700">murid</span>
+          </article>
+        `).join("");
+      }
+
+      function render() {
+        const session = getSession();
+        if (authStatus) {
+          authStatus.textContent = session ? "Login" : "Offline";
+          authStatus.className = session
+            ? "rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-black text-emerald-700"
+            : "rounded-full bg-stone-100 px-3 py-1.5 text-xs font-black text-stone-600";
+        }
+
+        if (!session) {
+          activeAccount?.classList.add("hidden");
+          teacherPanel?.classList.add("hidden");
+          if (roleCard) roleCard.textContent = "Belum login";
+          renderStudentList();
+          return;
+        }
+
+        activeAccount?.classList.remove("hidden");
+        if (activeName) activeName.textContent = session.name;
+        if (activeNim) activeNim.textContent = session.nim;
+        if (activeRole) activeRole.textContent = session.role;
+        if (roleCard) roleCard.textContent = session.role;
+
+        const canManageStudents = session.role === "guru" || session.role === "developer";
+        teacherPanel?.classList.toggle("hidden", !canManageStudents);
+        renderStudentList();
+      }
+
+      loginForm?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const nim = normalizeNim(loginNim?.value);
+        const user = getUsers().find((item) => item.nim === nim);
+        if (!user) {
+          if (loginMessage) loginMessage.textContent = "NIM belum terdaftar.";
+          return;
+        }
+
+        setSession(user);
+        if (loginMessage) loginMessage.textContent = "";
+        if (loginNim) loginNim.value = "";
+        render();
+      });
+
+      studentForm?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const session = getSession();
+        if (!session || (session.role !== "guru" && session.role !== "developer")) return;
+
+        const nim = normalizeNim(studentNim?.value);
+        const name = String(studentName?.value || "").trim();
+        if (!nim || !name) return;
+
+        const exists = getUsers().some((user) => user.nim === nim);
+        if (exists) {
+          if (studentMessage) studentMessage.textContent = "NIM sudah dipakai.";
+          return;
+        }
+
+        saveUser({ nim, name, role: "murid", createdBy: session.nim });
+        if (studentMessage) studentMessage.textContent = `Akun ${name} dibuat. Murid bisa login pakai NIM ${nim}.`;
+        if (studentNim) studentNim.value = "";
+        if (studentName) studentName.value = "";
+        render();
+      });
+
+      logoutButton?.addEventListener("click", () => {
+        clearSession();
+        render();
+      });
+
+      render();
+    </script>
   </AppShell>
 </Layout>

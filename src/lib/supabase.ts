@@ -13,6 +13,7 @@ export async function createSupabaseClient() {
 }
 
 export const plannedTables = [
+  "accounts",
   "profiles",
   "learning_items",
   "user_progress",

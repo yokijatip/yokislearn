@@ -22,110 +22,218 @@ const activeName = material.label;
 <Layout title={`${material.label} ${levelInfo.label} - YokisLearn`}>
   <AppShell active={activeName}>
     <section class="mx-auto w-full max-w-6xl overflow-x-clip px-3 py-5 sm:px-4 sm:py-8">
-      <div class="grid min-w-0 gap-4 lg:grid-cols-[220px_minmax(0,1fr)]">
-        <aside class="min-w-0 overflow-hidden h-fit rounded-[1.5rem] border border-black/5 bg-white/90 p-4 shadow-lg shadow-slate-900/5">
+      <div class="grid min-w-0 gap-6 lg:grid-cols-[220px_minmax(0,1fr)]">
+        <!-- Sidebar - ditaruh di bawah pada mobile menggunakan order-last, dan di kiri pada desktop dengan lg:order-first -->
+        <aside class="order-last lg:order-first min-w-0 overflow-hidden h-fit rounded-[2rem] border border-stone-200/80 bg-white/95 p-5 shadow-lg shadow-slate-900/5">
           <div class="flex items-center justify-between gap-3 lg:block">
             <div>
-              <div class="text-xs font-black uppercase text-red-600">{levelInfo.label}</div>
+              <div class="text-xs font-black uppercase text-red-600 tracking-wider">{levelInfo.label}</div>
               <h1 class="mt-1 text-2xl font-black text-slate-950">{material.label}</h1>
             </div>
-            <div class="rounded-2xl bg-slate-950 px-3 py-2 text-sm font-black text-white lg:mt-4">{items.length}</div>
+            <div class="rounded-2xl bg-slate-950 px-3 py-2 text-sm font-black text-white lg:mt-4 inline-block">{items.length} item</div>
           </div>
 
-          <div class="mt-4 grid grid-cols-2 gap-2">
+          <div class="mt-5 grid grid-cols-2 gap-2">
             {levels.map((target) => (
               <a href={`/belajar/${type}/${target.id}`} class:list={[
-                "rounded-xl px-3 py-2 text-center text-sm font-black",
-                target.id === level ? "bg-slate-950 text-white" : "bg-slate-100 text-slate-700",
+                "rounded-xl px-3 py-2.5 text-center text-sm font-black transition active:scale-95",
+                target.id === level ? "bg-slate-950 text-white shadow-sm" : "bg-stone-100 text-slate-700 hover:bg-stone-200/80 border border-black/5",
               ]}>
                 {target.label}
               </a>
             ))}
           </div>
 
-          <div class="mt-4 grid grid-cols-3 gap-2 lg:grid-cols-1">
+          <div class="mt-3 grid grid-cols-3 gap-2 lg:grid-cols-1">
             {materialTypes.map((target) => (
               <a href={`/belajar/${target.id}/${level}`} class:list={[
-                "rounded-xl px-3 py-2 text-sm font-black",
-                target.id === type ? "bg-red-600 text-white" : "bg-slate-100 text-slate-700 hover:bg-slate-200",
+                "rounded-xl px-3 py-2.5 text-center text-sm font-black transition active:scale-95",
+                target.id === type ? "bg-[#a64332] text-white shadow-sm" : "bg-stone-100 text-slate-700 hover:bg-stone-200/80 border border-black/5",
               ]}>
                 {target.label}
               </a>
             ))}
           </div>
 
-          <a href={`/latihan/cetak?type=${type}&level=${level}`} class="mt-4 block rounded-2xl bg-slate-950 px-3 py-3 text-center text-sm font-black text-white hover:bg-red-600">
+          <a href={`/latihan/cetak?type=${type}&level=${level}`} class="mt-5 block rounded-2xl bg-slate-950 px-3 py-3.5 text-center text-sm font-black text-white hover:bg-[#a64332] transition active:scale-95">
             Cetak Ulangan
           </a>
         </aside>
 
+        <!-- Main Learning Panel -->
         <div class="min-w-0 space-y-4">
-          <div class="rounded-[1.5rem] border border-black/5 bg-white/90 p-3 shadow-lg shadow-slate-900/5 sm:p-4">
-            <div class="grid min-w-0 gap-3 xl:grid-cols-[360px_minmax(0,1fr)]">
-              <div class="grid w-full min-w-0 grid-cols-3 gap-2 text-center">
-                <button class="mode-btn rounded-xl bg-slate-950 px-3 py-2 text-sm font-black text-white" data-mode="flashcard">Flashcard</button>
-                <button class="mode-btn rounded-xl bg-slate-100 px-3 py-2 text-sm font-black text-slate-700" data-mode="list">Daftar</button>
-                <button class="mode-btn rounded-xl bg-slate-100 px-3 py-2 text-sm font-black text-slate-700" data-mode="quiz">Kuis</button>
-              </div>
-              <div class="grid min-w-0 gap-2 sm:grid-cols-[44px_minmax(0,1fr)_44px]">
-                <button id="prevChapter" class="grid size-11 place-items-center rounded-xl bg-slate-100 text-lg font-black text-slate-700" type="button" aria-label="Bab sebelumnya">‹</button>
-                <label class="min-w-0">
-                  <span class="sr-only">Pilih {type === "kanji" ? "grup" : "bab"}</span>
-                  <select id="chapterSelect" class="h-11 w-full rounded-xl border-0 bg-slate-100 px-4 text-sm font-black text-slate-800 outline-none ring-0">
-                    <option value="all">Semua {type === "kanji" ? "Grup" : "Bab"}</option>
-                    {chapters.map((chapter) => (
-                      <option value={chapter}>{type === "kanji" ? "Grup" : "Bab"} {chapter}</option>
-                    ))}
-                  </select>
-                </label>
-                <button id="nextChapter" class="grid size-11 place-items-center rounded-xl bg-slate-100 text-lg font-black text-slate-700" type="button" aria-label="Bab berikutnya">›</button>
-              </div>
-            </div>
-            <div id="chapterSummary" class="mt-3 rounded-2xl bg-[#fffaf1] px-4 py-3 text-sm font-black text-slate-600"></div>
+          
+          <!-- Tab-style Horizontal Bab/Grup Selector -->
+          <div class="flex items-center gap-2 overflow-x-auto scrollbar-none pb-2" id="chapterTabs">
+            <button class="chapter-tab shrink-0 rounded-full px-5 py-2.5 text-sm font-black transition-all bg-slate-950 text-white shadow-sm cursor-pointer" data-chapter="all">Semua</button>
+            {chapters.map((chapter) => (
+              <button class="chapter-tab shrink-0 rounded-full px-5 py-2.5 text-sm font-black transition-all bg-white text-slate-700 hover:bg-slate-100 border border-black/5 cursor-pointer" data-chapter={chapter}>
+                {type === "kanji" ? "Grup" : "Bab"} {chapter}
+              </button>
+            ))}
           </div>
 
-          <section id="flashcardPanel" class="min-w-0 rounded-[1.5rem] border border-black/5 bg-white p-3 shadow-lg shadow-slate-900/5 sm:p-4">
-            <div class="mb-4 flex items-center justify-between gap-3">
-              <div>
-                <div id="cardMeta" class="text-xs font-black uppercase text-slate-500">Flashcard</div>
-                <div id="cardCount" class="text-sm font-bold text-slate-600"></div>
+          <!-- Mode Switcher Tabs (Kartu, Kuis, Daftar) -->
+          <div class="grid grid-cols-3 gap-1 rounded-2xl bg-[#ede8e0]/60 p-1 border border-stone-200/30">
+            <button class="mode-btn flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-black transition-all bg-white text-slate-950 shadow-sm cursor-pointer flex-1" data-mode="flashcard">
+              <svg class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="16" rx="3" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h10M7 16h6" />
+              </svg>
+              <span>Kartu</span>
+            </button>
+            <button class="mode-btn flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-black transition-all text-stone-700 hover:bg-white/50 cursor-pointer flex-1" data-mode="quiz">
+              <svg class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.5 21.5l4.5-.838A9.953 9.953 0 0012 22z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 17h.01" />
+              </svg>
+              <span>Kuis</span>
+            </button>
+            <button class="mode-btn flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-black transition-all text-stone-700 hover:bg-white/50 cursor-pointer flex-1" data-mode="list">
+              <svg class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <line x1="8" y1="6" x2="21" y2="6" stroke-linecap="round" stroke-linejoin="round" />
+                <line x1="8" y1="12" x2="21" y2="12" stroke-linecap="round" stroke-linejoin="round" />
+                <line x1="8" y1="18" x2="21" y2="18" stroke-linecap="round" stroke-linejoin="round" />
+                <line x1="3" y1="6" x2="3.01" y2="6" stroke-linecap="round" stroke-linejoin="round" />
+                <line x1="3" y1="12" x2="3.01" y2="12" stroke-linecap="round" stroke-linejoin="round" />
+                <line x1="3" y1="18" x2="3.01" y2="18" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>Daftar</span>
+            </button>
+          </div>
+
+          <!-- Hidden summary element to avoid runtime JavaScript errors -->
+          <div id="chapterSummary" class="hidden"></div>
+
+          <!-- PANEL 1: FLASHCARD (KARTU BELAJAR) -->
+          <section id="flashcardPanel" class="min-w-0 space-y-4">
+            <!-- Progress Bar and Counter Row -->
+            <div class="flex items-center justify-between gap-4 py-2 text-xs font-black text-slate-500">
+              <div class="flex items-center gap-1 min-w-[50px]">
+                <span id="progressIndex" class="text-slate-800">1</span>
+                <span>/</span>
+                <span id="progressTotal">40</span>
               </div>
-              <div class="flex gap-2">
-                <button id="prevCard" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-black">Prev</button>
-                <button id="nextCard" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-black">Next</button>
+              
+              <div class="relative flex-1 h-1.5 bg-stone-200/80 rounded-full">
+                <div id="progressBarFill" class="absolute left-0 top-0 h-full bg-stone-500 rounded-full transition-all duration-300" style="width: 2.5%"></div>
+                <div id="progressBarDot" class="absolute -top-[3px] size-3 bg-stone-600 border border-white rounded-full shadow-sm transition-all duration-300" style="left: calc(2.5% - 6px)"></div>
+              </div>
+
+              <div class="flex items-center gap-1 text-slate-800 min-w-[60px] justify-end">
+                <span id="hafalCount">0</span>
+                <span class="text-slate-500 font-bold">hafal</span>
               </div>
             </div>
-            <button id="flashcard" class="relative grid min-h-[360px] w-full max-w-full overflow-hidden rounded-[1.5rem] bg-slate-950 p-5 text-center text-white sm:min-h-[440px] sm:p-6">
-              <span class="absolute -right-10 -top-10 size-36 rounded-full bg-red-600/80"></span>
-              <span class="absolute bottom-4 left-5 font-serif text-8xl font-bold leading-none text-white/5">学</span>
-              <div>
-                <div id="cardPrompt" class="max-w-full break-all font-serif text-6xl font-bold leading-tight text-white sm:text-8xl"></div>
-                <div id="cardHint" class="mt-5 text-sm font-black uppercase text-red-300">Klik untuk lihat jawaban</div>
-                <div id="cardAnswer" class="mt-5 hidden">
-                  <div id="cardReading" class="break-all text-xl font-black text-red-300 sm:text-2xl"></div>
-                  <div id="cardMeaning" class="mt-2 break-words text-xl font-black text-white sm:text-2xl"></div>
-                  <div id="cardExample" class="mt-4 break-words text-sm leading-7 text-slate-300"></div>
+
+            <!-- The Study Card -->
+            <button id="flashcard" class="relative isolate flex w-full min-w-0 flex-col justify-between overflow-hidden rounded-[1.75rem] border border-stone-200/80 bg-[#faf6ee] p-5 text-left shadow-lg transition-all active:scale-[0.99] sm:min-h-[380px] sm:p-6" type="button">
+              <!-- Card background kanji graphic (watermark) -->
+              <span class="pointer-events-none absolute bottom-4 left-5 z-0 select-none font-serif text-8xl font-bold leading-none text-stone-300/15">学</span>
+              
+              <!-- Card Header inside Card -->
+              <div class="relative z-10 w-full text-left">
+                <span id="cardMeta" class="text-xs font-black uppercase tracking-wider text-stone-500/80">BAB 1</span>
+              </div>
+
+              <!-- Card Main Body -->
+              <div class="relative z-10 my-auto flex w-full min-w-0 flex-col items-center justify-center py-6">
+                <!-- Japanese Prompt (Hiragana/Kanji) -->
+                <div id="cardPrompt" class="max-w-full break-all text-center font-serif text-[clamp(3rem,14vw,6.5rem)] font-bold leading-tight tracking-normal text-slate-900"></div>
+                
+                <!-- Meaning and Answer part -->
+                <div id="cardAnswer" class="w-full flex flex-col items-center mt-4">
+                  <!-- Subtitle/Translation (Meaning) -->
+                  <div id="cardMeaning" class="mt-1 max-w-full break-words text-center text-xl font-extrabold text-slate-800 sm:text-2xl"></div>
+                  
+                  <!-- Reading (if exists) -->
+                  <div id="cardReading" class="mt-2 max-w-full break-all text-center text-sm font-black text-red-700/90"></div>
+                  
+                  <!-- Divider -->
+                  <div class="w-full border-t border-dashed border-stone-300/60 my-5"></div>
+                  
+                  <!-- Example Sentence -->
+                  <div id="cardExample" class="max-w-lg break-words text-center text-sm font-medium leading-relaxed text-stone-600"></div>
+                </div>
+
+                <!-- Card Hint when hidden -->
+                <div id="cardHint" class="text-xs font-black uppercase tracking-wider text-stone-400 mt-6 bg-stone-100/80 px-3 py-1.5 rounded-full border border-stone-200/50">
+                  Klik untuk lihat jawaban
                 </div>
               </div>
             </button>
+
+            <!-- "Belum hafal" and "Sudah hafal" Buttons Row -->
+            <div class="grid grid-cols-2 gap-3">
+              <button id="btnBelumHafal" class="flex items-center justify-center gap-2 rounded-2xl bg-[#ede8e0] hover:bg-[#e4dec2]/80 border border-stone-300/40 py-3.5 text-sm font-black text-stone-700 transition active:scale-95 flex-1 cursor-pointer" type="button">
+                <svg class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                </svg>
+                <span>Belum hafal</span>
+              </button>
+
+              <button id="btnSudahHafal" class="flex items-center justify-center gap-2 rounded-2xl bg-[#a64332] hover:bg-[#933b2b] text-white py-3.5 text-sm font-black transition shadow-md shadow-[#a64332]/10 active:scale-95 flex-1 cursor-pointer" type="button">
+                <svg class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9" />
+                </svg>
+                <span>Sudah hafal</span>
+              </button>
+            </div>
+
+            <!-- Navigation toolbar below -->
+            <div class="grid grid-cols-3 items-center gap-2 py-2 text-sm font-bold text-stone-600">
+              <button id="prevCard" class="flex items-center justify-start gap-1 rounded-2xl px-2 py-2 transition-all hover:bg-white/70 hover:text-slate-950 active:scale-95" type="button">
+                <span>← Sebelumnya</span>
+              </button>
+              
+              <button id="btnShuffle" class="flex items-center justify-center gap-2 rounded-2xl px-2 py-2 font-bold text-stone-600 transition-all hover:bg-white/70 hover:text-slate-950 active:scale-95" type="button">
+                <svg class="size-4 shrink-0 text-orange-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 4l11.733 11.733M4 20L15.733 8.267M20 4h-5.5M20 4v5.5M20 20h-5.5M20 20v-5.5" />
+                </svg>
+                <span>Acak</span>
+              </button>
+
+              <button id="nextCard" class="flex items-center justify-end gap-1 rounded-2xl px-2 py-2 transition-all hover:bg-white/70 hover:text-slate-950 active:scale-95" type="button">
+                <span>Berikutnya →</span>
+              </button>
+            </div>
+
+            <!-- Progress automatic saving & footer -->
+            <div class="mt-6 border-t border-stone-200/60 pt-4 text-center">
+              <div class="text-[11px] font-medium text-stone-500">Progres disimpan otomatis di perangkat ini</div>
+              <div class="mt-4 text-[11px] text-stone-400 font-medium">
+                © 2026 <span class="font-bold text-stone-600">Yoki Jati Perkasa</span>
+              </div>
+              <div class="mt-1.5 flex items-center justify-center gap-3 text-[10px] text-stone-400 font-medium">
+                <a href="https://yokijp.com" target="_blank" class="hover:text-stone-600 transition">Website</a>
+                <span>·</span>
+                <a href="https://instagram.com/yokijp_" target="_blank" class="hover:text-stone-600 transition">Instagram @yokijp_</a>
+                <span>·</span>
+                <a href="https://tiktok.com/@yokijp_" target="_blank" class="hover:text-stone-600 transition">TikTok @yokijp_</a>
+              </div>
+            </div>
           </section>
 
-          <section id="listPanel" class="hidden min-w-0 rounded-[1.5rem] border border-black/5 bg-white p-4 shadow-lg shadow-slate-900/5">
-            <input id="searchInput" type="search" placeholder="Cari materi..." class="mb-4 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm font-bold outline-none focus:border-slate-950" />
-            <div id="itemList" class="grid gap-2"></div>
+          <!-- PANEL 2: LIST (DAFTAR MATERI) -->
+          <section id="listPanel" class="hidden min-w-0 rounded-[2rem] border border-stone-200 bg-white p-5 shadow-lg shadow-slate-900/5">
+            <input id="searchInput" type="search" placeholder="Cari materi..." class="mb-4 w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm font-bold outline-none focus:border-stone-400 focus:bg-stone-50/50 transition-all" />
+            <div id="itemList" class="grid gap-3"></div>
           </section>
 
-          <section id="quizPanel" class="hidden min-w-0 rounded-[1.5rem] border border-black/5 bg-white p-4 shadow-lg shadow-slate-900/5">
+          <!-- PANEL 3: QUIZ (KUIS CEPAT) -->
+          <section id="quizPanel" class="hidden min-w-0 rounded-[2rem] border border-stone-200 bg-white p-5 shadow-lg shadow-slate-900/5">
             <div class="mb-4 flex items-center justify-between gap-3">
-              <div id="quizMeta" class="text-sm font-black uppercase text-slate-500">Kuis Cepat</div>
-              <div id="quizScore" class="rounded-xl bg-slate-950 px-3 py-2 text-sm font-black text-white">0 benar</div>
+              <div id="quizMeta" class="text-xs font-black uppercase text-slate-500 tracking-wider">Kuis Cepat</div>
+              <div id="quizScore" class="rounded-xl bg-slate-950 px-3 py-1.5 text-xs font-black text-white">0 benar</div>
             </div>
             <div class="rounded-[1.5rem] bg-slate-950 p-6 text-center">
-              <div id="quizPrompt" class="break-all font-serif text-6xl font-bold leading-tight text-white sm:text-7xl"></div>
+              <div id="quizPrompt" class="break-all font-serif text-5xl font-bold leading-tight text-white sm:text-6xl"></div>
             </div>
             <div id="quizOptions" class="mt-4 grid gap-3 sm:grid-cols-2"></div>
-            <button id="nextQuiz" class="mt-4 hidden rounded-xl bg-red-600 px-4 py-3 text-sm font-black text-white">Soal Berikut</button>
+            <button id="nextQuiz" class="mt-4 hidden w-full rounded-xl bg-red-600 px-4 py-3 text-sm font-black text-white hover:bg-red-700 transition active:scale-95 cursor-pointer">Soal Berikut</button>
           </section>
+
         </div>
       </div>
     </section>
@@ -134,24 +242,45 @@ const activeName = material.label;
       const allItems = items;
       let chapter = "all";
       let mode = "flashcard";
+      let isShuffled = false;
       let deck = allItems.slice();
       let cardIndex = 0;
       let revealed = false;
       let score = 0;
       let currentQuiz = null;
 
+      // LocalStorage Key for progress tracking
+      const activeSession = JSON.parse(localStorage.getItem("yokislearn:session") || "null");
+      const storageOwner = activeSession?.nim || "guest";
+      const storageKey = `yokislearn:memorized:${storageOwner}:${type}:${level}`;
+      let memorizedIds = new Set();
+      try {
+        const stored = localStorage.getItem(storageKey);
+        if (stored) {
+          memorizedIds = new Set(JSON.parse(stored));
+        }
+      } catch (e) {
+        console.error("Error loading progress", e);
+      }
+
+      function saveProgress() {
+        try {
+          localStorage.setItem(storageKey, JSON.stringify([...memorizedIds]));
+        } catch (e) {
+          console.error("Error saving progress", e);
+        }
+      }
+
+      // UI Elements
       const modeButtons = [...document.querySelectorAll(".mode-btn")];
-      const chapterSelect = document.getElementById("chapterSelect");
-      const prevChapter = document.getElementById("prevChapter");
-      const nextChapter = document.getElementById("nextChapter");
-      const chapterSummary = document.getElementById("chapterSummary");
+      const chapterTabs = [...document.querySelectorAll(".chapter-tab")];
       const panels = {
         flashcard: document.getElementById("flashcardPanel"),
         list: document.getElementById("listPanel"),
         quiz: document.getElementById("quizPanel"),
       };
+      
       const cardMeta = document.getElementById("cardMeta");
-      const cardCount = document.getElementById("cardCount");
       const cardPrompt = document.getElementById("cardPrompt");
       const cardHint = document.getElementById("cardHint");
       const cardAnswer = document.getElementById("cardAnswer");
@@ -166,42 +295,91 @@ const activeName = material.label;
       const quizScore = document.getElementById("quizScore");
       const nextQuiz = document.getElementById("nextQuiz");
 
+      const progressIndex = document.getElementById("progressIndex");
+      const progressTotal = document.getElementById("progressTotal");
+      const progressBarFill = document.getElementById("progressBarFill");
+      const progressBarDot = document.getElementById("progressBarDot");
+      const hafalCount = document.getElementById("hafalCount");
+      const btnBelumHafal = document.getElementById("btnBelumHafal");
+      const btnSudahHafal = document.getElementById("btnSudahHafal");
+      const btnShuffle = document.getElementById("btnShuffle");
+
+      // Hidden summary element reference
+      const chapterSummary = document.getElementById("chapterSummary") || { textContent: "" };
+
       function shuffle(values) {
         return values.map((item) => ({ item, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(({ item }) => item);
       }
 
       function syncDeck() {
-        deck = chapter === "all" ? allItems.slice() : allItems.filter((item) => String(item.chapter) === chapter);
+        const filteredItems = chapter === "all" ? allItems.slice() : allItems.filter((item) => String(item.chapter) === chapter);
+        
+        if (isShuffled) {
+          deck = shuffle(filteredItems);
+        } else {
+          deck = filteredItems;
+        }
+
         cardIndex = Math.min(cardIndex, Math.max(deck.length - 1, 0));
         revealed = false;
-        renderChapterSummary();
+        
+        renderChapterTabs();
+        updateHafalCount();
         renderActiveMode();
       }
 
-      function renderChapterSummary() {
-        const label = type === "kanji" ? "grup" : "bab";
-        const chapterText = chapter === "all" ? `Semua ${label}` : `${label.charAt(0).toUpperCase() + label.slice(1)} ${chapter}`;
-        chapterSummary.textContent = `${chapterText} · ${deck.length} item`;
+      function renderChapterTabs() {
+        chapterTabs.forEach((tab) => {
+          const isActive = tab.dataset.chapter === chapter;
+          if (isActive) {
+            tab.className = "chapter-tab shrink-0 rounded-full px-5 py-2.5 text-sm font-black transition-all bg-slate-950 text-white shadow-sm cursor-pointer";
+            tab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+          } else {
+            tab.className = "chapter-tab shrink-0 rounded-full px-5 py-2.5 text-sm font-black transition-all bg-white text-slate-700 hover:bg-slate-100 border border-black/5 cursor-pointer";
+          }
+        });
       }
 
-      function stepChapter(direction) {
-        const values = ["all", ...[...new Set(allItems.map((item) => String(item.chapter)))].sort((a, b) => Number(a) - Number(b))];
-        const currentIndex = Math.max(values.indexOf(chapter), 0);
-        const nextIndex = (currentIndex + direction + values.length) % values.length;
-        chapter = values[nextIndex];
-        chapterSelect.value = chapter;
-        syncDeck();
+      function updateHafalCount() {
+        const currentDeckHafalCount = deck.filter((item) => memorizedIds.has(item.id)).length;
+        if (hafalCount) hafalCount.textContent = currentDeckHafalCount;
+      }
+
+      function updateHafalButtonsState() {
+        if (!deck.length) return;
+        const currentItem = deck[cardIndex];
+        const isMemorized = memorizedIds.has(currentItem.id);
+        
+        if (isMemorized) {
+          if (btnSudahHafal) {
+            btnSudahHafal.className = "flex items-center justify-center gap-2 rounded-2xl bg-[#a64332] text-white py-3.5 text-sm font-black transition shadow-md shadow-[#a64332]/20 active:scale-95 flex-1 cursor-pointer";
+          }
+          if (btnBelumHafal) {
+            btnBelumHafal.className = "flex items-center justify-center gap-2 rounded-2xl bg-[#ede8e0]/60 hover:bg-[#ede8e0] border border-stone-300/20 py-3.5 text-sm font-black text-stone-400 transition active:scale-95 flex-1 cursor-pointer";
+          }
+        } else {
+          if (btnSudahHafal) {
+            btnSudahHafal.className = "flex items-center justify-center gap-2 rounded-2xl bg-[#a64332]/40 hover:bg-[#a64332]/60 text-white/90 py-3.5 text-sm font-black transition active:scale-95 flex-1 cursor-pointer";
+          }
+          if (btnBelumHafal) {
+            btnBelumHafal.className = "flex items-center justify-center gap-2 rounded-2xl bg-[#ede8e0] hover:bg-[#e4dec2]/80 border border-stone-300/40 py-3.5 text-sm font-black text-stone-700 transition active:scale-95 flex-1 cursor-pointer";
+          }
+        }
       }
 
       function setMode(nextMode) {
         mode = nextMode;
         modeButtons.forEach((button) => {
           const active = button.dataset.mode === mode;
-          button.className = active
-            ? "mode-btn rounded-xl bg-slate-950 px-3 py-2 text-sm font-black text-white"
-            : "mode-btn rounded-xl bg-slate-100 px-3 py-2 text-sm font-black text-slate-700";
+          if (active) {
+            button.className = "mode-btn flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-black transition-all bg-white text-slate-950 shadow-sm flex-1 cursor-pointer";
+          } else {
+            button.className = "mode-btn flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-black transition-all text-stone-700 hover:bg-white/50 flex-1 cursor-pointer";
+          }
         });
-        Object.entries(panels).forEach(([key, panel]) => panel.classList.toggle("hidden", key !== mode));
+        Object.entries(panels).forEach(([key, panel]) => {
+          if (panel) panel.classList.toggle("hidden", key !== mode);
+        });
         renderActiveMode();
       }
 
@@ -213,91 +391,186 @@ const activeName = material.label;
 
       function renderCard() {
         if (!deck.length) {
-          cardPrompt.textContent = "-";
-          cardMeta.textContent = "Belum ada data";
+          if (cardPrompt) cardPrompt.textContent = "-";
+          if (cardMeta) cardMeta.textContent = "Belum ada data";
+          if (progressIndex) progressIndex.textContent = "0";
+          if (progressTotal) progressTotal.textContent = "0";
+          if (progressBarFill) progressBarFill.style.width = "0%";
+          if (progressBarDot) progressBarDot.style.left = "calc(0% - 6px)";
           return;
         }
         const item = deck[cardIndex];
-        cardMeta.textContent = type === "kanji" ? `Kanji ${level.toUpperCase()}` : `${item.type} Bab ${item.chapter}`;
-        cardCount.textContent = `${cardIndex + 1} / ${deck.length}`;
-        cardPrompt.textContent = item.prompt;
-        cardReading.textContent = item.reading || "";
-        cardMeaning.textContent = item.meaning;
-        cardExample.textContent = item.example || item.note || "";
-        cardAnswer.classList.toggle("hidden", !revealed);
-        cardHint.textContent = revealed ? "Klik untuk sembunyikan jawaban" : "Klik untuk lihat jawaban";
+        if (cardMeta) cardMeta.textContent = type === "kanji" ? `Kanji ${level.toUpperCase()} - Grup ${item.chapter}` : `${item.type.toUpperCase()} Bab ${item.chapter}`;
+        
+        if (progressIndex) progressIndex.textContent = cardIndex + 1;
+        if (progressTotal) progressTotal.textContent = deck.length;
+        if (progressBarFill && progressBarDot) {
+          const percentage = deck.length ? ((cardIndex + 1) / deck.length) * 100 : 0;
+          progressBarFill.style.width = `${percentage}%`;
+          progressBarDot.style.left = `calc(${percentage}% - 6px)`;
+        }
+
+        if (cardPrompt) cardPrompt.textContent = item.prompt;
+        if (cardReading) cardReading.textContent = item.reading || "";
+        if (cardMeaning) cardMeaning.textContent = item.meaning;
+        
+        let exampleText = item.example || "";
+        if (!exampleText && item.note) {
+          exampleText = item.note;
+        }
+        if (cardExample) cardExample.textContent = exampleText;
+
+        if (cardAnswer) cardAnswer.classList.toggle("hidden", !revealed);
+        if (cardHint) {
+          cardHint.classList.toggle("hidden", revealed);
+          cardHint.textContent = revealed ? "Klik untuk sembunyikan jawaban" : "Klik untuk lihat jawaban";
+        }
+
+        updateHafalButtonsState();
       }
 
       function renderList() {
-        const query = searchInput.value.trim().toLowerCase();
+        const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
         const filtered = deck.filter((item) => {
           return !query || [item.prompt, item.reading, item.meaning, item.example, item.note].filter(Boolean).join(" ").toLowerCase().includes(query);
         });
-        itemList.innerHTML = filtered.map((item) => `
-          <article class="rounded-2xl border border-black/5 bg-[#fffaf1] p-4">
-            <div class="flex items-start justify-between gap-3">
-              <div class="max-w-full break-all font-serif text-4xl font-bold leading-tight text-slate-950">${item.prompt}</div>
-              <div class="rounded-md bg-white px-2 py-1 text-xs font-black text-slate-500">${type === "kanji" ? level.toUpperCase() : `Bab ${item.chapter}`}</div>
-            </div>
-            <div class="mt-3 break-all text-sm font-black text-red-700">${item.reading || ""}</div>
-            <div class="mt-1 break-words text-base font-black text-slate-900">${item.meaning}</div>
-            <div class="mt-2 break-words text-sm leading-6 text-slate-600">${item.example || item.note || ""}</div>
-          </article>
-        `).join("");
+        if (itemList) {
+          itemList.innerHTML = filtered.map((item) => `
+            <article class="rounded-2xl border border-stone-200 bg-[#faf6ee] p-5 shadow-sm">
+              <div class="flex items-start justify-between gap-3">
+                <div class="max-w-full break-all font-serif text-4xl font-bold leading-tight text-slate-950">${item.prompt}</div>
+                <div class="rounded-md bg-stone-100 border border-stone-200/50 px-2 py-1 text-xs font-black text-slate-500">${type === "kanji" ? level.toUpperCase() : `Bab ${item.chapter}`}</div>
+              </div>
+              <div class="mt-3 break-all text-sm font-black text-red-700">${item.reading || ""}</div>
+              <div class="mt-1 break-words text-base font-black text-slate-900">${item.meaning}</div>
+              <div class="mt-2 break-words text-sm leading-6 text-slate-600">${item.example || item.note || ""}</div>
+            </article>
+          `).join("");
+        }
       }
 
       function renderQuiz() {
         if (!deck.length) return;
         currentQuiz = shuffle(deck)[0];
         const options = shuffle([currentQuiz, ...shuffle(allItems.filter((item) => item.id !== currentQuiz.id)).slice(0, 3)]);
-        quizMeta.textContent = type === "kanji" ? `Kanji ${level.toUpperCase()}` : `${currentQuiz.type} Bab ${currentQuiz.chapter}`;
-        quizPrompt.textContent = currentQuiz.prompt;
-        quizScore.textContent = `${score} benar`;
-        nextQuiz.classList.add("hidden");
-        quizOptions.innerHTML = options.map((item) => `
-          <button class="quiz-option rounded-xl border border-slate-200 bg-white px-4 py-4 text-left text-sm font-black text-slate-800 hover:border-slate-950" data-id="${item.id}">
-            ${item.meaning}
-          </button>
-        `).join("");
+        if (quizMeta) quizMeta.textContent = type === "kanji" ? `Kanji ${level.toUpperCase()}` : `${currentQuiz.type.toUpperCase()} Bab ${currentQuiz.chapter}`;
+        if (quizPrompt) quizPrompt.textContent = currentQuiz.prompt;
+        if (quizScore) quizScore.textContent = `${score} benar`;
+        if (nextQuiz) nextQuiz.classList.add("hidden");
+        if (quizOptions) {
+          quizOptions.innerHTML = options.map((item) => `
+            <button class="quiz-option rounded-xl border border-stone-200 bg-white px-4 py-4 text-left text-sm font-black text-slate-800 hover:border-slate-950 transition active:scale-[0.98] cursor-pointer w-full" data-id="${item.id}">
+              ${item.meaning}
+            </button>
+          `).join("");
+        }
       }
 
-      chapterSelect.addEventListener("change", () => {
-        chapter = chapterSelect.value;
+      function markMemorized(isMemorized) {
+        if (!deck.length) return;
+        const currentItem = deck[cardIndex];
+        if (isMemorized) {
+          memorizedIds.add(currentItem.id);
+        } else {
+          memorizedIds.delete(currentItem.id);
+        }
+        saveProgress();
+        updateHafalCount();
+        updateHafalButtonsState();
+
+        if (isMemorized && deck.length > 1) {
+          setTimeout(() => {
+            cardIndex = (cardIndex + 1) % deck.length;
+            revealed = false;
+            renderCard();
+          }, 250);
+        }
+      }
+
+      function toggleShuffle() {
+        isShuffled = !isShuffled;
+        if (isShuffled) {
+          if (btnShuffle) {
+            btnShuffle.className = "flex items-center justify-center gap-2 rounded-2xl border border-orange-200/50 bg-orange-50 px-2 py-2 font-extrabold text-orange-600 shadow-sm transition-all active:scale-95";
+          }
+        } else {
+          if (btnShuffle) {
+            btnShuffle.className = "flex items-center justify-center gap-2 rounded-2xl px-2 py-2 font-bold text-stone-600 transition-all hover:bg-white/70 hover:text-slate-950 active:scale-95";
+          }
+        }
         syncDeck();
+      }
+
+      // Add Event Listeners
+      chapterTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          chapter = tab.dataset.chapter;
+          cardIndex = 0;
+          syncDeck();
+        });
       });
-      prevChapter.addEventListener("click", () => stepChapter(-1));
-      nextChapter.addEventListener("click", () => stepChapter(1));
 
       modeButtons.forEach((button) => button.addEventListener("click", () => setMode(button.dataset.mode)));
-      document.getElementById("flashcard").addEventListener("click", () => {
-        revealed = !revealed;
-        renderCard();
-      });
-      document.getElementById("prevCard").addEventListener("click", () => {
-        cardIndex = (cardIndex - 1 + deck.length) % deck.length;
-        revealed = false;
-        renderCard();
-      });
-      document.getElementById("nextCard").addEventListener("click", () => {
-        cardIndex = (cardIndex + 1) % deck.length;
-        revealed = false;
-        renderCard();
-      });
-      searchInput.addEventListener("input", renderList);
-      quizOptions.addEventListener("click", (event) => {
-        const button = event.target.closest("button");
-        if (!button || button.disabled) return;
-        const correct = button.dataset.id === currentQuiz.id;
-        [...quizOptions.querySelectorAll("button")].forEach((item) => {
-          item.disabled = true;
-          if (item.dataset.id === currentQuiz.id) item.classList.add("border-emerald-600", "bg-emerald-50", "text-emerald-800");
+      
+      const flashcardEl = document.getElementById("flashcard");
+      if (flashcardEl) {
+        flashcardEl.addEventListener("click", () => {
+          revealed = !revealed;
+          renderCard();
         });
-        if (!correct) button.classList.add("border-red-700", "bg-red-50", "text-red-800");
-        if (correct) score += 1;
-        quizScore.textContent = `${score} benar`;
-        nextQuiz.classList.remove("hidden");
-      });
-      nextQuiz.addEventListener("click", renderQuiz);
+      }
+
+      const prevCardBtn = document.getElementById("prevCard");
+      if (prevCardBtn) {
+        prevCardBtn.addEventListener("click", () => {
+          if (deck.length) {
+            cardIndex = (cardIndex - 1 + deck.length) % deck.length;
+            revealed = false;
+            renderCard();
+          }
+        });
+      }
+
+      const nextCardBtn = document.getElementById("nextCard");
+      if (nextCardBtn) {
+        nextCardBtn.addEventListener("click", () => {
+          if (deck.length) {
+            cardIndex = (cardIndex + 1) % deck.length;
+            revealed = false;
+            renderCard();
+          }
+        });
+      }
+
+      if (btnBelumHafal) {
+        btnBelumHafal.addEventListener("click", () => markMemorized(false));
+      }
+      if (btnSudahHafal) {
+        btnSudahHafal.addEventListener("click", () => markMemorized(true));
+      }
+      if (btnShuffle) {
+        btnShuffle.addEventListener("click", toggleShuffle);
+      }
+
+      if (searchInput) searchInput.addEventListener("input", renderList);
+      
+      if (quizOptions) {
+        quizOptions.addEventListener("click", (event) => {
+          const button = event.target.closest("button");
+          if (!button || button.disabled) return;
+          const correct = button.dataset.id === currentQuiz.id;
+          [...quizOptions.querySelectorAll("button")].forEach((item) => {
+            item.disabled = true;
+            if (item.dataset.id === currentQuiz.id) item.classList.add("border-emerald-600", "bg-emerald-50", "text-emerald-800");
+          });
+          if (!correct) button.classList.add("border-red-700", "bg-red-50", "text-red-800");
+          if (correct) score += 1;
+          if (quizScore) quizScore.textContent = `${score} benar`;
+          if (nextQuiz) nextQuiz.classList.remove("hidden");
+        });
+      }
+      
+      if (nextQuiz) nextQuiz.addEventListener("click", renderQuiz);
 
       syncDeck();
     </script>
