@@ -237,7 +237,9 @@ import { isFirebaseConfigured } from "../../lib/firebase";
         if (studentMessage) {
           studentMessage.textContent = result.remoteSaved
             ? `Akun ${name} dibuat. Murid bisa login dari perangkat lain pakai NIM ${result.account.nim}.`
-            : `Akun ${name} dibuat di browser ini. Aktifkan Firebase agar bisa login dari perangkat lain.`;
+            : result.remoteError
+              ? `Akun ${name} dibuat lokal, tapi gagal masuk Firebase: ${result.remoteError.message}`
+              : `Akun ${name} dibuat di browser ini. Aktifkan Firebase agar bisa login dari perangkat lain.`;
         }
         if (studentNim) studentNim.value = "";
         if (studentName) studentName.value = "";

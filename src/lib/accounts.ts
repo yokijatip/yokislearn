@@ -112,6 +112,16 @@ export async function createStudentAccount(input: { nim: string; name: string; c
     return { account, remoteSaved: false, error: new Error("NIM sudah dipakai.") };
   }
 
+  if (!isFirebaseConfigured) {
+    saveLocalUser(account);
+    return {
+      account,
+      remoteSaved: false,
+      error: null,
+      remoteError: new Error("Firebase belum aktif di browser. Redeploy Netlify setelah mengisi env Firebase."),
+    };
+  }
+
   if (isFirebaseConfigured) {
     try {
       const db = await createFirebaseDb();
@@ -128,18 +138,19 @@ export async function createStudentAccount(input: { nim: string; name: string; c
         saveLocalUser(account);
         return { account, remoteSaved: true, error: null };
       }
-    } catch {
-      // Fallback below keeps local development usable.
+    } catch (error) {
+      saveLocalUser(account);
+      return { account, remoteSaved: false, error: null, remoteError: error as Error };
     }
   }
 
   saveLocalUser(account);
-  return { account, remoteSaved: false, error: null };
+  return { account, remoteSaved: false, error: null, remoteError: null };
 }
 
 export async function syncLocalStudentsToRemote() {
   if (!isFirebaseConfigured) {
-    return { synced: 0, error: null as Error | null };
+    return { synced: 0, error: new Error("Firebase belum aktif di browser.") };
   }
 
   try {

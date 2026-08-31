@@ -210,7 +210,9 @@ if (Astro.request.method === "POST") {
           setMessage(
             result.remoteSaved
               ? `Akun ${result.account.name} dibuat. Murid bisa login pakai NIM ${result.account.nim}.`
-              : `Akun ${result.account.name} dibuat di browser ini. Firebase perlu diaktifkan agar bisa dipakai dari perangkat lain.`,
+              : result.remoteError
+                ? `Akun ${result.account.name} dibuat lokal, tapi gagal masuk Firebase: ${result.remoteError.message}`
+                : `Akun ${result.account.name} dibuat di browser ini. Firebase perlu diaktifkan agar bisa dipakai dari perangkat lain.`,
             result.remoteSaved ? "success" : "neutral",
           );
           await renderStudents();
