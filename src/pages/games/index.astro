@@ -6,84 +6,542 @@ import { learningItems } from "../../data/learning";
 
 <Layout title="Games - YokisLearn">
   <AppShell active="Games">
-    <section class="border-b border-slate-200 bg-white">
-      <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <p class="text-sm font-black uppercase tracking-normal text-red-700">Games</p>
-        <h1 class="mt-2 text-3xl font-black text-slate-950 sm:text-4xl">Latihan cepat</h1>
-        <p class="mt-3 max-w-2xl text-sm leading-7 text-slate-600">Mode awal untuk menjawab arti item secara acak. Score masih lokal dan nanti bisa dikirim ke Supabase.</p>
-      </div>
-    </section>
-
-    <section class="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1fr_320px] lg:px-8">
-      <div class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-        <div class="flex items-center justify-between gap-4">
-          <div>
-            <div id="gameMeta" class="text-sm font-black uppercase tracking-normal text-slate-500">Ready</div>
-            <div id="gamePrompt" class="mt-4 font-serif text-7xl font-bold leading-none text-slate-950">始</div>
+    <section class="mx-auto w-full max-w-6xl overflow-x-clip px-3 py-5 sm:px-4 sm:py-8">
+      <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <section class="min-w-0 rounded-[1.75rem] border border-stone-200/80 bg-white p-4 shadow-lg shadow-slate-900/5 sm:p-6">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div class="min-w-0">
+              <p class="text-xs font-black uppercase tracking-wider text-red-600">Games</p>
+              <h1 class="mt-1 text-2xl font-black leading-tight text-slate-950 sm:text-3xl">Lobby latihan</h1>
+              <p id="playerLabel" class="mt-2 text-sm font-bold leading-6 text-stone-600">Masuk sebagai tamu</p>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-center">
+              <div class="rounded-2xl bg-slate-950 px-4 py-3 text-white">
+                <div id="totalScore" class="text-2xl font-black">0</div>
+                <div class="text-[10px] font-black uppercase text-white/60">total</div>
+              </div>
+              <div class="rounded-2xl bg-red-600 px-4 py-3 text-white">
+                <div id="bestScore" class="text-2xl font-black">0</div>
+                <div class="text-[10px] font-black uppercase text-white/70">best</div>
+              </div>
+            </div>
           </div>
-          <div class="rounded-lg bg-slate-950 px-4 py-3 text-center text-white">
-            <div id="score" class="text-3xl font-black">0</div>
-            <div class="text-xs font-bold uppercase tracking-normal text-slate-300">score</div>
-          </div>
-        </div>
-        <div id="options" class="mt-8 grid gap-3 sm:grid-cols-2"></div>
-        <button id="next" class="mt-5 hidden rounded-lg bg-red-700 px-5 py-3 text-sm font-black text-white">Soal berikut</button>
-      </div>
 
-      <aside class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 class="text-lg font-black text-slate-950">Roadmap games</h2>
-        <div class="mt-4 space-y-3 text-sm leading-6 text-slate-600">
-          <p><strong class="text-slate-950">Speed quiz:</strong> jawab sebanyak mungkin dalam batas waktu.</p>
-          <p><strong class="text-slate-950">Matching:</strong> cocokkan kanji/kotoba dengan arti.</p>
-          <p><strong class="text-slate-950">Boss review:</strong> ulangi item yang sering salah.</p>
-          <p><strong class="text-slate-950">Leaderboard:</strong> score per user via Supabase.</p>
-        </div>
-      </aside>
+          <div id="lobbyPanel" class="mt-6 grid gap-5">
+            <form id="roomForm" class="grid gap-3 rounded-[1.25rem] border border-stone-200 bg-[#faf6ee] p-4 sm:grid-cols-[1fr_130px_130px_120px_auto]">
+              <label class="grid gap-2 text-sm font-black text-slate-800">
+                Nama room
+                <input id="roomName" class="h-11 rounded-2xl border border-stone-200 bg-white px-4 text-sm font-black outline-none focus:border-slate-950" placeholder="Contoh: Latihan sore" required />
+              </label>
+              <label class="grid gap-2 text-sm font-black text-slate-800">
+                Materi
+                <select id="roomType" class="h-11 rounded-2xl border border-stone-200 bg-white px-3 text-sm font-black outline-none focus:border-slate-950">
+                  <option value="kanji">Kanji</option>
+                  <option value="kotoba">Kotoba</option>
+                </select>
+              </label>
+              <label class="grid gap-2 text-sm font-black text-slate-800">
+                Level
+                <select id="roomLevel" class="h-11 rounded-2xl border border-stone-200 bg-white px-3 text-sm font-black outline-none focus:border-slate-950">
+                  <option value="n5">N5</option>
+                  <option value="n4">N4</option>
+                </select>
+              </label>
+              <label class="grid gap-2 text-sm font-black text-slate-800">
+                Waktu
+                <select id="roomTime" class="h-11 rounded-2xl border border-stone-200 bg-white px-3 text-sm font-black outline-none focus:border-slate-950">
+                  <option value="60">60 detik</option>
+                  <option value="90">90 detik</option>
+                  <option value="120">120 detik</option>
+                </select>
+              </label>
+              <button class="mt-auto h-11 rounded-2xl bg-slate-950 px-5 text-sm font-black text-white active:scale-[0.98]" type="submit">Buat</button>
+            </form>
+
+            <div id="roomList" class="grid gap-3 sm:grid-cols-2"></div>
+          </div>
+
+          <div id="gamePanel" class="mt-6 hidden min-w-0">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <button id="backToLobby" class="rounded-2xl border border-black/10 bg-white px-4 py-2 text-sm font-black text-slate-700 active:scale-[0.98]" type="button">Lobby</button>
+              <div class="flex gap-2 text-center">
+                <div class="min-w-20 rounded-2xl bg-[#faf6ee] px-4 py-2">
+                  <div id="roundTimer" class="text-xl font-black text-slate-950">60</div>
+                  <div class="text-[10px] font-black uppercase text-stone-500">detik</div>
+                </div>
+                <div class="min-w-20 rounded-2xl bg-slate-950 px-4 py-2 text-white">
+                  <div id="roundScore" class="text-xl font-black">0</div>
+                  <div class="text-[10px] font-black uppercase text-white/60">score</div>
+                </div>
+                <div class="min-w-20 rounded-2xl bg-red-600 px-4 py-2 text-white">
+                  <div id="roundStreak" class="text-xl font-black">0</div>
+                  <div class="text-[10px] font-black uppercase text-white/70">streak</div>
+                </div>
+              </div>
+            </div>
+
+            <article class="mt-4 overflow-hidden rounded-[1.5rem] border border-stone-200 bg-white shadow-sm">
+              <div class="border-b border-stone-200 bg-[#faf6ee] px-4 py-3">
+                <div id="activeRoomMeta" class="text-xs font-black uppercase tracking-wider text-red-600"></div>
+                <div id="activeRoomTitle" class="mt-1 text-lg font-black text-slate-950"></div>
+              </div>
+              <div class="grid gap-4 p-4 lg:grid-cols-[minmax(0,1fr)_240px]">
+                <div class="min-w-0">
+                  <div class="grid min-h-[230px] place-items-center rounded-[1.25rem] bg-slate-950 px-4 py-8 text-white sm:min-h-[280px]">
+                    <div id="gamePrompt" class="max-w-full whitespace-nowrap text-center font-serif text-[clamp(2.25rem,15vw,5.5rem)] font-bold leading-tight tracking-normal [overflow-wrap:normal] [word-break:keep-all] [writing-mode:horizontal-tb]"></div>
+                  </div>
+                  <div id="gameReading" class="mt-3 min-h-6 break-words text-center text-sm font-black text-red-700"></div>
+                </div>
+                <aside class="rounded-[1.25rem] bg-[#faf6ee] p-4">
+                  <div class="text-xs font-black uppercase tracking-wider text-stone-500">Target</div>
+                  <div id="targetLabel" class="mt-2 text-2xl font-black text-slate-950">Arti Indonesia</div>
+                  <p id="feedback" class="mt-4 min-h-12 text-sm font-bold leading-6 text-stone-600"></p>
+                </aside>
+              </div>
+              <div id="options" class="grid gap-3 px-4 pb-4 sm:grid-cols-2"></div>
+            </article>
+          </div>
+        </section>
+
+        <aside class="grid content-start gap-4">
+          <section class="rounded-[1.75rem] border border-stone-200/80 bg-white p-5 shadow-lg shadow-slate-900/5">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <p class="text-xs font-black uppercase tracking-wider text-red-600">Score</p>
+                <h2 class="mt-1 text-xl font-black text-slate-950">Leaderboard</h2>
+              </div>
+              <span id="scoreSource" class="rounded-full bg-stone-100 px-3 py-1 text-xs font-black text-stone-600">Lokal</span>
+            </div>
+            <div id="leaderboard" class="mt-4 grid gap-2"></div>
+          </section>
+
+          <section class="rounded-[1.75rem] border border-stone-200/80 bg-white p-5 shadow-lg shadow-slate-900/5">
+            <p class="text-xs font-black uppercase tracking-wider text-red-600">Mode</p>
+            <div class="mt-3 grid gap-2">
+              <div class="rounded-2xl bg-[#faf6ee] p-4">
+                <div class="font-black text-slate-950">Speed Quiz</div>
+                <div class="mt-1 text-sm font-bold leading-6 text-stone-600">Jawab arti sebanyak mungkin sebelum waktu habis.</div>
+              </div>
+              <div class="rounded-2xl bg-[#faf6ee] p-4">
+                <div class="font-black text-slate-950">Room Guru/User</div>
+                <div class="mt-1 text-sm font-bold leading-6 text-stone-600">Room menampilkan pembuat, materi, level, waktu, dan score.</div>
+              </div>
+            </div>
+          </section>
+        </aside>
+      </div>
     </section>
 
     <script define:vars={{ learningItems }}>
+      import { createSupabaseClient, isSupabaseConfigured } from "../../lib/supabase";
+
       const playable = learningItems.filter((item) => item.status !== "draft");
-      const promptEl = document.getElementById("gamePrompt");
-      const metaEl = document.getElementById("gameMeta");
-      const optionsEl = document.getElementById("options");
-      const scoreEl = document.getElementById("score");
-      const nextBtn = document.getElementById("next");
-      let current;
-      let score = Number(localStorage.getItem("yokislearn-game-score") || 0);
-      scoreEl.textContent = score;
+      const session = JSON.parse(localStorage.getItem("yokislearn:session") || "null");
+      const player = session || { nim: "GUEST", name: "Tamu", role: "guest" };
+      const localRoomsKey = "yokislearn:game-rooms";
+      const localScoresKey = "yokislearn:game-scores";
+      const seedRooms = [
+        { id: "seed-kanji-n5", name: "Kanji N5 Sprint", type: "kanji", level: "n5", mode: "Speed Quiz", timeLimit: 60, createdBy: "GURU001", creatorName: "Guru LPK Baraya", createdAt: "2026-09-01T00:00:00.000Z" },
+        { id: "seed-kotoba-n5", name: "Kotoba Bab Campur", type: "kotoba", level: "n5", mode: "Speed Quiz", timeLimit: 90, createdBy: "DEV001", creatorName: "Developer", createdAt: "2026-09-01T00:00:00.000Z" },
+        { id: "seed-kanji-n4", name: "Kanji N4 Challenge", type: "kanji", level: "n4", mode: "Speed Quiz", timeLimit: 120, createdBy: "GURU001", creatorName: "Guru LPK Baraya", createdAt: "2026-09-01T00:00:00.000Z" },
+      ];
 
-      function shuffle(items) {
-        return items.map((item) => ({ item, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(({ item }) => item);
+      const playerLabel = document.getElementById("playerLabel");
+      const totalScoreEl = document.getElementById("totalScore");
+      const bestScoreEl = document.getElementById("bestScore");
+      const lobbyPanel = document.getElementById("lobbyPanel");
+      const gamePanel = document.getElementById("gamePanel");
+      const roomForm = document.getElementById("roomForm");
+      const roomName = document.getElementById("roomName");
+      const roomType = document.getElementById("roomType");
+      const roomLevel = document.getElementById("roomLevel");
+      const roomTime = document.getElementById("roomTime");
+      const roomList = document.getElementById("roomList");
+      const leaderboard = document.getElementById("leaderboard");
+      const scoreSource = document.getElementById("scoreSource");
+      const backToLobby = document.getElementById("backToLobby");
+      const activeRoomMeta = document.getElementById("activeRoomMeta");
+      const activeRoomTitle = document.getElementById("activeRoomTitle");
+      const roundTimer = document.getElementById("roundTimer");
+      const roundScore = document.getElementById("roundScore");
+      const roundStreak = document.getElementById("roundStreak");
+      const gamePrompt = document.getElementById("gamePrompt");
+      const gameReading = document.getElementById("gameReading");
+      const targetLabel = document.getElementById("targetLabel");
+      const feedback = document.getElementById("feedback");
+      const options = document.getElementById("options");
+
+      let activeRoom = null;
+      let activeItems = [];
+      let current = null;
+      let score = 0;
+      let streak = 0;
+      let answered = 0;
+      let remaining = 0;
+      let timerId = null;
+      let remoteReady = false;
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
       }
 
-      function renderRound() {
-        current = shuffle(playable)[0];
-        const options = shuffle([current, ...shuffle(playable.filter((item) => item.id !== current.id)).slice(0, 3)]);
-        promptEl.textContent = current.prompt;
-        metaEl.textContent = current.type === "kanji" ? `Kanji ${current.level.toUpperCase()}` : `${current.level.toUpperCase()} ${current.type} Bab ${current.chapter}`;
-        nextBtn.classList.add("hidden");
-        optionsEl.innerHTML = options.map((item) => `<button class="option rounded-lg border border-slate-300 px-4 py-4 text-left text-sm font-black text-slate-800 transition hover:border-slate-950" data-id="${item.id}">${item.meaning}</button>`).join("");
-      }
-
-      optionsEl.addEventListener("click", (event) => {
-        const button = event.target.closest("button");
-        if (!button || button.disabled) return;
-        const correct = button.dataset.id === current.id;
-        [...optionsEl.querySelectorAll("button")].forEach((item) => {
-          item.disabled = true;
-          if (item.dataset.id === current.id) item.classList.add("border-emerald-600", "bg-emerald-50", "text-emerald-800");
-        });
-        if (!correct) button.classList.add("border-red-700", "bg-red-50", "text-red-800");
-        if (correct) {
-          score += 10;
-          localStorage.setItem("yokislearn-game-score", String(score));
-          scoreEl.textContent = score;
+      function shuffle(values) {
+        const items = values.slice();
+        for (let index = items.length - 1; index > 0; index -= 1) {
+          const swapIndex = Math.floor(Math.random() * (index + 1));
+          [items[index], items[swapIndex]] = [items[swapIndex], items[index]];
         }
-        nextBtn.classList.remove("hidden");
+        return items;
+      }
+
+      function getLocalRooms() {
+        try {
+          return JSON.parse(localStorage.getItem(localRoomsKey) || "[]");
+        } catch {
+          return [];
+        }
+      }
+
+      function saveLocalRoom(room) {
+        const rooms = getLocalRooms().filter((item) => item.id !== room.id);
+        rooms.unshift(room);
+        localStorage.setItem(localRoomsKey, JSON.stringify(rooms));
+      }
+
+      function getLocalScores() {
+        try {
+          return JSON.parse(localStorage.getItem(localScoresKey) || "[]");
+        } catch {
+          return [];
+        }
+      }
+
+      function saveLocalScore(scoreRow) {
+        const scores = getLocalScores();
+        scores.unshift(scoreRow);
+        localStorage.setItem(localScoresKey, JSON.stringify(scores.slice(0, 100)));
+      }
+
+      async function getSupabase() {
+        if (!isSupabaseConfigured) return null;
+        try {
+          return await createSupabaseClient();
+        } catch {
+          return null;
+        }
+      }
+
+      async function loadRooms() {
+        const supabase = await getSupabase();
+        if (supabase) {
+          const { data, error } = await supabase.from("game_rooms").select("*").order("created_at", { ascending: false });
+          if (!error) {
+            remoteReady = true;
+            return [...(data || []).map((room) => ({
+              id: room.id,
+              name: room.name,
+              type: room.material_type,
+              level: room.level,
+              mode: room.mode,
+              timeLimit: room.time_limit,
+              createdBy: room.created_by,
+              creatorName: room.creator_name,
+              createdAt: room.created_at,
+            })), ...seedRooms];
+          }
+        }
+        remoteReady = false;
+        return [...getLocalRooms(), ...seedRooms];
+      }
+
+      async function createRoom(room) {
+        const supabase = await getSupabase();
+        if (supabase) {
+          const { data, error } = await supabase
+            .from("game_rooms")
+            .insert({
+              name: room.name,
+              material_type: room.type,
+              level: room.level,
+              mode: room.mode,
+              time_limit: room.timeLimit,
+              created_by: room.createdBy,
+              creator_name: room.creatorName,
+            })
+            .select("*")
+            .single();
+
+          if (!error && data) {
+            remoteReady = true;
+            return {
+              id: data.id,
+              name: data.name,
+              type: data.material_type,
+              level: data.level,
+              mode: data.mode,
+              timeLimit: data.time_limit,
+              createdBy: data.created_by,
+              creatorName: data.creator_name,
+              createdAt: data.created_at,
+            };
+          }
+        }
+
+        saveLocalRoom(room);
+        return room;
+      }
+
+      async function loadScores() {
+        const supabase = await getSupabase();
+        if (supabase) {
+          const { data, error } = await supabase.from("game_scores").select("*").order("score", { ascending: false }).limit(20);
+          if (!error) {
+            remoteReady = true;
+            return data || [];
+          }
+        }
+        return getLocalScores();
+      }
+
+      async function saveScore() {
+        if (!activeRoom || !score) return;
+        const scoreRow = {
+          id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+          room_id: activeRoom.id,
+          room_name: activeRoom.name,
+          player_nim: player.nim,
+          player_name: player.name,
+          score,
+          correct_count: Math.floor(score / 10),
+          answered_count: answered,
+          created_at: new Date().toISOString(),
+        };
+
+        const supabase = await getSupabase();
+        if (supabase) {
+          const { error } = await supabase.from("game_scores").insert(scoreRow);
+          if (!error) {
+            remoteReady = true;
+            return;
+          }
+        }
+        saveLocalScore(scoreRow);
+      }
+
+      function getPlayerScores(scores) {
+        return scores.filter((item) => item.player_nim === player.nim);
+      }
+
+      async function renderScoreSummary() {
+        const scores = await loadScores();
+        const mine = getPlayerScores(scores);
+        const total = mine.reduce((sum, item) => sum + Number(item.score || 0), 0);
+        const best = mine.reduce((max, item) => Math.max(max, Number(item.score || 0)), 0);
+        if (totalScoreEl) totalScoreEl.textContent = total;
+        if (bestScoreEl) bestScoreEl.textContent = best;
+        if (scoreSource) {
+          scoreSource.textContent = remoteReady ? "Supabase" : "Lokal";
+          scoreSource.className = remoteReady
+            ? "rounded-full bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700"
+            : "rounded-full bg-stone-100 px-3 py-1 text-xs font-black text-stone-600";
+        }
+      }
+
+      async function renderLeaderboard() {
+        const scores = await loadScores();
+        const topScores = scores.slice(0, 8);
+        if (!leaderboard) return;
+        if (!topScores.length) {
+          leaderboard.innerHTML = `<div class="rounded-2xl bg-[#faf6ee] p-4 text-sm font-bold text-stone-600">Belum ada score.</div>`;
+          return;
+        }
+        leaderboard.innerHTML = topScores.map((item, index) => `
+          <article class="flex items-center justify-between gap-3 rounded-2xl bg-[#faf6ee] px-4 py-3">
+            <div class="min-w-0">
+              <div class="truncate text-sm font-black text-slate-950">${index + 1}. ${escapeHtml(item.player_name)}</div>
+              <div class="truncate text-xs font-bold text-stone-500">${escapeHtml(item.room_name || "Room")}</div>
+            </div>
+            <div class="shrink-0 rounded-full bg-slate-950 px-3 py-1 text-xs font-black text-white">${Number(item.score || 0)}</div>
+          </article>
+        `).join("");
+      }
+
+      async function renderRooms() {
+        const rooms = await loadRooms();
+        if (!roomList) return;
+        roomList.innerHTML = rooms.map((room) => {
+          const count = playable.filter((item) => item.type === room.type && item.level === room.level).length;
+          return `
+            <article class="flex min-h-[190px] flex-col justify-between rounded-[1.25rem] border border-stone-200 bg-white p-4 shadow-sm">
+              <div>
+                <div class="flex items-start justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="truncate text-lg font-black text-slate-950">${escapeHtml(room.name)}</div>
+                    <div class="mt-1 truncate text-xs font-bold text-stone-500">Dibuat oleh ${escapeHtml(room.creatorName || room.createdBy)}</div>
+                  </div>
+                  <span class="shrink-0 rounded-full bg-red-50 px-3 py-1 text-xs font-black uppercase text-red-700">${escapeHtml(room.level)}</span>
+                </div>
+                <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs font-black">
+                  <div class="rounded-2xl bg-[#faf6ee] px-2 py-3">${escapeHtml(room.type)}</div>
+                  <div class="rounded-2xl bg-[#faf6ee] px-2 py-3">${escapeHtml(room.mode)}</div>
+                  <div class="rounded-2xl bg-[#faf6ee] px-2 py-3">${room.timeLimit}s</div>
+                </div>
+              </div>
+              <button class="join-room mt-4 h-11 rounded-2xl bg-slate-950 px-4 text-sm font-black text-white active:scale-[0.98]" data-room-id="${escapeHtml(room.id)}" type="button">
+                Masuk room (${count})
+              </button>
+            </article>
+          `;
+        }).join("");
+      }
+
+      function renderQuestion() {
+        if (!activeItems.length) return;
+        current = shuffle(activeItems)[0];
+        const choices = shuffle([current, ...shuffle(activeItems.filter((item) => item.id !== current.id)).slice(0, 3)]);
+        const promptLength = String(current.prompt || "").replace(/\s/g, "").length;
+
+        if (gamePrompt) gamePrompt.textContent = current.prompt;
+        if (gamePrompt) {
+          gamePrompt.style.fontSize = promptLength > 12
+            ? "clamp(1.5rem, 8vw, 3rem)"
+            : promptLength > 7
+              ? "clamp(1.85rem, 10vw, 4rem)"
+              : promptLength > 4
+                ? "clamp(2.1rem, 12vw, 4.75rem)"
+                : "clamp(2.25rem, 15vw, 5.5rem)";
+        }
+        if (gameReading) gameReading.textContent = current.reading || "";
+        if (targetLabel) targetLabel.textContent = current.type === "kanji" ? "Pilih arti kanji" : "Pilih arti kotoba";
+        if (feedback) feedback.textContent = "Pilih jawaban yang paling tepat.";
+        if (options) {
+          options.innerHTML = choices.map((item) => `
+            <button class="answer-option min-h-16 rounded-2xl border border-stone-300 bg-white px-4 py-4 text-left text-base font-black leading-6 text-slate-800 transition hover:border-slate-950 active:scale-[0.98]" data-id="${item.id}" type="button">
+              ${escapeHtml(item.meaning)}
+            </button>
+          `).join("");
+        }
+      }
+
+      function setRoundStats() {
+        if (roundTimer) roundTimer.textContent = remaining;
+        if (roundScore) roundScore.textContent = score;
+        if (roundStreak) roundStreak.textContent = streak;
+      }
+
+      function finishGame() {
+        if (timerId) window.clearInterval(timerId);
+        timerId = null;
+        if (feedback) feedback.textContent = `Selesai. Score kamu ${score} dari ${answered} jawaban.`;
+        if (options) {
+          options.innerHTML = `<button id="playAgain" class="min-h-14 rounded-2xl bg-red-600 px-4 py-3 text-sm font-black text-white active:scale-[0.98]" type="button">Main lagi</button>`;
+        }
+        void saveScore().then(async () => {
+          await renderScoreSummary();
+          await renderLeaderboard();
+        });
+      }
+
+      function startTimer() {
+        setRoundStats();
+        timerId = window.setInterval(() => {
+          remaining -= 1;
+          setRoundStats();
+          if (remaining <= 0) finishGame();
+        }, 1000);
+      }
+
+      function startRoom(room) {
+        activeRoom = room;
+        activeItems = playable.filter((item) => item.type === room.type && item.level === room.level);
+        score = 0;
+        streak = 0;
+        answered = 0;
+        remaining = Number(room.timeLimit || 60);
+        if (activeRoomMeta) activeRoomMeta.textContent = `${room.type.toUpperCase()} ${room.level.toUpperCase()} - ${room.mode}`;
+        if (activeRoomTitle) activeRoomTitle.textContent = room.name;
+        lobbyPanel?.classList.add("hidden");
+        gamePanel?.classList.remove("hidden");
+        renderQuestion();
+        startTimer();
+      }
+
+      if (playerLabel) {
+        playerLabel.textContent = player.nim === "GUEST" ? "Masuk sebagai tamu" : `Login sebagai ${player.name} (${player.nim})`;
+      }
+
+      roomForm?.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const room = {
+          id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+          name: String(roomName?.value || "").trim(),
+          type: roomType?.value || "kanji",
+          level: roomLevel?.value || "n5",
+          mode: "Speed Quiz",
+          timeLimit: Number(roomTime?.value || 60),
+          createdBy: player.nim,
+          creatorName: player.name,
+          createdAt: new Date().toISOString(),
+        };
+        if (!room.name) return;
+        await createRoom(room);
+        if (roomName) roomName.value = "";
+        await renderRooms();
       });
 
-      nextBtn.addEventListener("click", renderRound);
-      renderRound();
+      roomList?.addEventListener("click", async (event) => {
+        const button = event.target.closest(".join-room");
+        if (!button) return;
+        const rooms = await loadRooms();
+        const room = rooms.find((item) => item.id === button.dataset.roomId);
+        if (room) startRoom(room);
+      });
+
+      options?.addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (!button) return;
+        if (button.id === "playAgain" && activeRoom) {
+          startRoom(activeRoom);
+          return;
+        }
+        if (!button.classList.contains("answer-option") || !current) return;
+
+        answered += 1;
+        const correct = button.dataset.id === current.id;
+        [...options.querySelectorAll(".answer-option")].forEach((option) => {
+          option.disabled = true;
+          if (option.dataset.id === current.id) option.classList.add("border-emerald-600", "bg-emerald-50", "text-emerald-800");
+        });
+        if (correct) {
+          score += 10 + Math.min(streak, 5);
+          streak += 1;
+          if (feedback) feedback.textContent = `Benar. ${current.prompt} berarti ${current.meaning}.`;
+        } else {
+          streak = 0;
+          button.classList.add("border-red-700", "bg-red-50", "text-red-800");
+          if (feedback) feedback.textContent = `Salah. Jawaban benar: ${current.meaning}.`;
+        }
+        setRoundStats();
+        window.setTimeout(renderQuestion, 650);
+      });
+
+      backToLobby?.addEventListener("click", async () => {
+        if (timerId) window.clearInterval(timerId);
+        timerId = null;
+        gamePanel?.classList.add("hidden");
+        lobbyPanel?.classList.remove("hidden");
+        await renderScoreSummary();
+        await renderLeaderboard();
+      });
+
+      await renderRooms();
+      await renderScoreSummary();
+      await renderLeaderboard();
     </script>
   </AppShell>
 </Layout>
