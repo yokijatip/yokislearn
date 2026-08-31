@@ -136,6 +136,42 @@ export async function createStudentAccount(input: { nim: string; name: string; c
   return { account, remoteSaved: false, error: null };
 }
 
+export async function syncLocalStudentsToRemote() {
+  if (!isSupabaseConfigured) {
+    return { synced: 0, error: null as Error | null };
+  }
+
+  try {
+    const supabase = await createSupabaseClient();
+    if (!supabase) return { synced: 0, error: null };
+
+    const { users: remoteUsers, error: remoteError } = await getRemoteUsers();
+    if (remoteError) return { synced: 0, error: remoteError };
+
+    const remoteNims = new Set(remoteUsers.map((user) => normalizeNim(user.nim)));
+    const localStudents = getLocalUsers().filter(
+      (user) => user.role === "murid" && user.createdBy !== "system" && !remoteNims.has(normalizeNim(user.nim)),
+    );
+
+    if (!localStudents.length) {
+      return { synced: 0, error: null };
+    }
+
+    const { error } = await supabase.from("accounts").insert(
+      localStudents.map((user) => ({
+        nim: normalizeNim(user.nim),
+        name: user.name,
+        role: "murid",
+        created_by: user.createdBy || "local-sync",
+      })),
+    );
+
+    return { synced: error ? 0 : localStudents.length, error };
+  } catch (error) {
+    return { synced: 0, error: error as Error };
+  }
+}
+
 export async function findAccountByNim(nim: string) {
   const normalized = normalizeNim(nim);
   const { users, remoteError } = await getUsers();

@@ -18,15 +18,16 @@ function firstSurface(value) {
   return clean(value).split(/[、,／/]/)[0].trim();
 }
 
-function makeExample(kanji, reading) {
+function makeExample(kanji, reading, meaning) {
   const surface = firstSurface(kanji);
   const yomi = firstSurface(reading);
+  const arti = clean(meaning);
 
   if (surface.startsWith("~") || surface.startsWith("～")) {
-    return `${surface}を使って文を作ります。`;
+    return `日本語の授業で「${surface}（${yomi}）」を使って文を作ります。 Artinya: Di kelas bahasa Jepang, saya membuat kalimat dengan pola "${surface}" yang berarti ${arti}.`;
   }
 
-  return `${surface}は「${yomi}」と読みます。`;
+  return `日本語の授業で「${surface}（${yomi}）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata "${surface}" yang berarti ${arti}.`;
 }
 
 let group = null;
@@ -61,7 +62,7 @@ for (const line of lines) {
     prompt: kanji,
     reading,
     meaning,
-    example: makeExample(kanji, reading),
+    example: makeExample(kanji, reading, meaning),
     status: "ready",
   });
 }

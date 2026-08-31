@@ -9,7 +9,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "今年",
     "reading": "ことし",
     "meaning": "tahun ini",
-    "example": "今年は「ことし」と読みます。",
+    "example": "日本語の授業で「今年（ことし）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"今年\" yang berarti tahun ini.",
     "status": "ready"
   },
   {
@@ -20,7 +20,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "昨年",
     "reading": "さくねん",
     "meaning": "tahun lalu",
-    "example": "昨年は「さくねん」と読みます。",
+    "example": "日本語の授業で「昨年（さくねん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"昨年\" yang berarti tahun lalu.",
     "status": "ready"
   },
   {
@@ -31,7 +31,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "毎年",
     "reading": "まいとし",
     "meaning": "setiap tahun",
-    "example": "毎年は「まいとし」と読みます。",
+    "example": "日本語の授業で「毎年（まいとし）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"毎年\" yang berarti setiap tahun.",
     "status": "ready"
   },
   {
@@ -42,7 +42,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "文化",
     "reading": "ぶんか",
     "meaning": "budaya",
-    "example": "文化は「ぶんか」と読みます。",
+    "example": "日本語の授業で「文化（ぶんか）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"文化\" yang berarti budaya.",
     "status": "ready"
   },
   {
@@ -53,7 +53,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "祭り",
     "reading": "まつり",
     "meaning": "festival/pesta rakyat",
-    "example": "祭りは「まつり」と読みます。",
+    "example": "日本語の授業で「祭り（まつり）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"祭り\" yang berarti festival/pesta rakyat.",
     "status": "ready"
   },
   {
@@ -64,7 +64,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "正月",
     "reading": "しょうがつ",
     "meaning": "tahun baru",
-    "example": "正月は「しょうがつ」と読みます。",
+    "example": "日本語の授業で「正月（しょうがつ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"正月\" yang berarti tahun baru.",
     "status": "ready"
   },
   {
@@ -75,7 +75,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "~式",
     "reading": "~しき",
     "meaning": "upacara/acara ~",
-    "example": "~式を使って文を作ります。",
+    "example": "日本語の授業で「~式（~しき）」を使って文を作ります。 Artinya: Di kelas bahasa Jepang, saya membuat kalimat dengan pola \"~式\" yang berarti upacara/acara ~.",
     "status": "ready"
   },
   {
@@ -86,7 +86,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "大人",
     "reading": "おとな",
     "meaning": "orang dewasa",
-    "example": "大人は「おとな」と読みます。",
+    "example": "日本語の授業で「大人（おとな）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"大人\" yang berarti orang dewasa.",
     "status": "ready"
   },
   {
@@ -97,7 +97,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "米",
     "reading": "こめ",
     "meaning": "beras",
-    "example": "米は「こめ」と読みます。",
+    "example": "日本語の授業で「米（こめ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"米\" yang berarti beras.",
     "status": "ready"
   },
   {
@@ -108,7 +108,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "特別",
     "reading": "とくべつ",
     "meaning": "istimewa/spesial",
-    "example": "特別は「とくべつ」と読みます。",
+    "example": "日本語の授業で「特別（とくべつ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"特別\" yang berarti istimewa/spesial.",
     "status": "ready"
   },
   {
@@ -119,7 +119,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "色",
     "reading": "いろ",
     "meaning": "warna",
-    "example": "色は「いろ」と読みます。",
+    "example": "日本語の授業で「色（いろ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"色\" yang berarti warna.",
     "status": "ready"
   },
   {
@@ -130,7 +130,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "袋",
     "reading": "ふくろ",
     "meaning": "kantong/tas",
-    "example": "袋は「ふくろ」と読みます。",
+    "example": "日本語の授業で「袋（ふくろ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"袋\" yang berarti kantong/tas.",
     "status": "ready"
   },
   {
@@ -141,7 +141,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "自分",
     "reading": "じぶん",
     "meaning": "diri sendiri",
-    "example": "自分は「じぶん」と読みます。",
+    "example": "日本語の授業で「自分（じぶん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"自分\" yang berarti diri sendiri.",
     "status": "ready"
   },
   {
@@ -152,7 +152,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "店長",
     "reading": "てんちょう",
     "meaning": "manajer toko",
-    "example": "店長は「てんちょう」と読みます。",
+    "example": "日本語の授業で「店長（てんちょう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"店長\" yang berarti manajer toko.",
     "status": "ready"
   },
   {
@@ -163,7 +163,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "全員",
     "reading": "ぜんいん",
     "meaning": "semua anggota",
-    "example": "全員は「ぜんいん」と読みます。",
+    "example": "日本語の授業で「全員（ぜんいん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"全員\" yang berarti semua anggota.",
     "status": "ready"
   },
   {
@@ -174,7 +174,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "習慣",
     "reading": "しゅうかん",
     "meaning": "kebiasaan",
-    "example": "習慣は「しゅうかん」と読みます。",
+    "example": "日本語の授業で「習慣（しゅうかん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"習慣\" yang berarti kebiasaan.",
     "status": "ready"
   },
   {
@@ -185,7 +185,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "普通",
     "reading": "ふつう",
     "meaning": "biasa/normal",
-    "example": "普通は「ふつう」と読みます。",
+    "example": "日本語の授業で「普通（ふつう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"普通\" yang berarti biasa/normal.",
     "status": "ready"
   },
   {
@@ -196,7 +196,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "暗い",
     "reading": "くらい",
     "meaning": "gelap",
-    "example": "暗いは「くらい」と読みます。",
+    "example": "日本語の授業で「暗い（くらい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"暗い\" yang berarti gelap.",
     "status": "ready"
   },
   {
@@ -207,7 +207,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "怒る",
     "reading": "おこる",
     "meaning": "marah",
-    "example": "怒るは「おこる」と読みます。",
+    "example": "日本語の授業で「怒る（おこる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"怒る\" yang berarti marah.",
     "status": "ready"
   },
   {
@@ -218,7 +218,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "入院する",
     "reading": "にゅういんする",
     "meaning": "masuk rumah sakit/dirawat",
-    "example": "入院するは「にゅういんする」と読みます。",
+    "example": "日本語の授業で「入院する（にゅういんする）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"入院する\" yang berarti masuk rumah sakit/dirawat.",
     "status": "ready"
   },
   {
@@ -229,7 +229,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "赤",
     "reading": "あか",
     "meaning": "merah",
-    "example": "赤は「あか」と読みます。",
+    "example": "日本語の授業で「赤（あか）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"赤\" yang berarti merah.",
     "status": "ready"
   },
   {
@@ -240,7 +240,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "青",
     "reading": "あお",
     "meaning": "biru",
-    "example": "青は「あお」と読みます。",
+    "example": "日本語の授業で「青（あお）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"青\" yang berarti biru.",
     "status": "ready"
   },
   {
@@ -251,7 +251,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "黒",
     "reading": "くろ",
     "meaning": "hitam",
-    "example": "黒は「くろ」と読みます。",
+    "example": "日本語の授業で「黒（くろ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"黒\" yang berarti hitam.",
     "status": "ready"
   },
   {
@@ -262,7 +262,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "白",
     "reading": "しろ",
     "meaning": "putih",
-    "example": "白は「しろ」と読みます。",
+    "example": "日本語の授業で「白（しろ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"白\" yang berarti putih.",
     "status": "ready"
   },
   {
@@ -273,7 +273,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "女性",
     "reading": "じょせい",
     "meaning": "wanita",
-    "example": "女性は「じょせい」と読みます。",
+    "example": "日本語の授業で「女性（じょせい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"女性\" yang berarti wanita.",
     "status": "ready"
   },
   {
@@ -284,7 +284,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "男性",
     "reading": "だんせい",
     "meaning": "pria",
-    "example": "男性は「だんせい」と読みます。",
+    "example": "日本語の授業で「男性（だんせい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"男性\" yang berarti pria.",
     "status": "ready"
   },
   {
@@ -295,7 +295,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "急に",
     "reading": "きゅうに",
     "meaning": "tiba-tiba",
-    "example": "急には「きゅうに」と読みます。",
+    "example": "日本語の授業で「急に（きゅうに）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"急に\" yang berarti tiba-tiba.",
     "status": "ready"
   },
   {
@@ -306,7 +306,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "営業する",
     "reading": "えいぎょうする",
     "meaning": "beroperasi/berjualan",
-    "example": "営業するは「えいぎょうする」と読みます。",
+    "example": "日本語の授業で「営業する（えいぎょうする）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"営業する\" yang berarti beroperasi/berjualan.",
     "status": "ready"
   },
   {
@@ -317,7 +317,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "案内する",
     "reading": "あんないする",
     "meaning": "memandu/menginformasikan",
-    "example": "案内するは「あんないする」と読みます。",
+    "example": "日本語の授業で「案内する（あんないする）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"案内する\" yang berarti memandu/menginformasikan.",
     "status": "ready"
   },
   {
@@ -328,7 +328,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "商品",
     "reading": "しょうひん",
     "meaning": "barang/produk",
-    "example": "商品は「しょうひん」と読みます。",
+    "example": "日本語の授業で「商品（しょうひん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"商品\" yang berarti barang/produk.",
     "status": "ready"
   },
   {
@@ -339,7 +339,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "値段",
     "reading": "ねだん",
     "meaning": "harga",
-    "example": "値段は「ねだん」と読みます。",
+    "example": "日本語の授業で「値段（ねだん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"値段\" yang berarti harga.",
     "status": "ready"
   },
   {
@@ -350,7 +350,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "価格",
     "reading": "かかく",
     "meaning": "harga/nilai",
-    "example": "価格は「かかく」と読みます。",
+    "example": "日本語の授業で「価格（かかく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"価格\" yang berarti harga/nilai.",
     "status": "ready"
   },
   {
@@ -361,7 +361,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "消費税",
     "reading": "しょうひぜい",
     "meaning": "pajak konsumsi",
-    "example": "消費税は「しょうひぜい」と読みます。",
+    "example": "日本語の授業で「消費税（しょうひぜい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"消費税\" yang berarti pajak konsumsi.",
     "status": "ready"
   },
   {
@@ -372,7 +372,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "税別",
     "reading": "ぜいべつ",
     "meaning": "belum termasuk pajak",
-    "example": "税別は「ぜいべつ」と読みます。",
+    "example": "日本語の授業で「税別（ぜいべつ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"税別\" yang berarti belum termasuk pajak.",
     "status": "ready"
   },
   {
@@ -383,7 +383,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "店員",
     "reading": "てんいん",
     "meaning": "pegawai toko",
-    "example": "店員は「てんいん」と読みます。",
+    "example": "日本語の授業で「店員（てんいん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"店員\" yang berarti pegawai toko.",
     "status": "ready"
   },
   {
@@ -394,7 +394,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "親切",
     "reading": "しんせつ",
     "meaning": "baik hati/ramah",
-    "example": "親切は「しんせつ」と読みます。",
+    "example": "日本語の授業で「親切（しんせつ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"親切\" yang berarti baik hati/ramah.",
     "status": "ready"
   },
   {
@@ -405,7 +405,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "重い",
     "reading": "おもい",
     "meaning": "berat",
-    "example": "重いは「おもい」と読みます。",
+    "example": "日本語の授業で「重い（おもい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"重い\" yang berarti berat.",
     "status": "ready"
   },
   {
@@ -416,7 +416,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "軽い",
     "reading": "かるい",
     "meaning": "ringan",
-    "example": "軽いは「かるい」と読みます。",
+    "example": "日本語の授業で「軽い（かるい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"軽い\" yang berarti ringan.",
     "status": "ready"
   },
   {
@@ -427,7 +427,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "変わる",
     "reading": "かわる",
     "meaning": "berubah",
-    "example": "変わるは「かわる」と読みます。",
+    "example": "日本語の授業で「変わる（かわる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"変わる\" yang berarti berubah.",
     "status": "ready"
   },
   {
@@ -438,7 +438,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "市",
     "reading": "し",
     "meaning": "kota",
-    "example": "市は「し」と読みます。",
+    "example": "日本語の授業で「市（し）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"市\" yang berarti kota.",
     "status": "ready"
   },
   {
@@ -449,7 +449,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "外国",
     "reading": "がいこく",
     "meaning": "luar negeri",
-    "example": "外国は「がいこく」と読みます。",
+    "example": "日本語の授業で「外国（がいこく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"外国\" yang berarti luar negeri.",
     "status": "ready"
   },
   {
@@ -460,7 +460,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "温度",
     "reading": "おんど",
     "meaning": "suhu",
-    "example": "温度は「おんど」と読みます。",
+    "example": "日本語の授業で「温度（おんど）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"温度\" yang berarti suhu.",
     "status": "ready"
   },
   {
@@ -471,7 +471,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "地震",
     "reading": "じしん",
     "meaning": "gempa bumi",
-    "example": "地震は「じしん」と読みます。",
+    "example": "日本語の授業で「地震（じしん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"地震\" yang berarti gempa bumi.",
     "status": "ready"
   },
   {
@@ -482,7 +482,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "料金",
     "reading": "りょうきん",
     "meaning": "biaya/tarif",
-    "example": "料金は「りょうきん」と読みます。",
+    "example": "日本語の授業で「料金（りょうきん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"料金\" yang berarti biaya/tarif.",
     "status": "ready"
   },
   {
@@ -493,7 +493,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "情報",
     "reading": "じょうほう",
     "meaning": "informasi",
-    "example": "情報は「じょうほう」と読みます。",
+    "example": "日本語の授業で「情報（じょうほう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"情報\" yang berarti informasi.",
     "status": "ready"
   },
   {
@@ -504,7 +504,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "危険",
     "reading": "きけん",
     "meaning": "bahaya",
-    "example": "危険は「きけん」と読みます。",
+    "example": "日本語の授業で「危険（きけん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"危険\" yang berarti bahaya.",
     "status": "ready"
   },
   {
@@ -515,7 +515,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "台風",
     "reading": "たいふう",
     "meaning": "topan",
-    "example": "台風は「たいふう」と読みます。",
+    "example": "日本語の授業で「台風（たいふう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"台風\" yang berarti topan.",
     "status": "ready"
   },
   {
@@ -526,7 +526,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "図書館",
     "reading": "としょかん",
     "meaning": "perpustakaan",
-    "example": "図書館は「としょかん」と読みます。",
+    "example": "日本語の授業で「図書館（としょかん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"図書館\" yang berarti perpustakaan.",
     "status": "ready"
   },
   {
@@ -537,7 +537,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "相談",
     "reading": "そうだん",
     "meaning": "konsultasi",
-    "example": "相談は「そうだん」と読みます。",
+    "example": "日本語の授業で「相談（そうだん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"相談\" yang berarti konsultasi.",
     "status": "ready"
   },
   {
@@ -548,7 +548,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "種類",
     "reading": "しゅるい",
     "meaning": "jenis",
-    "example": "種類は「しゅるい」と読みます。",
+    "example": "日本語の授業で「種類（しゅるい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"種類\" yang berarti jenis.",
     "status": "ready"
   },
   {
@@ -559,7 +559,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "外",
     "reading": "そと",
     "meaning": "luar",
-    "example": "外は「そと」と読みます。",
+    "example": "日本語の授業で「外（そと）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"外\" yang berarti luar.",
     "status": "ready"
   },
   {
@@ -570,7 +570,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "道具",
     "reading": "どうぐ",
     "meaning": "alat",
-    "example": "道具は「どうぐ」と読みます。",
+    "example": "日本語の授業で「道具（どうぐ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"道具\" yang berarti alat.",
     "status": "ready"
   },
   {
@@ -581,7 +581,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "質問",
     "reading": "しつもん",
     "meaning": "pertanyaan",
-    "example": "質問は「しつもん」と読みます。",
+    "example": "日本語の授業で「質問（しつもん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"質問\" yang berarti pertanyaan.",
     "status": "ready"
   },
   {
@@ -592,7 +592,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "消す",
     "reading": "けす",
     "meaning": "mematikan/menghapus",
-    "example": "消すは「けす」と読みます。",
+    "example": "日本語の授業で「消す（けす）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"消す\" yang berarti mematikan/menghapus.",
     "status": "ready"
   },
   {
@@ -603,7 +603,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "声",
     "reading": "こえ",
     "meaning": "suara",
-    "example": "声は「こえ」と読みます。",
+    "example": "日本語の授業で「声（こえ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"声\" yang berarti suara.",
     "status": "ready"
   },
   {
@@ -614,7 +614,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "~点",
     "reading": "~てん",
     "meaning": "~poin/nilai",
-    "example": "~点を使って文を作ります。",
+    "example": "日本語の授業で「~点（~てん）」を使って文を作ります。 Artinya: Di kelas bahasa Jepang, saya membuat kalimat dengan pola \"~点\" yang berarti ~poin/nilai.",
     "status": "ready"
   },
   {
@@ -625,7 +625,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "窓口",
     "reading": "まどぐち",
     "meaning": "loket",
-    "example": "窓口は「まどぐち」と読みます。",
+    "example": "日本語の授業で「窓口（まどぐち）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"窓口\" yang berarti loket.",
     "status": "ready"
   },
   {
@@ -636,7 +636,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "捨てる",
     "reading": "すてる",
     "meaning": "membuang",
-    "example": "捨てるは「すてる」と読みます。",
+    "example": "日本語の授業で「捨てる（すてる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"捨てる\" yang berarti membuang.",
     "status": "ready"
   },
   {
@@ -647,7 +647,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "危ない",
     "reading": "あぶない",
     "meaning": "berbahaya",
-    "example": "危ないは「あぶない」と読みます。",
+    "example": "日本語の授業で「危ない（あぶない）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"危ない\" yang berarti berbahaya.",
     "status": "ready"
   },
   {
@@ -658,7 +658,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "必要な",
     "reading": "ひつような",
     "meaning": "perlu",
-    "example": "必要なは「ひつような」と読みます。",
+    "example": "日本語の授業で「必要な（ひつような）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"必要な\" yang berarti perlu.",
     "status": "ready"
   },
   {
@@ -669,7 +669,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "郵便局",
     "reading": "ゆうびんきょく",
     "meaning": "kantor pos",
-    "example": "郵便局は「ゆうびんきょく」と読みます。",
+    "example": "日本語の授業で「郵便局（ゆうびんきょく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"郵便局\" yang berarti kantor pos.",
     "status": "ready"
   },
   {
@@ -680,7 +680,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "出す",
     "reading": "だす",
     "meaning": "mengeluarkan",
-    "example": "出すは「だす」と読みます。",
+    "example": "日本語の授業で「出す（だす）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"出す\" yang berarti mengeluarkan.",
     "status": "ready"
   },
   {
@@ -691,7 +691,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "大切",
     "reading": "たいせつ",
     "meaning": "penting",
-    "example": "大切は「たいせつ」と読みます。",
+    "example": "日本語の授業で「大切（たいせつ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"大切\" yang berarti penting.",
     "status": "ready"
   },
   {
@@ -702,7 +702,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "借りる",
     "reading": "かりる",
     "meaning": "meminjam",
-    "example": "借りるは「かりる」と読みます。",
+    "example": "日本語の授業で「借りる（かりる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"借りる\" yang berarti meminjam.",
     "status": "ready"
   },
   {
@@ -713,7 +713,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "近所",
     "reading": "きんじょ",
     "meaning": "tetangga/sekitar",
-    "example": "近所は「きんじょ」と読みます。",
+    "example": "日本語の授業で「近所（きんじょ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"近所\" yang berarti tetangga/sekitar.",
     "status": "ready"
   },
   {
@@ -724,7 +724,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "分ける",
     "reading": "わける",
     "meaning": "membagi",
-    "example": "分けるは「わける」と読みます。",
+    "example": "日本語の授業で「分ける（わける）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"分ける\" yang berarti membagi.",
     "status": "ready"
   },
   {
@@ -735,7 +735,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "心配",
     "reading": "しんぱい",
     "meaning": "khawatir",
-    "example": "心配は「しんぱい」と読みます。",
+    "example": "日本語の授業で「心配（しんぱい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"心配\" yang berarti khawatir.",
     "status": "ready"
   },
   {
@@ -746,7 +746,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "返す",
     "reading": "かえす",
     "meaning": "mengembalikan",
-    "example": "返すは「かえす」と読みます。",
+    "example": "日本語の授業で「返す（かえす）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"返す\" yang berarti mengembalikan.",
     "status": "ready"
   },
   {
@@ -757,7 +757,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "自動",
     "reading": "じどう",
     "meaning": "otomatis",
-    "example": "自動は「じどう」と読みます。",
+    "example": "日本語の授業で「自動（じどう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"自動\" yang berarti otomatis.",
     "status": "ready"
   },
   {
@@ -768,7 +768,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "燃える",
     "reading": "もえる",
     "meaning": "terbakar",
-    "example": "燃えるは「もえる」と読みます。",
+    "example": "日本語の授業で「燃える（もえる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"燃える\" yang berarti terbakar.",
     "status": "ready"
   },
   {
@@ -779,7 +779,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "集まる",
     "reading": "あつまる",
     "meaning": "berkumpul",
-    "example": "集まるは「あつまる」と読みます。",
+    "example": "日本語の授業で「集まる（あつまる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"集まる\" yang berarti berkumpul.",
     "status": "ready"
   },
   {
@@ -790,7 +790,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "開く",
     "reading": "あく",
     "meaning": "terbuka",
-    "example": "開くは「あく」と読みます。",
+    "example": "日本語の授業で「開く（あく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"開く\" yang berarti terbuka.",
     "status": "ready"
   },
   {
@@ -801,7 +801,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "洗う",
     "reading": "あらう",
     "meaning": "mencuci",
-    "example": "洗うは「あらう」と読みます。",
+    "example": "日本語の授業で「洗う（あらう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"洗う\" yang berarti mencuci.",
     "status": "ready"
   },
   {
@@ -812,7 +812,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "決める",
     "reading": "きめる",
     "meaning": "memutuskan",
-    "example": "決めるは「きめる」と読みます。",
+    "example": "日本語の授業で「決める（きめる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"決める\" yang berarti memutuskan.",
     "status": "ready"
   },
   {
@@ -823,7 +823,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "進む",
     "reading": "すすむ",
     "meaning": "maju",
-    "example": "進むは「すすむ」と読みます。",
+    "example": "日本語の授業で「進む（すすむ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"進む\" yang berarti maju.",
     "status": "ready"
   },
   {
@@ -834,7 +834,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "閉まる",
     "reading": "しまる",
     "meaning": "tertutup",
-    "example": "閉まるは「しまる」と読みます。",
+    "example": "日本語の授業で「閉まる（しまる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"閉まる\" yang berarti tertutup.",
     "status": "ready"
   },
   {
@@ -845,7 +845,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "入力する",
     "reading": "にゅうりょくする",
     "meaning": "menginput",
-    "example": "入力するは「にゅうりょくする」と読みます。",
+    "example": "日本語の授業で「入力する（にゅうりょくする）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"入力する\" yang berarti menginput.",
     "status": "ready"
   },
   {
@@ -856,7 +856,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "設定する",
     "reading": "せっていする",
     "meaning": "mengatur/setting",
-    "example": "設定するは「せっていする」と読みます。",
+    "example": "日本語の授業で「設定する（せっていする）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"設定する\" yang berarti mengatur/setting.",
     "status": "ready"
   },
   {
@@ -867,7 +867,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "利用する",
     "reading": "りようする",
     "meaning": "menggunakan/memanfaatkan",
-    "example": "利用するは「りようする」と読みます。",
+    "example": "日本語の授業で「利用する（りようする）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"利用する\" yang berarti menggunakan/memanfaatkan.",
     "status": "ready"
   },
   {
@@ -878,7 +878,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "自然",
     "reading": "しぜん",
     "meaning": "alam",
-    "example": "自然は「しぜん」と読みます。",
+    "example": "日本語の授業で「自然（しぜん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"自然\" yang berarti alam.",
     "status": "ready"
   },
   {
@@ -889,7 +889,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "運転",
     "reading": "うんてん",
     "meaning": "mengemudi",
-    "example": "運転は「うんてん」と読みます。",
+    "example": "日本語の授業で「運転（うんてん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"運転\" yang berarti mengemudi.",
     "status": "ready"
   },
   {
@@ -900,7 +900,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "お知らせ",
     "reading": "おしらせ",
     "meaning": "pemberitahuan",
-    "example": "お知らせは「おしらせ」と読みます。",
+    "example": "日本語の授業で「お知らせ（おしらせ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"お知らせ\" yang berarti pemberitahuan.",
     "status": "ready"
   },
   {
@@ -911,7 +911,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "来年",
     "reading": "らいねん",
     "meaning": "tahun depan",
-    "example": "来年は「らいねん」と読みます。",
+    "example": "日本語の授業で「来年（らいねん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"来年\" yang berarti tahun depan.",
     "status": "ready"
   },
   {
@@ -922,7 +922,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "交通",
     "reading": "こうつう",
     "meaning": "lalu lintas",
-    "example": "交通は「こうつう」と読みます。",
+    "example": "日本語の授業で「交通（こうつう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"交通\" yang berarti lalu lintas.",
     "status": "ready"
   },
   {
@@ -933,7 +933,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "事故",
     "reading": "じこ",
     "meaning": "kecelakaan",
-    "example": "事故は「じこ」と読みます。",
+    "example": "日本語の授業で「事故（じこ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"事故\" yang berarti kecelakaan.",
     "status": "ready"
   },
   {
@@ -944,7 +944,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "今月",
     "reading": "こんげつ",
     "meaning": "bulan ini",
-    "example": "今月は「こんげつ」と読みます。",
+    "example": "日本語の授業で「今月（こんげつ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"今月\" yang berarti bulan ini.",
     "status": "ready"
   },
   {
@@ -955,7 +955,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "会場",
     "reading": "かいじょう",
     "meaning": "tempat acara",
-    "example": "会場は「かいじょう」と読みます。",
+    "example": "日本語の授業で「会場（かいじょう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"会場\" yang berarti tempat acara.",
     "status": "ready"
   },
   {
@@ -966,7 +966,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "船",
     "reading": "ふね",
     "meaning": "kapal",
-    "example": "船は「ふね」と読みます。",
+    "example": "日本語の授業で「船（ふね）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"船\" yang berarti kapal.",
     "status": "ready"
   },
   {
@@ -977,7 +977,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "故障",
     "reading": "こしょう",
     "meaning": "kerusakan",
-    "example": "故障は「こしょう」と読みます。",
+    "example": "日本語の授業で「故障（こしょう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"故障\" yang berarti kerusakan.",
     "status": "ready"
   },
   {
@@ -988,7 +988,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "水道",
     "reading": "すいどう",
     "meaning": "air ledeng/PDAM",
-    "example": "水道は「すいどう」と読みます。",
+    "example": "日本語の授業で「水道（すいどう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"水道\" yang berarti air ledeng/PDAM.",
     "status": "ready"
   },
   {
@@ -999,7 +999,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "世界",
     "reading": "せかい",
     "meaning": "dunia",
-    "example": "世界は「せかい」と読みます。",
+    "example": "日本語の授業で「世界（せかい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"世界\" yang berarti dunia.",
     "status": "ready"
   },
   {
@@ -1010,7 +1010,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "自転車",
     "reading": "じてんしゃ",
     "meaning": "sepeda",
-    "example": "自転車は「じてんしゃ」と読みます。",
+    "example": "日本語の授業で「自転車（じてんしゃ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"自転車\" yang berarti sepeda.",
     "status": "ready"
   },
   {
@@ -1021,7 +1021,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "指定席",
     "reading": "していせき",
     "meaning": "kursi reservasi/khusus",
-    "example": "指定席は「していせき」と読みます。",
+    "example": "日本語の授業で「指定席（していせき）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"指定席\" yang berarti kursi reservasi/khusus.",
     "status": "ready"
   },
   {
@@ -1032,7 +1032,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "工事",
     "reading": "こうじ",
     "meaning": "konstruksi",
-    "example": "工事は「こうじ」と読みます。",
+    "example": "日本語の授業で「工事（こうじ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"工事\" yang berarti konstruksi.",
     "status": "ready"
   },
   {
@@ -1043,7 +1043,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "体験",
     "reading": "たいけん",
     "meaning": "pengalaman",
-    "example": "体験は「たいけん」と読みます。",
+    "example": "日本語の授業で「体験（たいけん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"体験\" yang berarti pengalaman.",
     "status": "ready"
   },
   {
@@ -1054,7 +1054,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "旅館",
     "reading": "りょかん",
     "meaning": "penginapan tradisional",
-    "example": "旅館は「りょかん」と読みます。",
+    "example": "日本語の授業で「旅館（りょかん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"旅館\" yang berarti penginapan tradisional.",
     "status": "ready"
   },
   {
@@ -1065,7 +1065,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "週末",
     "reading": "しゅうまつ",
     "meaning": "akhir pekan",
-    "example": "週末は「しゅうまつ」と読みます。",
+    "example": "日本語の授業で「週末（しゅうまつ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"週末\" yang berarti akhir pekan.",
     "status": "ready"
   },
   {
@@ -1076,7 +1076,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "広場",
     "reading": "ひろば",
     "meaning": "alun-alun",
-    "example": "広場は「ひろば」と読みます。",
+    "example": "日本語の授業で「広場（ひろば）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"広場\" yang berarti alun-alun.",
     "status": "ready"
   },
   {
@@ -1087,7 +1087,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "国際交流",
     "reading": "こくさいこうりゅう",
     "meaning": "pertukaran internasional",
-    "example": "国際交流は「こくさいこうりゅう」と読みます。",
+    "example": "日本語の授業で「国際交流（こくさいこうりゅう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"国際交流\" yang berarti pertukaran internasional.",
     "status": "ready"
   },
   {
@@ -1098,7 +1098,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "東京",
     "reading": "とうきょう",
     "meaning": "Tokyo",
-    "example": "東京は「とうきょう」と読みます。",
+    "example": "日本語の授業で「東京（とうきょう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"東京\" yang berarti Tokyo.",
     "status": "ready"
   },
   {
@@ -1109,7 +1109,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "絵",
     "reading": "え",
     "meaning": "gambar/lukisan",
-    "example": "絵は「え」と読みます。",
+    "example": "日本語の授業で「絵（え）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"絵\" yang berarti gambar/lukisan.",
     "status": "ready"
   },
   {
@@ -1120,7 +1120,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "場合",
     "reading": "ばあい",
     "meaning": "kasus/keadaan",
-    "example": "場合は「ばあい」と読みます。",
+    "example": "日本語の授業で「場合（ばあい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"場合\" yang berarti kasus/keadaan.",
     "status": "ready"
   },
   {
@@ -1131,7 +1131,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "禁止",
     "reading": "きんし",
     "meaning": "dilarang",
-    "example": "禁止は「きんし」と読みます。",
+    "example": "日本語の授業で「禁止（きんし）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"禁止\" yang berarti dilarang.",
     "status": "ready"
   },
   {
@@ -1142,7 +1142,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "計画",
     "reading": "けいかく",
     "meaning": "rencana",
-    "example": "計画は「けいかく」と読みます。",
+    "example": "日本語の授業で「計画（けいかく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"計画\" yang berarti rencana.",
     "status": "ready"
   },
   {
@@ -1153,7 +1153,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "空",
     "reading": "そら",
     "meaning": "langit",
-    "example": "空は「そら」と読みます。",
+    "example": "日本語の授業で「空（そら）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"空\" yang berarti langit.",
     "status": "ready"
   },
   {
@@ -1164,7 +1164,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "中止",
     "reading": "ちゅうし",
     "meaning": "dibatalkan",
-    "example": "中止は「ちゅうし」と読みます。",
+    "example": "日本語の授業で「中止（ちゅうし）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"中止\" yang berarti dibatalkan.",
     "status": "ready"
   },
   {
@@ -1175,7 +1175,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "紙",
     "reading": "かみ",
     "meaning": "kertas",
-    "example": "紙は「かみ」と読みます。",
+    "example": "日本語の授業で「紙（かみ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"紙\" yang berarti kertas.",
     "status": "ready"
   },
   {
@@ -1186,7 +1186,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "遊ぶ",
     "reading": "あそぶ",
     "meaning": "bermain",
-    "example": "遊ぶは「あそぶ」と読みます。",
+    "example": "日本語の授業で「遊ぶ（あそぶ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"遊ぶ\" yang berarti bermain.",
     "status": "ready"
   },
   {
@@ -1197,7 +1197,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "泳ぐ",
     "reading": "およぐ",
     "meaning": "berenang",
-    "example": "泳ぐは「およぐ」と読みます。",
+    "example": "日本語の授業で「泳ぐ（およぐ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"泳ぐ\" yang berarti berenang.",
     "status": "ready"
   },
   {
@@ -1208,7 +1208,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "条件",
     "reading": "じょうけん",
     "meaning": "syarat",
-    "example": "条件は「じょうけん」と読みます。",
+    "example": "日本語の授業で「条件（じょうけん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"条件\" yang berarti syarat.",
     "status": "ready"
   },
   {
@@ -1219,7 +1219,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "始まる",
     "reading": "はじまる",
     "meaning": "dimulai",
-    "example": "始まるは「はじまる」と読みます。",
+    "example": "日本語の授業で「始まる（はじまる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"始まる\" yang berarti dimulai.",
     "status": "ready"
   },
   {
@@ -1230,7 +1230,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "調べる",
     "reading": "しらべる",
     "meaning": "meneliti/mencari tahu",
-    "example": "調べるは「しらべる」と読みます。",
+    "example": "日本語の授業で「調べる（しらべる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"調べる\" yang berarti meneliti/mencari tahu.",
     "status": "ready"
   },
   {
@@ -1241,7 +1241,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "光る",
     "reading": "ひかる",
     "meaning": "bersinar",
-    "example": "光るは「ひかる」と読みます。",
+    "example": "日本語の授業で「光る（ひかる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"光る\" yang berarti bersinar.",
     "status": "ready"
   },
   {
@@ -1252,7 +1252,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "~以上",
     "reading": "~いじょう",
     "meaning": "lebih dari ~",
-    "example": "~以上を使って文を作ります。",
+    "example": "日本語の授業で「~以上（~いじょう）」を使って文を作ります。 Artinya: Di kelas bahasa Jepang, saya membuat kalimat dengan pola \"~以上\" yang berarti lebih dari ~.",
     "status": "ready"
   },
   {
@@ -1263,7 +1263,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "申し込む",
     "reading": "もうしこむ",
     "meaning": "mendaftar",
-    "example": "申し込むは「もうしこむ」と読みます。",
+    "example": "日本語の授業で「申し込む（もうしこむ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"申し込む\" yang berarti mendaftar.",
     "status": "ready"
   },
   {
@@ -1274,7 +1274,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "出発する",
     "reading": "しゅっぱつする",
     "meaning": "berangkat",
-    "example": "出発するは「しゅっぱつする」と読みます。",
+    "example": "日本語の授業で「出発する（しゅっぱつする）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"出発する\" yang berarti berangkat.",
     "status": "ready"
   },
   {
@@ -1285,7 +1285,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "到着する",
     "reading": "とうちゃくする",
     "meaning": "tiba",
-    "example": "到着するは「とうちゃくする」と読みます。",
+    "example": "日本語の授業で「到着する（とうちゃくする）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"到着する\" yang berarti tiba.",
     "status": "ready"
   },
   {
@@ -1296,7 +1296,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "開く",
     "reading": "ひらく",
     "meaning": "membuka",
-    "example": "開くは「ひらく」と読みます。",
+    "example": "日本語の授業で「開く（ひらく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"開く\" yang berarti membuka.",
     "status": "ready"
   },
   {
@@ -1307,7 +1307,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "生産する",
     "reading": "せいさんする",
     "meaning": "memproduksi",
-    "example": "生産するは「せいさんする」と読みます。",
+    "example": "日本語の授業で「生産する（せいさんする）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"生産する\" yang berarti memproduksi.",
     "status": "ready"
   },
   {
@@ -1318,7 +1318,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "山",
     "reading": "やま",
     "meaning": "gunung",
-    "example": "山は「やま」と読みます。",
+    "example": "日本語の授業で「山（やま）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"山\" yang berarti gunung.",
     "status": "ready"
   },
   {
@@ -1329,7 +1329,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "川",
     "reading": "かわ",
     "meaning": "sungai",
-    "example": "川は「かわ」と読みます。",
+    "example": "日本語の授業で「川（かわ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"川\" yang berarti sungai.",
     "status": "ready"
   },
   {
@@ -1340,7 +1340,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "海",
     "reading": "うみ",
     "meaning": "laut",
-    "example": "海は「うみ」と読みます。",
+    "example": "日本語の授業で「海（うみ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"海\" yang berarti laut.",
     "status": "ready"
   },
   {
@@ -1351,7 +1351,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "島",
     "reading": "しま",
     "meaning": "pulau",
-    "example": "島は「しま」と読みます。",
+    "example": "日本語の授業で「島（しま）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"島\" yang berarti pulau.",
     "status": "ready"
   },
   {
@@ -1362,7 +1362,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "森",
     "reading": "もり",
     "meaning": "hutan",
-    "example": "森は「もり」と読みます。",
+    "example": "日本語の授業で「森（もり）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"森\" yang berarti hutan.",
     "status": "ready"
   },
   {
@@ -1373,7 +1373,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "客",
     "reading": "きゃく",
     "meaning": "tamu/pelanggan",
-    "example": "客は「きゃく」と読みます。",
+    "example": "日本語の授業で「客（きゃく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"客\" yang berarti tamu/pelanggan.",
     "status": "ready"
   },
   {
@@ -1384,7 +1384,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "観光地",
     "reading": "かんこうち",
     "meaning": "tempat wisata",
-    "example": "観光地は「かんこうち」と読みます。",
+    "example": "日本語の授業で「観光地（かんこうち）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"観光地\" yang berarti tempat wisata.",
     "status": "ready"
   },
   {
@@ -1395,7 +1395,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "意味",
     "reading": "いみ",
     "meaning": "arti",
-    "example": "意味は「いみ」と読みます。",
+    "example": "日本語の授業で「意味（いみ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"意味\" yang berarti arti.",
     "status": "ready"
   },
   {
@@ -1406,7 +1406,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "経験",
     "reading": "けいけん",
     "meaning": "pengalaman",
-    "example": "経験は「けいけん」と読みます。",
+    "example": "日本語の授業で「経験（けいけん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"経験\" yang berarti pengalaman.",
     "status": "ready"
   },
   {
@@ -1417,7 +1417,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "写真",
     "reading": "しゃしん",
     "meaning": "foto",
-    "example": "写真は「しゃしん」と読みます。",
+    "example": "日本語の授業で「写真（しゃしん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"写真\" yang berarti foto.",
     "status": "ready"
   },
   {
@@ -1428,7 +1428,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "歌",
     "reading": "うた",
     "meaning": "lagu",
-    "example": "歌は「うた」と読みます。",
+    "example": "日本語の授業で「歌（うた）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"歌\" yang berarti lagu.",
     "status": "ready"
   },
   {
@@ -1439,7 +1439,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "歌手",
     "reading": "かしゅ",
     "meaning": "penyanyi",
-    "example": "歌手は「かしゅ」と読みます。",
+    "example": "日本語の授業で「歌手（かしゅ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"歌手\" yang berarti penyanyi.",
     "status": "ready"
   },
   {
@@ -1450,7 +1450,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "上手な",
     "reading": "じょうずな",
     "meaning": "pandai/mahir",
-    "example": "上手なは「じょうずな」と読みます。",
+    "example": "日本語の授業で「上手な（じょうずな）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"上手な\" yang berarti pandai/mahir.",
     "status": "ready"
   },
   {
@@ -1461,7 +1461,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "明るい",
     "reading": "あかるい",
     "meaning": "terang/cerah",
-    "example": "明るいは「あかるい」と読みます。",
+    "example": "日本語の授業で「明るい（あかるい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"明るい\" yang berarti terang/cerah.",
     "status": "ready"
   },
   {
@@ -1472,7 +1472,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "長い",
     "reading": "ながい",
     "meaning": "panjang",
-    "example": "長いは「ながい」と読みます。",
+    "example": "日本語の授業で「長い（ながい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"長い\" yang berarti panjang.",
     "status": "ready"
   },
   {
@@ -1483,7 +1483,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "短い",
     "reading": "みじかい",
     "meaning": "pendek",
-    "example": "短いは「みじかい」と読みます。",
+    "example": "日本語の授業で「短い（みじかい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"短い\" yang berarti pendek.",
     "status": "ready"
   },
   {
@@ -1494,7 +1494,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "着る",
     "reading": "きる",
     "meaning": "memakai (baju)",
-    "example": "着るは「きる」と読みます。",
+    "example": "日本語の授業で「着る（きる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"着る\" yang berarti memakai (baju).",
     "status": "ready"
   },
   {
@@ -1505,7 +1505,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "立つ",
     "reading": "たつ",
     "meaning": "berdiri",
-    "example": "立つは「たつ」と読みます。",
+    "example": "日本語の授業で「立つ（たつ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"立つ\" yang berarti berdiri.",
     "status": "ready"
   },
   {
@@ -1516,7 +1516,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "泣く",
     "reading": "なく",
     "meaning": "menangis",
-    "example": "泣くは「なく」と読みます。",
+    "example": "日本語の授業で「泣く（なく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"泣く\" yang berarti menangis.",
     "status": "ready"
   },
   {
@@ -1527,7 +1527,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "注文",
     "reading": "ちゅうもん",
     "meaning": "pesanan",
-    "example": "注文は「ちゅうもん」と読みます。",
+    "example": "日本語の授業で「注文（ちゅうもん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"注文\" yang berarti pesanan.",
     "status": "ready"
   },
   {
@@ -1538,7 +1538,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "会計",
     "reading": "かいけい",
     "meaning": "pembayaran/kasir",
-    "example": "会計は「かいけい」と読みます。",
+    "example": "日本語の授業で「会計（かいけい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"会計\" yang berarti pembayaran/kasir.",
     "status": "ready"
   },
   {
@@ -1549,7 +1549,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "予約",
     "reading": "よやく",
     "meaning": "reservasi",
-    "example": "予約は「よやく」と読みます。",
+    "example": "日本語の授業で「予約（よやく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"予約\" yang berarti reservasi.",
     "status": "ready"
   },
   {
@@ -1560,7 +1560,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "電話番号",
     "reading": "でんわばんごう",
     "meaning": "nomor telepon",
-    "example": "電話番号は「でんわばんごう」と読みます。",
+    "example": "日本語の授業で「電話番号（でんわばんごう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"電話番号\" yang berarti nomor telepon.",
     "status": "ready"
   },
   {
@@ -1571,7 +1571,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "~様",
     "reading": "~さま",
     "meaning": "Bapak/Ibu (sebutan hormat)",
-    "example": "~様を使って文を作ります。",
+    "example": "日本語の授業で「~様（~さま）」を使って文を作ります。 Artinya: Di kelas bahasa Jepang, saya membuat kalimat dengan pola \"~様\" yang berarti Bapak/Ibu (sebutan hormat).",
     "status": "ready"
   },
   {
@@ -1582,7 +1582,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "ご飯",
     "reading": "ごはん",
     "meaning": "nasi",
-    "example": "ご飯は「ごはん」と読みます。",
+    "example": "日本語の授業で「ご飯（ごはん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"ご飯\" yang berarti nasi.",
     "status": "ready"
   },
   {
@@ -1593,7 +1593,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "牛乳",
     "reading": "ぎゅうにゅう",
     "meaning": "susu sapi",
-    "example": "牛乳は「ぎゅうにゅう」と読みます。",
+    "example": "日本語の授業で「牛乳（ぎゅうにゅう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"牛乳\" yang berarti susu sapi.",
     "status": "ready"
   },
   {
@@ -1604,7 +1604,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "生",
     "reading": "なま",
     "meaning": "mentah",
-    "example": "生は「なま」と読みます。",
+    "example": "日本語の授業で「生（なま）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"生\" yang berarti mentah.",
     "status": "ready"
   },
   {
@@ -1615,7 +1615,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "禁煙",
     "reading": "きんえん",
     "meaning": "dilarang merokok",
-    "example": "禁煙は「きんえん」と読みます。",
+    "example": "日本語の授業で「禁煙（きんえん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"禁煙\" yang berarti dilarang merokok.",
     "status": "ready"
   },
   {
@@ -1626,7 +1626,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "自由",
     "reading": "じゆう",
     "meaning": "bebas",
-    "example": "自由は「じゆう」と読みます。",
+    "example": "日本語の授業で「自由（じゆう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"自由\" yang berarti bebas.",
     "status": "ready"
   },
   {
@@ -1637,7 +1637,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "塩",
     "reading": "しお",
     "meaning": "garam",
-    "example": "塩は「しお」と読みます。",
+    "example": "日本語の授業で「塩（しお）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"塩\" yang berarti garam.",
     "status": "ready"
   },
   {
@@ -1648,7 +1648,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "油",
     "reading": "あぶら",
     "meaning": "minyak",
-    "example": "油は「あぶら」と読みます。",
+    "example": "日本語の授業で「油（あぶら）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"油\" yang berarti minyak.",
     "status": "ready"
   },
   {
@@ -1659,7 +1659,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "量",
     "reading": "りょう",
     "meaning": "jumlah/kuantitas",
-    "example": "量は「りょう」と読みます。",
+    "example": "日本語の授業で「量（りょう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"量\" yang berarti jumlah/kuantitas.",
     "status": "ready"
   },
   {
@@ -1670,7 +1670,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "~方",
     "reading": "~かた",
     "meaning": "cara ~",
-    "example": "~方を使って文を作ります。",
+    "example": "日本語の授業で「~方（~かた）」を使って文を作ります。 Artinya: Di kelas bahasa Jepang, saya membuat kalimat dengan pola \"~方\" yang berarti cara ~.",
     "status": "ready"
   },
   {
@@ -1681,7 +1681,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "~屋",
     "reading": "~や",
     "meaning": "toko ~",
-    "example": "~屋を使って文を作ります。",
+    "example": "日本語の授業で「~屋（~や）」を使って文を作ります。 Artinya: Di kelas bahasa Jepang, saya membuat kalimat dengan pola \"~屋\" yang berarti toko ~.",
     "status": "ready"
   },
   {
@@ -1692,7 +1692,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "満足な",
     "reading": "まんぞくな",
     "meaning": "puas",
-    "example": "満足なは「まんぞくな」と読みます。",
+    "example": "日本語の授業で「満足な（まんぞくな）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"満足な\" yang berarti puas.",
     "status": "ready"
   },
   {
@@ -1703,7 +1703,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "切る",
     "reading": "きる",
     "meaning": "memotong",
-    "example": "切るは「きる」と読みます。",
+    "example": "日本語の授業で「切る（きる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"切る\" yang berarti memotong.",
     "status": "ready"
   },
   {
@@ -1714,7 +1714,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "焼く",
     "reading": "やく",
     "meaning": "membakar/memanggang",
-    "example": "焼くは「やく」と読みます。",
+    "example": "日本語の授業で「焼く（やく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"焼く\" yang berarti membakar/memanggang.",
     "status": "ready"
   },
   {
@@ -1725,7 +1725,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "入れる",
     "reading": "いれる",
     "meaning": "memasukkan",
-    "example": "入れるは「いれる」と読みます。",
+    "example": "日本語の授業で「入れる（いれる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"入れる\" yang berarti memasukkan.",
     "status": "ready"
   },
   {
@@ -1736,7 +1736,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "最近",
     "reading": "さいきん",
     "meaning": "akhir-akhir ini",
-    "example": "最近は「さいきん」と読みます。",
+    "example": "日本語の授業で「最近（さいきん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"最近\" yang berarti akhir-akhir ini.",
     "status": "ready"
   },
   {
@@ -1747,7 +1747,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "授業",
     "reading": "じゅぎょう",
     "meaning": "pelajaran/kelas",
-    "example": "授業は「じゅぎょう」と読みます。",
+    "example": "日本語の授業で「授業（じゅぎょう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"授業\" yang berarti pelajaran/kelas.",
     "status": "ready"
   },
   {
@@ -1758,7 +1758,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "問題",
     "reading": "もんだい",
     "meaning": "masalah/soal",
-    "example": "問題は「もんだい」と読みます。",
+    "example": "日本語の授業で「問題（もんだい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"問題\" yang berarti masalah/soal.",
     "status": "ready"
   },
   {
@@ -1769,7 +1769,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "大変",
     "reading": "たいへん",
     "meaning": "berat/susah",
-    "example": "大変は「たいへん」と読みます。",
+    "example": "日本語の授業で「大変（たいへん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"大変\" yang berarti berat/susah.",
     "status": "ready"
   },
   {
@@ -1780,7 +1780,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "困る",
     "reading": "こまる",
     "meaning": "kesulitan",
-    "example": "困るは「こまる」と読みます。",
+    "example": "日本語の授業で「困る（こまる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"困る\" yang berarti kesulitan.",
     "status": "ready"
   },
   {
@@ -1791,7 +1791,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "違う",
     "reading": "ちがう",
     "meaning": "berbeda",
-    "example": "違うは「ちがう」と読みます。",
+    "example": "日本語の授業で「違う（ちがう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"違う\" yang berarti berbeda.",
     "status": "ready"
   },
   {
@@ -1802,7 +1802,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "慣れる",
     "reading": "なれる",
     "meaning": "terbiasa",
-    "example": "慣れるは「なれる」と読みます。",
+    "example": "日本語の授業で「慣れる（なれる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"慣れる\" yang berarti terbiasa.",
     "status": "ready"
   },
   {
@@ -1813,7 +1813,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "増える",
     "reading": "ふえる",
     "meaning": "bertambah",
-    "example": "増えるは「ふえる」と読みます。",
+    "example": "日本語の授業で「増える（ふえる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"増える\" yang berarti bertambah.",
     "status": "ready"
   },
   {
@@ -1824,7 +1824,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "笑う",
     "reading": "わらう",
     "meaning": "tertawa",
-    "example": "笑うは「わらう」と読みます。",
+    "example": "日本語の授業で「笑う（わらう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"笑う\" yang berarti tertawa.",
     "status": "ready"
   },
   {
@@ -1835,7 +1835,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "苦労する",
     "reading": "くろうする",
     "meaning": "bersusah payah",
-    "example": "苦労するは「くろうする」と読みます。",
+    "example": "日本語の授業で「苦労する（くろうする）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"苦労する\" yang berarti bersusah payah.",
     "status": "ready"
   },
   {
@@ -1846,7 +1846,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "希望",
     "reading": "きぼう",
     "meaning": "harapan",
-    "example": "希望は「きぼう」と読みます。",
+    "example": "日本語の授業で「希望（きぼう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"希望\" yang berarti harapan.",
     "status": "ready"
   },
   {
@@ -1857,7 +1857,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "募集",
     "reading": "ぼしゅう",
     "meaning": "perekrutan",
-    "example": "募集は「ぼしゅう」と読みます。",
+    "example": "日本語の授業で「募集（ぼしゅう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"募集\" yang berarti perekrutan.",
     "status": "ready"
   },
   {
@@ -1868,7 +1868,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "特に",
     "reading": "とくに",
     "meaning": "terutama",
-    "example": "特には「とくに」と読みます。",
+    "example": "日本語の授業で「特に（とくに）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"特に\" yang berarti terutama.",
     "status": "ready"
   },
   {
@@ -1879,7 +1879,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "住む",
     "reading": "すむ",
     "meaning": "tinggal",
-    "example": "住むは「すむ」と読みます。",
+    "example": "日本語の授業で「住む（すむ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"住む\" yang berarti tinggal.",
     "status": "ready"
   },
   {
@@ -1890,7 +1890,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "建てる",
     "reading": "たてる",
     "meaning": "membangun",
-    "example": "建てるは「たてる」と読みます。",
+    "example": "日本語の授業で「建てる（たてる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"建てる\" yang berarti membangun.",
     "status": "ready"
   },
   {
@@ -1901,7 +1901,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "続ける",
     "reading": "つづける",
     "meaning": "melanjutkan",
-    "example": "続けるは「つづける」と読みます。",
+    "example": "日本語の授業で「続ける（つづける）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"続ける\" yang berarti melanjutkan.",
     "status": "ready"
   },
   {
@@ -1912,7 +1912,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "考える",
     "reading": "かんがえる",
     "meaning": "berpikir",
-    "example": "考えるは「かんがえる」と読みます。",
+    "example": "日本語の授業で「考える（かんがえる）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"考える\" yang berarti berpikir.",
     "status": "ready"
   },
   {
@@ -1923,7 +1923,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "役に立つ",
     "reading": "やくにたつ",
     "meaning": "berguna",
-    "example": "役に立つは「やくにたつ」と読みます。",
+    "example": "日本語の授業で「役に立つ（やくにたつ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"役に立つ\" yang berarti berguna.",
     "status": "ready"
   },
   {
@@ -1934,7 +1934,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "卒業する",
     "reading": "そつぎょうする",
     "meaning": "lulus",
-    "example": "卒業するは「そつぎょうする」と読みます。",
+    "example": "日本語の授業で「卒業する（そつぎょうする）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"卒業する\" yang berarti lulus.",
     "status": "ready"
   },
   {
@@ -1945,7 +1945,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "留学する",
     "reading": "りゅうがくする",
     "meaning": "belajar di luar negeri",
-    "example": "留学するは「りゅうがくする」と読みます。",
+    "example": "日本語の授業で「留学する（りゅうがくする）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"留学する\" yang berarti belajar di luar negeri.",
     "status": "ready"
   },
   {
@@ -1956,7 +1956,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "準備中",
     "reading": "じゅんびちゅう",
     "meaning": "sedang dalam persiapan",
-    "example": "準備中は「じゅんびちゅう」と読みます。",
+    "example": "日本語の授業で「準備中（じゅんびちゅう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"準備中\" yang berarti sedang dalam persiapan.",
     "status": "ready"
   },
   {
@@ -1967,7 +1967,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "電源",
     "reading": "でんげん",
     "meaning": "tombol power/sumber listrik",
-    "example": "電源は「でんげん」と読みます。",
+    "example": "日本語の授業で「電源（でんげん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"電源\" yang berarti tombol power/sumber listrik.",
     "status": "ready"
   },
   {
@@ -1978,7 +1978,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "工場",
     "reading": "こうじょう",
     "meaning": "pabrik",
-    "example": "工場は「こうじょう」と読みます。",
+    "example": "日本語の授業で「工場（こうじょう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"工場\" yang berarti pabrik.",
     "status": "ready"
   },
   {
@@ -1989,7 +1989,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "停電",
     "reading": "ていでん",
     "meaning": "mati listrik",
-    "example": "停電は「ていでん」と読みます。",
+    "example": "日本語の授業で「停電（ていでん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"停電\" yang berarti mati listrik.",
     "status": "ready"
   },
   {
@@ -2000,7 +2000,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "地図",
     "reading": "ちず",
     "meaning": "peta",
-    "example": "地図は「ちず」と読みます。",
+    "example": "日本語の授業で「地図（ちず）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"地図\" yang berarti peta.",
     "status": "ready"
   },
   {
@@ -2011,7 +2011,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "傷",
     "reading": "きず",
     "meaning": "luka",
-    "example": "傷は「きず」と読みます。",
+    "example": "日本語の授業で「傷（きず）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"傷\" yang berarti luka.",
     "status": "ready"
   },
   {
@@ -2022,7 +2022,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "昔",
     "reading": "むかし",
     "meaning": "zaman dahulu",
-    "example": "昔は「むかし」と読みます。",
+    "example": "日本語の授業で「昔（むかし）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"昔\" yang berarti zaman dahulu.",
     "status": "ready"
   },
   {
@@ -2033,7 +2033,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "駐車場",
     "reading": "ちゅうしゃじょう",
     "meaning": "tempat parkir",
-    "example": "駐車場は「ちゅうしゃじょう」と読みます。",
+    "example": "日本語の授業で「駐車場（ちゅうしゃじょう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"駐車場\" yang berarti tempat parkir.",
     "status": "ready"
   },
   {
@@ -2044,7 +2044,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "工事中",
     "reading": "こうじちゅう",
     "meaning": "sedang pengerjaan",
-    "example": "工事中は「こうじちゅう」と読みます。",
+    "example": "日本語の授業で「工事中（こうじちゅう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"工事中\" yang berarti sedang pengerjaan.",
     "status": "ready"
   },
   {
@@ -2055,7 +2055,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "結婚式",
     "reading": "けっこんしき",
     "meaning": "upacara pernikahan",
-    "example": "結婚式は「けっこんしき」と読みます。",
+    "example": "日本語の授業で「結婚式（けっこんしき）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"結婚式\" yang berarti upacara pernikahan.",
     "status": "ready"
   },
   {
@@ -2066,7 +2066,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "以外",
     "reading": "いがい",
     "meaning": "selain/kecuali",
-    "example": "以外は「いがい」と読みます。",
+    "example": "日本語の授業で「以外（いがい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"以外\" yang berarti selain/kecuali.",
     "status": "ready"
   },
   {
@@ -2077,7 +2077,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "以下",
     "reading": "いか",
     "meaning": "kurang dari/ke bawah",
-    "example": "以下は「いか」と読みます。",
+    "example": "日本語の授業で「以下（いか）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"以下\" yang berarti kurang dari/ke bawah.",
     "status": "ready"
   },
   {
@@ -2088,7 +2088,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "非常口",
     "reading": "ひじょうぐち",
     "meaning": "pintu darurat",
-    "example": "非常口は「ひじょうぐち」と読みます。",
+    "example": "日本語の授業で「非常口（ひじょうぐち）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"非常口\" yang berarti pintu darurat.",
     "status": "ready"
   },
   {
@@ -2099,7 +2099,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "火事",
     "reading": "かじ",
     "meaning": "kebakaran",
-    "example": "火事は「かじ」と読みます。",
+    "example": "日本語の授業で「火事（かじ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"火事\" yang berarti kebakaran.",
     "status": "ready"
   },
   {
@@ -2110,7 +2110,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "雲",
     "reading": "くも",
     "meaning": "awan",
-    "example": "雲は「くも」と読みます。",
+    "example": "日本語の授業で「雲（くも）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"雲\" yang berarti awan.",
     "status": "ready"
   },
   {
@@ -2121,7 +2121,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "曇り",
     "reading": "くもり",
     "meaning": "berawan",
-    "example": "曇りは「くもり」と読みます。",
+    "example": "日本語の授業で「曇り（くもり）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"曇り\" yang berarti berawan.",
     "status": "ready"
   },
   {
@@ -2132,7 +2132,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "端",
     "reading": "はし",
     "meaning": "pinggir/ujung",
-    "example": "端は「はし」と読みます。",
+    "example": "日本語の授業で「端（はし）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"端\" yang berarti pinggir/ujung.",
     "status": "ready"
   },
   {
@@ -2143,7 +2143,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "栓抜き",
     "reading": "せんぬき",
     "meaning": "pembuka tutup botol",
-    "example": "栓抜きは「せんぬき」と読みます。",
+    "example": "日本語の授業で「栓抜き（せんぬき）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"栓抜き\" yang berarti pembuka tutup botol.",
     "status": "ready"
   },
   {
@@ -2154,7 +2154,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "世界中",
     "reading": "せかいじゅう",
     "meaning": "seluruh dunia",
-    "example": "世界中は「せかいじゅう」と読みます。",
+    "example": "日本語の授業で「世界中（せかいじゅう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"世界中\" yang berarti seluruh dunia.",
     "status": "ready"
   },
   {
@@ -2165,7 +2165,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "禁煙席",
     "reading": "きんえんせき",
     "meaning": "area bebas asap rokok",
-    "example": "禁煙席は「きんえんせき」と読みます。",
+    "example": "日本語の授業で「禁煙席（きんえんせき）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"禁煙席\" yang berarti area bebas asap rokok.",
     "status": "ready"
   },
   {
@@ -2176,7 +2176,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "予約席",
     "reading": "よやくせき",
     "meaning": "kursi reservasi",
-    "example": "予約席は「よやくせき」と読みます。",
+    "example": "日本語の授業で「予約席（よやくせき）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"予約席\" yang berarti kursi reservasi.",
     "status": "ready"
   },
   {
@@ -2187,7 +2187,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "相撲",
     "reading": "すもう",
     "meaning": "gulat sumo",
-    "example": "相撲は「すもう」と読みます。",
+    "example": "日本語の授業で「相撲（すもう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"相撲\" yang berarti gulat sumo.",
     "status": "ready"
   },
   {
@@ -2198,7 +2198,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "使用中",
     "reading": "しようちゅう",
     "meaning": "sedang digunakan",
-    "example": "使用中は「しようちゅう」と読みます。",
+    "example": "日本語の授業で「使用中（しようちゅう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"使用中\" yang berarti sedang digunakan.",
     "status": "ready"
   },
   {
@@ -2209,7 +2209,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "寝室",
     "reading": "しんしつ",
     "meaning": "kamar tidur",
-    "example": "寝室は「しんしつ」と読みます。",
+    "example": "日本語の授業で「寝室（しんしつ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"寝室\" yang berarti kamar tidur.",
     "status": "ready"
   },
   {
@@ -2220,7 +2220,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "洗濯機",
     "reading": "せんたくき",
     "meaning": "mesin cuci",
-    "example": "洗濯機は「せんたくき」と読みます。",
+    "example": "日本語の授業で「洗濯機（せんたくき）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"洗濯機\" yang berarti mesin cuci.",
     "status": "ready"
   },
   {
@@ -2231,7 +2231,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "集中",
     "reading": "しゅうちゅう",
     "meaning": "konsentrasi",
-    "example": "集中は「しゅうちゅう」と読みます。",
+    "example": "日本語の授業で「集中（しゅうちゅう）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"集中\" yang berarti konsentrasi.",
     "status": "ready"
   },
   {
@@ -2242,7 +2242,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "美術館",
     "reading": "びじゅつかん",
     "meaning": "museum seni",
-    "example": "美術館は「びじゅつかん」と読みます。",
+    "example": "日本語の授業で「美術館（びじゅつかん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"美術館\" yang berarti museum seni.",
     "status": "ready"
   },
   {
@@ -2253,7 +2253,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "四季",
     "reading": "しき",
     "meaning": "empat musim",
-    "example": "四季は「しき」と読みます。",
+    "example": "日本語の授業で「四季（しき）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"四季\" yang berarti empat musim.",
     "status": "ready"
   },
   {
@@ -2264,7 +2264,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "帽子",
     "reading": "ぼうし",
     "meaning": "topi",
-    "example": "帽子は「ぼうし」と読みます。",
+    "example": "日本語の授業で「帽子（ぼうし）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"帽子\" yang berarti topi.",
     "status": "ready"
   },
   {
@@ -2275,7 +2275,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "椅子",
     "reading": "いす",
     "meaning": "kursi",
-    "example": "椅子は「いす」と読みます。",
+    "example": "日本語の授業で「椅子（いす）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"椅子\" yang berarti kursi.",
     "status": "ready"
   },
   {
@@ -2286,7 +2286,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "自動販売機",
     "reading": "じどうはんばいき",
     "meaning": "mesin penjual otomatis",
-    "example": "自動販売機は「じどうはんばいき」と読みます。",
+    "example": "日本語の授業で「自動販売機（じどうはんばいき）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"自動販売機\" yang berarti mesin penjual otomatis.",
     "status": "ready"
   },
   {
@@ -2297,7 +2297,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "髪",
     "reading": "かみ",
     "meaning": "rambut",
-    "example": "髪は「かみ」と読みます。",
+    "example": "日本語の授業で「髪（かみ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"髪\" yang berarti rambut.",
     "status": "ready"
   },
   {
@@ -2308,7 +2308,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "冷蔵庫",
     "reading": "れいぞうこ",
     "meaning": "kulkas",
-    "example": "冷蔵庫は「れいぞうこ」と読みます。",
+    "example": "日本語の授業で「冷蔵庫（れいぞうこ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"冷蔵庫\" yang berarti kulkas.",
     "status": "ready"
   },
   {
@@ -2319,7 +2319,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "研究者",
     "reading": "けんきゅうしゃ",
     "meaning": "peneliti",
-    "example": "研究者は「けんきゅうしゃ」と読みます。",
+    "example": "日本語の授業で「研究者（けんきゅうしゃ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"研究者\" yang berarti peneliti.",
     "status": "ready"
   },
   {
@@ -2330,7 +2330,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "化粧室",
     "reading": "けしょうしつ",
     "meaning": "toilet/kamar kecil",
-    "example": "化粧室は「けしょうしつ」と読みます。",
+    "example": "日本語の授業で「化粧室（けしょうしつ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"化粧室\" yang berarti toilet/kamar kecil.",
     "status": "ready"
   },
   {
@@ -2341,7 +2341,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "入国管理局",
     "reading": "にゅうこくかんりきょく",
     "meaning": "imigrasi",
-    "example": "入国管理局は「にゅうこくかんりきょく」と読みます。",
+    "example": "日本語の授業で「入国管理局（にゅうこくかんりきょく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"入国管理局\" yang berarti imigrasi.",
     "status": "ready"
   },
   {
@@ -2352,7 +2352,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "定休日",
     "reading": "ていきゅうび",
     "meaning": "hari libur rutin",
-    "example": "定休日は「ていきゅうび」と読みます。",
+    "example": "日本語の授業で「定休日（ていきゅうび）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"定休日\" yang berarti hari libur rutin.",
     "status": "ready"
   },
   {
@@ -2363,7 +2363,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "炊飯器",
     "reading": "すいはんき",
     "meaning": "penanak nasi",
-    "example": "炊飯器は「すいはんき」と読みます。",
+    "example": "日本語の授業で「炊飯器（すいはんき）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"炊飯器\" yang berarti penanak nasi.",
     "status": "ready"
   },
   {
@@ -2374,7 +2374,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "民族資料館",
     "reading": "みんぞくしりょうかん",
     "meaning": "museum etnografi",
-    "example": "民族資料館は「みんぞくしりょうかん」と読みます。",
+    "example": "日本語の授業で「民族資料館（みんぞくしりょうかん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"民族資料館\" yang berarti museum etnografi.",
     "status": "ready"
   },
   {
@@ -2385,7 +2385,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "閉店",
     "reading": "へいてん",
     "meaning": "toko tutup",
-    "example": "閉店は「へいてん」と読みます。",
+    "example": "日本語の授業で「閉店（へいてん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"閉店\" yang berarti toko tutup.",
     "status": "ready"
   },
   {
@@ -2396,7 +2396,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "体温計",
     "reading": "たいおんけい",
     "meaning": "termometer",
-    "example": "体温計は「たいおんけい」と読みます。",
+    "example": "日本語の授業で「体温計（たいおんけい）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"体温計\" yang berarti termometer.",
     "status": "ready"
   },
   {
@@ -2407,7 +2407,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "服",
     "reading": "ふく",
     "meaning": "pakaian",
-    "example": "服は「ふく」と読みます。",
+    "example": "日本語の授業で「服（ふく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"服\" yang berarti pakaian.",
     "status": "ready"
   },
   {
@@ -2418,7 +2418,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "法律",
     "reading": "ほうりつ",
     "meaning": "hukum",
-    "example": "法律は「ほうりつ」と読みます。",
+    "example": "日本語の授業で「法律（ほうりつ）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"法律\" yang berarti hukum.",
     "status": "ready"
   },
   {
@@ -2429,7 +2429,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "立ち入り禁止",
     "reading": "たちいりきんし",
     "meaning": "dilarang masuk",
-    "example": "立ち入り禁止は「たちいりきんし」と読みます。",
+    "example": "日本語の授業で「立ち入り禁止（たちいりきんし）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"立ち入り禁止\" yang berarti dilarang masuk.",
     "status": "ready"
   },
   {
@@ -2440,7 +2440,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "体育館",
     "reading": "たいいくかん",
     "meaning": "gedung olahraga",
-    "example": "体育館は「たいいくかん」と読みます。",
+    "example": "日本語の授業で「体育館（たいいくかん）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"体育館\" yang berarti gedung olahraga.",
     "status": "ready"
   },
   {
@@ -2451,7 +2451,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "定食",
     "reading": "ていしょく",
     "meaning": "paket makanan",
-    "example": "定食は「ていしょく」と読みます。",
+    "example": "日本語の授業で「定食（ていしょく）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"定食\" yang berarti paket makanan.",
     "status": "ready"
   },
   {
@@ -2462,7 +2462,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "眼鏡",
     "reading": "めがね",
     "meaning": "kacamata",
-    "example": "眼鏡は「めがね」と読みます。",
+    "example": "日本語の授業で「眼鏡（めがね）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"眼鏡\" yang berarti kacamata.",
     "status": "ready"
   },
   {
@@ -2473,7 +2473,7 @@ export const kanjiN4Items: LearningItem[] = [
     "prompt": "弁護士",
     "reading": "べんごし",
     "meaning": "pengacara",
-    "example": "弁護士は「べんごし」と読みます。",
+    "example": "日本語の授業で「弁護士（べんごし）」を勉強します。 Artinya: Di kelas bahasa Jepang, saya belajar kata \"弁護士\" yang berarti pengacara.",
     "status": "ready"
   }
 ];

@@ -119,7 +119,7 @@ if (Astro.request.method === "POST") {
 
     {unlocked && (
       <script>
-        import { createStudentAccount, escapeHtml, getUsers, normalizeNim } from "../../lib/accounts";
+        import { createStudentAccount, escapeHtml, getUsers, normalizeNim, syncLocalStudentsToRemote } from "../../lib/accounts";
 
         const registerForm = document.getElementById("registerForm");
         const studentNim = document.getElementById("studentNim");
@@ -141,13 +141,23 @@ if (Astro.request.method === "POST") {
         }
 
         async function renderStudents() {
+          const syncResult = await syncLocalStudentsToRemote();
           const { users, remoteError } = await getUsers();
           const students = users.filter((user) => user.role === "murid");
 
           if (studentCount) studentCount.textContent = `${students.length} murid`;
-          if (storageStatus && remoteError) {
-            storageStatus.textContent = "Lokal";
-            storageStatus.className = "rounded-full bg-amber-50 px-3 py-1.5 text-xs font-black text-amber-700";
+          if (storageStatus) {
+            if (remoteError || syncResult.error) {
+              storageStatus.textContent = "Lokal";
+              storageStatus.className = "rounded-full bg-amber-50 px-3 py-1.5 text-xs font-black text-amber-700";
+            } else {
+              storageStatus.textContent = "Supabase";
+              storageStatus.className = "rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-black text-emerald-700";
+            }
+          }
+
+          if (syncResult.synced > 0) {
+            setMessage(`${syncResult.synced} akun lokal berhasil disinkronkan ke Supabase.`, "success");
           }
 
           if (!studentList) return;

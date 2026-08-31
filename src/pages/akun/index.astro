@@ -130,6 +130,7 @@ import { isSupabaseConfigured } from "../../lib/supabase";
         getUsers,
         normalizeNim,
         setSession,
+        syncLocalStudentsToRemote,
       } from "../../lib/accounts";
 
       const loginForm = document.getElementById("loginForm");
@@ -152,6 +153,7 @@ import { isSupabaseConfigured } from "../../lib/supabase";
       const nextUrl = new URLSearchParams(window.location.search).get("next") || "/";
 
       async function renderStudentList() {
+        await syncLocalStudentsToRemote();
         const { users, remoteError } = await getUsers();
         const students = users.filter((user) => user.role === "murid");
         if (studentCount) studentCount.textContent = `${students.length} murid`;
