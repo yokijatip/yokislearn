@@ -111,17 +111,26 @@ import { isSupabaseConfigured } from "../../lib/supabase";
               <div class="mt-2 text-sm font-black leading-6 text-slate-800">GURU001 / DEV001</div>
             </div>
           </div>
+          <div class="mt-5">
+            <a href="/register" class="inline-flex h-11 items-center rounded-2xl bg-red-600 px-5 text-sm font-black text-white transition active:scale-[0.98]">
+              Register murid
+            </a>
+          </div>
         </section>
       </div>
     </section>
 
     <script>
-      const USERS_KEY = "yokislearn:accounts";
-      const SESSION_KEY = "yokislearn:session";
-      const seededUsers = [
-        { nim: "DEV001", name: "Developer", role: "developer", createdBy: "system" },
-        { nim: "GURU001", name: "Guru LPK Baraya", role: "guru", createdBy: "system" },
-      ];
+      import {
+        clearSession,
+        createStudentAccount,
+        escapeHtml,
+        findAccountByNim,
+        getSession,
+        getUsers,
+        normalizeNim,
+        setSession,
+      } from "../../lib/accounts";
 
       const loginForm = document.getElementById("loginForm");
       const loginNim = document.getElementById("loginNim");
@@ -142,64 +151,14 @@ import { isSupabaseConfigured } from "../../lib/supabase";
       const authStatus = document.getElementById("authStatus");
       const nextUrl = new URLSearchParams(window.location.search).get("next") || "/";
 
-      function normalizeNim(value) {
-        return String(value || "").trim().toUpperCase();
-      }
-
-      function getUsers() {
-        let stored = [];
-        try {
-          stored = JSON.parse(localStorage.getItem(USERS_KEY) || "[]");
-        } catch {
-          stored = [];
-        }
-
-        const merged = [...seededUsers, ...stored];
-        const unique = new Map();
-        merged.forEach((user) => unique.set(normalizeNim(user.nim), { ...user, nim: normalizeNim(user.nim) }));
-        return [...unique.values()];
-      }
-
-      function saveUser(user) {
-        const users = getUsers();
-        const nim = normalizeNim(user.nim);
-        const nextUsers = users.filter((item) => item.nim !== nim && item.createdBy !== "system");
-        nextUsers.push({ ...user, nim });
-        localStorage.setItem(USERS_KEY, JSON.stringify(nextUsers));
-      }
-
-      function getSession() {
-        try {
-          return JSON.parse(localStorage.getItem(SESSION_KEY) || "null");
-        } catch {
-          return null;
-        }
-      }
-
-      function setSession(user) {
-        localStorage.setItem(SESSION_KEY, JSON.stringify(user));
-      }
-
-      function clearSession() {
-        localStorage.removeItem(SESSION_KEY);
-      }
-
-      function escapeHtml(value) {
-        return String(value || "")
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&#039;");
-      }
-
-      function renderStudentList() {
-        const students = getUsers().filter((user) => user.role === "murid");
+      async function renderStudentList() {
+        const { users, remoteError } = await getUsers();
+        const students = users.filter((user) => user.role === "murid");
         if (studentCount) studentCount.textContent = `${students.length} murid`;
         if (!studentList) return;
 
         if (!students.length) {
-          studentList.innerHTML = `<div class="rounded-2xl bg-[#f7f4ee] px-4 py-4 text-sm font-bold text-stone-600">Belum ada akun murid.</div>`;
+          studentList.innerHTML = `<div class="rounded-2xl bg-[#f7f4ee] px-4 py-4 text-sm font-bold text-stone-600">${remoteError ? "Belum ada akun murid di browser ini. Supabase belum siap." : "Belum ada akun murid."}</div>`;
           return;
         }
 
@@ -214,7 +173,7 @@ import { isSupabaseConfigured } from "../../lib/supabase";
         `).join("");
       }
 
-      function render() {
+      async function render() {
         const session = getSession();
         if (authStatus) {
           authStatus.textContent = session ? "Login" : "Offline";
@@ -227,7 +186,7 @@ import { isSupabaseConfigured } from "../../lib/supabase";
           activeAccount?.classList.add("hidden");
           teacherPanel?.classList.add("hidden");
           if (roleCard) roleCard.textContent = "Belum login";
-          renderStudentList();
+          await renderStudentList();
           return;
         }
 
@@ -239,15 +198,15 @@ import { isSupabaseConfigured } from "../../lib/supabase";
 
         const canManageStudents = session.role === "guru" || session.role === "developer";
         teacherPanel?.classList.toggle("hidden", !canManageStudents);
-        renderStudentList();
+        await renderStudentList();
       }
 
-      loginForm?.addEventListener("submit", (event) => {
+      loginForm?.addEventListener("submit", async (event) => {
         event.preventDefault();
         const nim = normalizeNim(loginNim?.value);
-        const user = getUsers().find((item) => item.nim === nim);
+        const { user, remoteError } = await findAccountByNim(nim);
         if (!user) {
-          if (loginMessage) loginMessage.textContent = "NIM belum terdaftar.";
+          if (loginMessage) loginMessage.textContent = remoteError ? "NIM belum terdaftar. Supabase belum siap, hanya akun lokal yang bisa login." : "NIM belum terdaftar.";
           return;
         }
 
@@ -258,7 +217,7 @@ import { isSupabaseConfigured } from "../../lib/supabase";
         window.location.assign(nextUrl.startsWith("/") ? nextUrl : "/");
       });
 
-      studentForm?.addEventListener("submit", (event) => {
+      studentForm?.addEventListener("submit", async (event) => {
         event.preventDefault();
         const session = getSession();
         if (!session || (session.role !== "guru" && session.role !== "developer")) return;
@@ -267,25 +226,28 @@ import { isSupabaseConfigured } from "../../lib/supabase";
         const name = String(studentName?.value || "").trim();
         if (!nim || !name) return;
 
-        const exists = getUsers().some((user) => user.nim === nim);
-        if (exists) {
-          if (studentMessage) studentMessage.textContent = "NIM sudah dipakai.";
+        const result = await createStudentAccount({ nim, name, createdBy: session.nim });
+        if (result.error) {
+          if (studentMessage) studentMessage.textContent = result.error.message;
           return;
         }
 
-        saveUser({ nim, name, role: "murid", createdBy: session.nim });
-        if (studentMessage) studentMessage.textContent = `Akun ${name} dibuat. Murid bisa login pakai NIM ${nim}.`;
+        if (studentMessage) {
+          studentMessage.textContent = result.remoteSaved
+            ? `Akun ${name} dibuat. Murid bisa login dari perangkat lain pakai NIM ${result.account.nim}.`
+            : `Akun ${name} dibuat di browser ini. Buat tabel Supabase agar bisa login dari perangkat lain.`;
+        }
         if (studentNim) studentNim.value = "";
         if (studentName) studentName.value = "";
-        render();
+        await render();
       });
 
       logoutButton?.addEventListener("click", () => {
         clearSession();
-        render();
+        void render();
       });
 
-      render();
+      void render();
     </script>
   </main>
 </Layout>
