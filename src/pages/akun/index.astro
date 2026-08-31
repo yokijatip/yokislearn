@@ -131,6 +131,7 @@ import { isSupabaseConfigured } from "../../lib/supabase";
       const studentCount = document.getElementById("studentCount");
       const roleCard = document.getElementById("roleCard");
       const authStatus = document.getElementById("authStatus");
+      const nextUrl = new URLSearchParams(window.location.search).get("next") || "/";
 
       function normalizeNim(value) {
         return String(value || "").trim().toUpperCase();
@@ -245,6 +246,7 @@ import { isSupabaseConfigured } from "../../lib/supabase";
         if (loginMessage) loginMessage.textContent = "";
         if (loginNim) loginNim.value = "";
         render();
+        window.location.assign(nextUrl.startsWith("/") ? nextUrl : "/");
       });
 
       studentForm?.addEventListener("submit", (event) => {

@@ -8,6 +8,16 @@ interface Props {
 const { active = "" } = Astro.props;
 ---
 
+{active !== "Akun" && (
+  <script>
+    const session = localStorage.getItem("yokislearn:session");
+    if (!session) {
+      const nextPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      window.location.replace(`/akun?next=${encodeURIComponent(nextPath)}`);
+    }
+  </script>
+)}
+
 <div class="min-h-screen overflow-x-clip bg-[#f7f4ee] pb-20 text-slate-950 sm:pb-0">
   <header class="sticky top-0 z-30 border-b border-black/5 bg-[#fffaf1]/90 backdrop-blur-xl print:hidden">
     <div class="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3">
